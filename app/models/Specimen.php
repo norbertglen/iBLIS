@@ -57,6 +57,22 @@ class Specimen extends Eloquent
 	}
 
 	/**
+	 * Collection Site relationship
+	 */
+	public function collectionSite()
+	{
+		return $this->belongsTo('SpecimenCollectionSite');
+	}
+
+	/**
+	 * Collection Location relationship
+	 */
+	public function collectionLocation()
+	{
+		return $this->belongsTo('SpecimenCollectionLocation');
+	}
+
+	/**
 	 * Test relationship
 	 */
 	public function test()

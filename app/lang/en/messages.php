@@ -56,6 +56,8 @@ return array(
     'new'   =>  'New',
     'edit'  =>  'Edit',
     'reorder' => 'Reorder',
+    'time' => 'Time',
+    'location' => 'Location',
 
     /** 
      *   Generic phrases
@@ -121,6 +123,7 @@ return array(
     'change-specimen' => 'Change',
     'change-specimen-title' => 'Change Specimen Type',
     'create-specimen-type' => 'Create Specimen Type',
+    'date-of-collection' => 'Date of collection',
     'edit-specimen-type' => 'Edit Specimen Type',
     'list-specimen-types' => 'List Specimen Types',
     'new-specimen-type' => 'New Specimen Type',
@@ -155,6 +158,8 @@ return array(
     'originating-from' => 'Originating From',
     'referred-by' => 'Referred by',
     'recieved-by' => 'Recieved by',
+    'sample-details' => 'Sample Details',
+    'site-of-collection' => 'Site of collection',
 
     /** 
      *   Test Catalog
@@ -280,6 +285,7 @@ return array(
      */
 
     'all' => 'All',
+    'date-of-admission' => 'Date of Admission',
     'create-new-test' => 'Create New Test',
     'completed' => 'Test Completed',
     'date-ordered' => 'Date Ordered',
@@ -296,6 +302,7 @@ return array(
     'patient-name' => 'Patient name',
     'pending' => 'Test Pending',
     'physician' => 'Requesting Physician',
+    'provisional-diagnosis' => 'Provisional diagnosis',
     'receive-test' => 'Receive',
     'receive-test-title' => 'Receive Test',
     'registered-by' => 'Registered By',
@@ -707,4 +714,5 @@ return array(
     'microcritical' =>      'Microbiology Critical|Microbiology Critical',
     'add-new'       =>      'Add New',
     'crit-val'      =>      'Critical Values',
+    'biochemical-tests'  =>'Biochemical Tests',
 );

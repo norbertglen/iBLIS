@@ -117,6 +117,7 @@ class TestController extends \BaseController {
 		$rules = array(
 			'visit_type' => 'required',
 			'physician' => 'required',
+			'admission_date' => 'required',
 			'testtypes' => 'required',
 		);
 		$validator = Validator::make(Input::all(), $rules);
@@ -137,6 +138,8 @@ class TestController extends \BaseController {
 			$visit = new Visit;
 			$visit->patient_id = Input::get('patient_id');
 			$visit->visit_type = $visitType[Input::get('visit_type')];
+			$visit->admission_date = Input::get('admission_date');
+			$visit->provisional_diagnosis = Input::get('provisional_diagnosis');
 			$visit->save();
 
 			/*
@@ -249,6 +252,33 @@ class TestController extends \BaseController {
 	{
 		$test = Test::find(Input::get('id'));
 		return View::make('test.changeSpecimenType')->with('test', $test);
+	}
+
+	/**
+	 * Display Change specimenType form fragment to be loaded in a modal via AJAX
+	 *
+	 * @param
+	 * @return
+	 */
+	public function sampleSpecimenDetails()
+	{
+		$test = Test::find(Input::get('id'));
+		return View::make('test.sampleSpecimenDetails')->with('test', $test);
+	}
+
+	/**
+	 * Update a Test's SpecimenType
+	 *
+	 * @param
+	 * @return
+	 */
+	public function updateSpecimenSampleDetails()
+	{
+		$specimen = Specimen::find(Input::get('specimen_id'));
+		$specimen->specimen_type_id = Input::get('specimen_type');
+		$specimen->save();
+
+		return Redirect::route('test.viewDetails', array($specimen->test->id));
 	}
 
 	/**

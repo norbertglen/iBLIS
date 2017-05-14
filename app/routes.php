@@ -208,6 +208,16 @@ Route::group(array("before" => "auth"), function()
         "as"   => "test.updateSpecimenType",
         "uses" => "TestController@updateSpecimenType"
     ));
+     Route::post("/test/samplespecimen", array(
+        "before" => "checkPerms:change_test_specimen",
+        "as"   => "test.sampleSpecimenDetails",
+        "uses" => "TestController@sampleSpecimenDetails"
+    ));
+     Route::post("/test/updatespecimensampledetails", array(
+        "before" => "checkPerms:change_test_specimen",
+        "as"   => "test.updateSpecimenSampleDetails",
+        "uses" => "TestController@updateSpecimenSampleDetails"
+    ));
     Route::post("/test/start", array(
         "before" => "checkPerms:start_test",
         "as"   => "test.start",

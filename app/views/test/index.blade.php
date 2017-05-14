@@ -185,6 +185,81 @@
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 {{trans('messages.view-details')}}
                             </a>
+                            <a class="btn btn-sm btn-info sample-specimen" href="#sample-details-modal"
+                                    data-toggle="modal" data-url="{{ URL::route('test.sampleSpecimenDetails') }}"
+                                    data-test-id="{{$test->id}}" data-target="#sample-details-modal"
+                                    title="{{trans('messages.sample-details')}}">
+                                    <!-- <span class="glyphicon glyphicon-transfer"></span> -->
+                                    {{trans('messages.sample-details')}}
+                                </a>
+                                <!-- custom modal for sample specimen form. Should be implemented in terms of posting to url for uniformity with other modals in this page like change specimen type -->
+                                <div class="modal fade" id="sample-details-modal">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    {{ Form::open(array('route' => 'test.updateSpecimenSampleDetails')) }}
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">&times;</span>
+                                            <span class="sr-only">{{trans('messages.close')}}</span>
+                                        </button>
+                                        <h4 class="modal-title">
+                                            <span class="glyphicon glyphicon-transfer"></span>
+                                            {{trans('messages.sample-details')}}</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="display-details">
+                                            {{ Form::hidden('specimen_id', $test->specimen_id) }}
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <strong>{{ Lang::choice('messages.date-of-collection',1) }}</strong>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        {{ Form::text('date_collected', Input::old('date_collected'), 
+                                                                array('class' => 'form-control standard-datepicker')) }}
+                                                    </div>
+                                                </div><br />
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <strong>{{trans('messages.time')}}</strong>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                            {{ Form::text('time_collected', Input::old('time_collected'), 
+                                                                array('class' => 'form-control standard-datepicker')) }}
+                                                        
+                                                    </div>
+                                                </div><br />
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <strong>{{trans('messages.location')}}</strong>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        {{ Form::select('location', $test->specimen->collectionLocation()->lists('name','id'),
+                                                            array($test->specimen->location_id), array('class' => 'form-control')) }}
+                                                    </div>
+                                                </div><br />
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <strong>{{ Lang::choice('messages.site-of-collection',2) }}</strong>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        {{ Form::select('collection_site', $test->specimen->collectionSite()->lists('name','id'),
+                                                            array($test->specimen->site_collected_id), array('class' => 'form-control')) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans('messages.save'),
+                                            array('class' => 'btn btn-primary', 'data-dismiss' => 'modal', 'onclick' => 'submit()')) }}
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            {{trans('messages.close')}}</button>
+                                      </div>
+                                    {{ Form::close() }}
+                                    </div><!-- /.modal-content -->
+                                  </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal /#sample-details-modal-->
                              <a class="btn btn-sm btn-midnight-blue barcode-button" onclick="print_barcode({{ "'".$test->specimen->id."'".', '."'".$barcode->encoding_format."'".', '."'".$barcode->barcode_width."'".', '."'".$barcode->barcode_height."'".', '."'".$barcode->text_size."'" }})" title="{{trans('messages.barcode')}}">
                                     <span class="glyphicon glyphicon-barcode"></span>
                                     {{trans('messages.barcode')}}
@@ -448,6 +523,33 @@
             {{trans('messages.refer-sample')}}
         </a>
     </div> <!-- /. referral-button -->
+
+    <!-- <div class="modal fade" id="sample-details-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        {{ Form::open(array('route' => 'test.updateSpecimenSampleDetails')) }}
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">{{trans('messages.close')}}</span>
+            </button>
+            <h4 class="modal-title">
+                <span class="glyphicon glyphicon-transfer"></span>
+                {{trans('messages.sample-details')}}</h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans('messages.save'),
+                array('class' => 'btn btn-primary', 'data-dismiss' => 'modal', 'onclick' => 'submit()')) }}
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                {{trans('messages.close')}}</button>
+          </div>
+        {{ Form::close() }}
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal /#sample-details-modal--> -->
+
     <!-- Barcode begins -->
     
     <div id="count" style='display:none;'>0</div>

@@ -281,6 +281,21 @@ $(function(){
 			$(e.currentTarget).find('.modal-body').html(data);
 		});
 	});
+
+	/** - Get a Test->id from the button clicked,
+	 *  - Fetch corresponding test and default specimen data
+	 *  - Display all in the modal.
+	 */
+	/*$('#sample-details-modal').on('show.bs.modal', function(e) {
+		//get data-id attribute of the clicked element
+		var id = $(e.relatedTarget).data('test-id');
+		var url = $(e.relatedTarget).data('url');
+
+		$.post(url, { id: id}).done(function(data){
+			//Show it in the modal
+			$(e.currentTarget).find('.modal-body').html(data);
+		});
+	});*/
   
 
 	/** Receive Test Request button.
@@ -875,3 +890,16 @@ $(function(){
 			);                               
 		}
 	}
+/*Toggle Admission Date on test registration form*/
+	function toggleAdmissionDate(className, obj){
+		var $input = $(obj);
+		console.log($input.val());
+		if($input.val() != "1"){
+			$("#admission-date-field").addClass('hidden');
+		}
+		else{
+			$("#admission-date-field").removeClass('hidden');
+		}
+	}
+
+/*End toggle Admission Date on test registration form*/

@@ -220,6 +220,75 @@ class KBLISSeeder extends DatabaseSeeder
             TestStatus::create($test_status);
         }
         $this->command->info('test_statuses seeded');
+
+        /* Specimen Sites table */
+        $specimen_sites_array = array(
+          array("name" => "Head"),
+          array("name" => "Abdomen"),
+          array("name" => "Lower back"),
+          array("name" => "Shoulder"),
+          array("name" => "Right upper arm"),
+          array("name" => "Left upper arm"),
+          array("name" => "Right elbow"),
+          array("name" => "Left elbow"),
+          array("name" => "Right wrist"),
+          array("name" => "Left wrist"),
+          array("name" => "Hip"),
+          array("name" => "Right thigh"),
+          array("name" => "Left thigh"),
+          array("name" => "Right knee"),
+          array("name" => "Left knee"),
+          array("name" => "Right lower leg"),
+          array("name" => "Left lower leg"),
+          array("name" => "Right ankle"),
+          array("name" => "Left ankle"),
+          array("name" => "Right foot"),
+          array("name" => "Left foot"),
+          array("name" => "Other"),
+        );
+        foreach ($specimen_sites_array as $specimen_site)
+        {
+            $specimen_site[] = SpecimenCollectionSite::create($specimen_site);
+        }
+        $this->command->info('specimen_site seeded');
+
+        /* Specimen Locations table */
+        $specimen_locations_array = array(
+          array("name" => "Accident & Emergency"),
+          array("name" => "Burns unit"),
+          array("name" => "Comprehensive care center"),
+          array("name" => "Delivery Ward"),
+          array("name" => "Dental unit"),
+          array("name" => "Diabetic clinic"),
+          array("name" => "ENT clinic"),
+          array("name" => "Surgical ward"),
+          array("name" => "Medical ward"),
+          array("name" => "Female ward 1"),
+          array("name" => "Female ward 2"),
+          array("name" => "Female ward 3"),
+          array("name" => "Female ward 4"),
+          array("name" => "Female ward 5"),
+          array("name" => "ICU"),
+          array("name" => "Inpatient Ward"),
+          array("name" => "Labour  ward"),
+          array("name" => "Male ward 1"),
+          array("name" => "Male ward 2"),
+          array("name" => "Male ward 3"),
+          array("name" => "Male ward 4"),
+          array("name" => "Male ward 5"),
+          array("name" => "Maternity"),
+          array("name" => "MCH"),
+          array("name" => "Outpatient clinic"),
+          array("name" => "Paediatric ward"),
+          array("name" => "Renal unit"),
+          array("name" => "TB clinic"),
+          array("name" => "Other"),
+        );
+        foreach ($specimen_locations_array as $specimen_location)
+        {
+            $specimen_location[] = SpecimenCollectionLocation::create($specimen_location);
+        }
+        $this->command->info('specimen_location seeded');
     }
 
 }

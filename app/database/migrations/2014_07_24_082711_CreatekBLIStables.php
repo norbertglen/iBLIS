@@ -189,6 +189,8 @@ class CreatekBLIStables extends Migration {
 			$table->integer('patient_id')->unsigned();
             $table->string('visit_type', 12)->default('Out-patient'); //'OUT-PATIENT' | 'IN-PATIENT'
             $table->integer('visit_number')->unsigned()->nullable(); //External
+            $table->date('admission_date');
+            $table->string('provisional_diagnosis');
 
             $table->index('visit_number');
 			$table->foreign('patient_id')->references('id')->on('patients');
@@ -201,6 +203,18 @@ class CreatekBLIStables extends Migration {
 			$table->increments('id')->unsigned();
 			$table->string("reason", 100);
 		});
+
+        Schema::create('specimen_collection_sites', function(Blueprint $table)
+        {
+            $table->increments('id')->unsigned();
+            $table->string("name", 100);
+        });
+
+        Schema::create('specimen_collection_locations', function(Blueprint $table)
+        {
+            $table->increments('id')->unsigned();
+            $table->string("name", 100);
+        });
 
         Schema::create('facilities', function(Blueprint $table)
         {
@@ -237,6 +251,11 @@ class CreatekBLIStables extends Migration {
 			$table->integer('referral_id')->unsigned()->nullable();
 			$table->timestamp('time_accepted')->nullable();
 			$table->timestamp('time_rejected')->nullable();
+
+            $table->date('date_collected')->nullable();
+            $table->timestamp('time_collected')->nullable();
+            $table->string('site_collected_id')->references('id')->on('specimen_collection_sites');
+            $table->string('location_id')->references('id')->on('specimen_collection_locations');
 			
             $table->index('accepted_by');
             $table->index('rejected_by');

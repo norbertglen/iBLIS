@@ -53,11 +53,20 @@
 								{{ Form::hidden('patient_id', $patient->id) }}
 								{{ Form::label('visit_type', trans("messages.visit-type")) }}
 								{{ Form::select('visit_type', [' ' => '--- Select visit type ---','0' => trans("messages.out-patient"),'1' => trans("messages.in-patient")], null,
-									 array('class' => 'form-control')) }}
+									 array('class' => 'form-control', 'onchange'=>'toggleAdmissionDate(".admission-date-field ", this)')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('physician', trans("messages.physician")) }}
 								{{Form::text('physician', Input::old('physician'), array('class' => 'form-control'))}}
+							</div>
+							<div class="form-group" id="admission-date-field">
+								{{ Form::label('admission_date', trans('messages.date-of-admission')) }}
+								{{ Form::text('admission_date', Input::old('admission_date'), 
+									array('class' => 'form-control standard-datepicker')) }}
+							</div>
+							<div class="form-group">
+								{{ Form::label('provisional_diagnosis', trans("messages.provisional-diagnosis")) }}
+								{{ Form::text('provisional_diagnosis', Input::old('provisional_diagnosis'), array('class' => 'form-control'))}}
 							</div>
 							<div class="form-group">
 								{{ Form::label('tests', trans("messages.select-tests")) }}
