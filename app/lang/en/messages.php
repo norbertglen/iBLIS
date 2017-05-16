@@ -337,6 +337,18 @@ return array(
     'audit-report' => 'Audit Report',
     'entered-by' => 'Entered by',
 
+
+    /** 
+     *   Biochemical Tests
+     */
+     'biochemical-test' => 'Biochemical Tests',
+     'create-biochemical-test' => 'Create Biochemical Test',
+     'success-creating-biochemical-test' => 'Biochemical Test Created Successfully',
+     'bio-chemical-test-detail' => 'Biochemical Test Detail',
+     'success-deleting-biochemical-test' => 'Successfully deleted the test',
+     'success-updating-biochemical-test' => 'The Test was successfully updated!',
+     'edit-biochemical-test' => 'Edit Biochemical Test',
+     
     /** 
      *   Tests search panel
      */

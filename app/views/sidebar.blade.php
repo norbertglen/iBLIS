@@ -200,6 +200,12 @@
 								<span class="glyphicon glyphicon-tag"></span> {{ Lang::choice('messages.microcritical', 2)}}</a>
 						</div>
 					</li>
+					<li>
+					<div>
+						<a href="{{ URL::route("biochemical.index")}}">
+							<span class="glyphicon glyphicon-tag"></span> {{ Lang::choice('messages.biochemical-test', 2)}}</a>
+					</div>
+				</li>
 				</ul>
 			</div>
 		</li>

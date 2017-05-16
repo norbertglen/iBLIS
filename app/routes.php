@@ -128,6 +128,17 @@ Route::group(array("before" => "auth"), function()
             "as"   => "microcritical.delete",
             "uses" => "MicroCriticalController@delete"
         ));
+        Route::resource('biochemical', 'BiochemicalController');
+
+        Route::get("/biochemical", array(
+            "as"   => "biochemical.index",
+            "uses" => "BiochemicalController@index"
+        ));
+
+        Route::get("/biochemical/{id}/delete", array(
+            "as"   => "biochemical.delete",
+            "uses" => "BiochemicalController@delete"
+        ));
     });
     Route::group(array("before" => "checkPerms:manage_lab_configurations"), function()
     {
