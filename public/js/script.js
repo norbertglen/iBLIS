@@ -478,6 +478,14 @@ $(function(){
 			showInputs: false,
 			minuteStep: 5
 		});
+
+		$('#timepicker').timepicker({
+			timeSeparator: ':',  
+			hours: {
+				starts: 0,                // First displayed hour
+				ends: 23                  // Last displayed hour
+			},
+		});
 });
 	/**
 	 *-----------------------------------

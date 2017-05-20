@@ -225,17 +225,18 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                             {{ Form::text('time_collected', Input::old('time_collected'), 
-                                                                array('class' => 'form-control standard-datepicker')) }}
-                                                        
+                                                                array(
+                                                                    'class' => 'form-control',
+                                                                    'id' => 'timepicker')) }}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <strong>{{trans('messages.location')}}</strong>
                                                     </div>
+
                                                     <div class="col-md-8">
-                                                        {{ Form::select('location', $test->specimen->collectionLocation()->lists('name','id'),
-                                                            array($test->specimen->location_id), array('class' => 'form-control')) }}
+                                                        {{ Form::select('location', $locations->lists('name', 'id'),  array($test->specimen->site_collected_id), array('class' => 'form-control') )}}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
@@ -243,7 +244,7 @@
                                                         <strong>{{ Lang::choice('messages.site-of-collection',2) }}</strong>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        {{ Form::select('collection_site', $test->specimen->collectionSite()->lists('name','id'),
+                                                        {{ Form::select('collection_site', $collection_site->lists('name','id'),
                                                             array($test->specimen->site_collected_id), array('class' => 'form-control')) }}
                                                     </div>
                                                 </div>

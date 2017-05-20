@@ -9,6 +9,8 @@
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/bootstrap-theme.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/dataTables.bootstrap.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/layout.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/jquery.ui.timepicker.css') }}" />
+
         <script type="text/javascript" src="{{ URL::asset('js/jquery.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery-ui-min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
@@ -19,6 +21,9 @@
         <script type="text/javascript" src="{{ URL::asset('js/html.sortable.min.js') }} "></script>
         <!-- jQuery barcode script -->
         <script type="text/javascript" src="{{ asset('js/jquery-barcode-2.0.2.js') }} "></script>
+        <!-- JQuery timepicker-->
+        <script src="{{ URL::asset('js/jquery.ui.timepicker.js') }}"></script>
+
         <title>{{ Config::get('kblis.name') }} {{ Config::get('kblis.version') }}</title>
     </head>
     <body>

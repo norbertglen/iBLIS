@@ -336,6 +336,7 @@ return array(
     'current-result' => 'Current result',
     'audit-report' => 'Audit Report',
     'entered-by' => 'Entered by',
+    'results' => 'Results',
 
 
     /** 

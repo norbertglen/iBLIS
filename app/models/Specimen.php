@@ -1,8 +1,10 @@
 <?php
 
+use Carbon\Carbon;
+
 class Specimen extends Eloquent
 {
-	/**
+	/*
 	 * The database table used by the model.
 	 *
 	 * @var string
@@ -167,4 +169,10 @@ class Specimen extends Eloquent
             return false;
         }
     }
+
+	public function setTimeCollectedAttribute($time) {
+		$date_collected = $this->attributes['date_collected'];
+		$date_to_save = $date_collected.' '.$time;
+		$this->attributes['time_collected'] = Carbon::createFromFormat('Y-m-d H:i', $date_to_save);
+	}
 }

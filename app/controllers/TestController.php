@@ -61,11 +61,19 @@ class TestController extends \BaseController {
 		//	Barcode
 		$barcode = Barcode::first();
 
+		// Locations
+		$locations =   SpecimenCollectionLocation::select('id', 'name')->get();
+
+		// collection sites
+		$sites = SpecimenCollectionSite::select('id', 'name')->get();
+
 		// Load the view and pass it the tests
 		return View::make('test.index')
 					->with('testSet', $tests)
 					->with('testStatus', $statuses)
 					->with('barcode', $barcode)
+					->with('locations', $locations)
+					->with('collection_site', $sites)
 					->withInput($input);
 	}
 
@@ -274,8 +282,12 @@ class TestController extends \BaseController {
 	 */
 	public function updateSpecimenSampleDetails()
 	{
+
 		$specimen = Specimen::find(Input::get('specimen_id'));
-		$specimen->specimen_type_id = Input::get('specimen_type');
+		$specimen->location_id = Input::get('location');
+		$specimen->site_collected_id = Input::get('collection_site');
+		$specimen->date_collected = Input::get('date_collected');
+		$specimen->time_collected = Input::get('time_collected');
 		$specimen->save();
 
 		return Redirect::route('test.viewDetails', array($specimen->test->id));
@@ -321,7 +333,11 @@ class TestController extends \BaseController {
 	public function enterResults($testID)
 	{
 		$test = Test::find($testID);
-		return View::make('test.enterResults')->with('test', $test);
+		$biochemical_tests = BiochemicalTest::orderBy('id', 'ASC')->get();
+		// dd($biochemical_tests);
+		return View::make('test.enterResults')
+			->with('test', $test)
+			->with('biochemical_tests', $biochemical_tests);
 	}
 
 	/**
