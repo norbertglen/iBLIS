@@ -200,6 +200,15 @@
                                 </table>
                                 <!-- Results entry end-->
                                 <!--End-->
+                                <p><strong>{{trans("messages.gram-stain")}}</strong></p>
+                                {{ Form::open(array('route' => array('test.saveResults',$test->id), 'method' => 'POST',
+                                    'id' => 'form-enter-results')) }}
+                                            <div class="form-group">
+                                        {{ Form::label('grainstain', trans('messages.gram-stain')) }}
+                                        {{ Form::select('size', array('L' => 'Large', 'S' => 'Small'), 'S'); }}
+                                    </div>
+                                    {{ Form::submit('messages.save'); }}
+                                {{ Form::close() }}
                                 <p><strong>{{trans("messages.susceptibility-test-results")}}</strong></p>
                                 <div class="form-group">
                                     <div class="form-pane panel panel-default">

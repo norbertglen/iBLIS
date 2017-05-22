@@ -284,6 +284,7 @@ return array(
     'zone-size' =>  'Zone size (mm)',
     'Not-Done' => 'Not Done',
     'interp'    =>  'Interpretation (S, I, R)',
+    'gram-stain' => 'Gram Stain',
 
     /**
      *  Tests
