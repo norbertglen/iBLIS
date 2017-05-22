@@ -167,42 +167,35 @@
                                         @foreach($biochemical_tests as $key=>$value)
                                             <div class="col-md-4">
                                                 <label  class="checkbox">
-                                                    <input type="checkbox" name="organism[]" value="{{ $value->id}}"  onchange="javascript:showSusceptibility(<?php echo $value->id; ?>)" />{{$value->name}}
-                                            </label>
+                                                    <input type="checkbox" name="organism[]" value="{{ $value->id}}"  onchange="javascript:addSelectedTests(<?php echo $value->id; ?>)" />{{$value->name}}
+                                                </label>
                                             </div>
                                         @endforeach
                                       </div>
                                     </div>
                                 </div>
-                                <table class="table table-bordered">
-                                    <thead>
-                                       <tr>
-                                            <th width="50%">{{ trans('messages.date')}}</th>
-                                            <th width="50%">{{ trans('messages.tech-initials')}}</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Some date</td>
-                                            <td>Initials</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        
                                 <!--Results entry-->
                                 <table class="table table-bordered">
                                     <thead>
-                                        <th width="50%">{{ trans('messages.biochemical-test')}}</th>
-                                        <th width="40%">{{ trans('messages.results')}}</th>
+                                        <th width="15%">{{ trans('messages.date')}}</th>
+                                        <th width="15%">{{ trans('messages.tech-initials')}}</th>
+                                        <th width="30%">{{ trans('messages.biochemical-test')}}</th>
+                                        <th width="30%">{{ trans('messages.results')}}</th>
                                         <th width="10%"></th>
                                     </thead>
                                     <tbody>
-                                            <tr>
-                                            {{ Form::open() }}
-                                                <td>{{ Form::label('username', 'jhjhj')}}</td>
-                                                <td>{{ Form::text('result')}}</td>
-                                                <td>{{ Form::submit('save') }}</td>
-                                            {{ Form::close() }} 
+                                    @foreach($biochemical_tests as $key => $value)
+                                        {{ Form::open()}}
+                                            <tr id="{{ 'selected_test'.$value->id}}" style="display:none;">
+                                                <td>Some date</td>
+                                                <td>{{ Auth::user()->name }}</td>
+                                                <td>{{ $value->name }}</td>
+                                                <td>{{ Form::select('result', array('positive', 'negative'))}}</td>
+                                                <td><a class="btn btn-xs btn-success"  href="javascript:void(0)" onclick="saveObservation(<?php echo $value->id; ?>, <?php echo Auth::user()->id; ?>, <?php echo "'".Auth::user()->name."'"; ?>)">{{ trans('messages.save') }}</a></td>
                                             </tr>
+                                        {{ Form::close() }} 
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 <!-- Results entry end-->

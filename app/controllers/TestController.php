@@ -334,10 +334,12 @@ class TestController extends \BaseController {
 	{
 		$test = Test::find($testID);
 		$biochemical_tests = BiochemicalTest::orderBy('id', 'ASC')->get();
+		$selected_tests = array('Culture test', 'Blood test', 'Sugar test');
 		// dd($biochemical_tests);
 		return View::make('test.enterResults')
 			->with('test', $test)
-			->with('biochemical_tests', $biochemical_tests);
+			->with('biochemical_tests', $biochemical_tests)
+			->with('selected_tests', $selected_tests);
 	}
 
 	/**

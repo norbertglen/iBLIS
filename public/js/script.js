@@ -739,6 +739,7 @@ $(function(){
 	function saveObservation(tid, user, username){
 		txtarea = "observation_"+tid;
 		observation = $("#"+txtarea).val();
+		if (1) return console.log(tid, user, username);
 
 		$.ajax({
 			type: 'POST',
@@ -838,6 +839,10 @@ $(function(){
 	/*Toggle susceptibility tables*/
 	function showSusceptibility(id){
 		$('#drugSusceptibilityForm_'+id).toggle(this.checked);
+	}
+
+	function addSelectedTests(id) {
+		$('#selected_test'+id).toggle(this.checked);
 	}
 
 	/*End toggle susceptibility*/
