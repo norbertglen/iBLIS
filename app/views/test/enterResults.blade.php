@@ -219,64 +219,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                <!-- Results entry end-->
-                                <!--End-->
-                                <p><strong>{{trans("messages.gram-stain")}}</strong></p>
-                                {{ Form::open(array('route' => array('test.saveResults',$test->id), 'method' => 'POST',
-                                    'id' => 'form-enter-results')) }}
-                                            <div class="form-group">
-                                        {{ Form::label('grainstain', trans('messages.gram-stain')) }}
-                                        {{ Form::select('size', array('L' => 'Large', 'S' => 'Small'), 'S'); }}
-                                    </div>
-                                    {{ Form::submit('messages.save'); }}
-                                {{ Form::close() }}
-                                <!--Biochemical Tests-->
-                                <p><strong>{{ trans("messages.biochemical-test")}}</strong></p>
-                                <div class="form-group">
-                                    <div class="form-pane panel panel-default">
-                                      <div class="container-fluid">
-                                        @foreach($biochemical_tests as $key=>$value)
-                                            <div class="col-md-4">
-                                                <label  class="checkbox">
-                                                    <input type="checkbox" name="organism[]" value="{{ $value->id}}"  onchange="javascript:showSusceptibility(<?php echo $value->id; ?>)" />{{$value->name}}
-                                            </label>
-                                            </div>
-                                        @endforeach
-                                      </div>
-                                    </div>
-                                </div>
-                                <table class="table table-bordered">
-                                    <thead>
-                                       <tr>
-                                            <th width="50%">{{ trans('messages.date')}}</th>
-                                            <th width="50%">{{ trans('messages.tech-initials')}}</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Some date</td>
-                                            <td>Initials</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <!--Results entry-->
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <th width="50%">{{ trans('messages.biochemical-test')}}</th>
-                                        <th width="40%">{{ trans('messages.results')}}</th>
-                                        <th width="10%"></th>
-                                    </thead>
-                                    <tbody>
-                                            <tr>
-                                            {{ Form::open() }}
-                                                <td>{{ Form::label('username', 'jhjhj')}}</td>
-                                                <td>{{ Form::text('result')}}</td>
-                                                <td>{{ Form::submit('save') }}</td>
-                                            {{ Form::close() }} 
-                                            </tr>
-                                    </tbody>
-                                </table>
-                                <!-- Results entry end-->
+                                
                                 <!--End-->
                                 <p><strong>{{trans("messages.susceptibility-test-results")}}</strong></p>
                                 <div class="form-group">
