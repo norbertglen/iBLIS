@@ -263,6 +263,14 @@ Route::group(array("before" => "auth"), function()
         "as"   => "test.saveResults",
         "uses" => "TestController@saveResults"
     ));
+    Route::post("/grainstain/saveresults", array(
+        "as"   => "graintest.saveResults",
+        "uses" => "GrainStainController@saveResults"
+    ));
+    Route::post("/biochemical/saveresults", array(
+        "as"   => "biochemical.saveBiochem",
+        "uses" => "BiochemicalWorkSheetController@saveBiochem"
+    ));
     Route::get("/test/{test}/viewdetails", array(
         "as"   => "test.viewDetails",
         "uses" => "TestController@viewDetails"

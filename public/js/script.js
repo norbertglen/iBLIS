@@ -750,6 +750,43 @@ $(function(){
 			}
 		});
 	}
+
+function saveGrainStain(tid, userId){
+		select = "grainstain_"+tid;
+		result = $("#"+select).find(":selected").val();
+		
+		// if (1) return console.log(tid, result,userId);
+
+		$.ajax({
+			type: 'POST',
+			url:  '/grainstain/saveresults',
+			data: {result: result, testId: tid, userId: userId, action: "add"},
+			success: function(){
+				alert("process sucess!")
+				// drawCultureWorksheet(tid , user, username);
+			}
+		});
+	}
+
+	function saveBiochemicalTest(tid, userId, bioID){
+		saveButton = "save_"+tid;
+		console.log(saveButton);
+		$("#"+saveButton).css("visibility", "hidden");
+		select = "biochemical_"+tid;
+		result = $("#"+select).find(":selected").val();
+		
+		// if (1) return console.log(tid, result,userId);
+
+		$.ajax({
+			type: 'POST',
+			url:  '/biochemical/saveresults',
+			data: {result: result, testId: tid, userId: userId, bioID: bioID, action: "add"},
+			success: function(){
+				alert("process sucess!")
+				// drawCultureWorksheet(tid , user, username);
+			}
+		});
+	}
 	/**
 	 * Request a json string from the server containing contents of the culture_worksheet table for this test
 	 * and then draws a table based on this data.

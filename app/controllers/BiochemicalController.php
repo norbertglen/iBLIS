@@ -137,5 +137,5 @@ class BiochemicalController extends \BaseController {
             return Redirect::to($url)
 			->with('message', trans('messages.success-deleting-biochemical-test'));
 	}
-
+	
 }

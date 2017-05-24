@@ -159,6 +159,25 @@
                                         @endif
                                     </tbody>
                                 </table>
+
+                                <!-- grainstain Tests-->
+                                <p><strong>{{trans("messages.gram-stain")}}</strong></p>
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td width="40%" class="form-group">
+                                                {{ trans('messages.gram-stain') }}
+                                            </td>
+                                            <td width="40%">{{ Form::select('result', 
+                                                    array(1 => 'positive', 0 => 'negative'),null,
+                                                    array('id' => 'grainstain_'.$test->id)) }}</td>
+                                            <td width="10%">
+                                                <a class="btn btn-xs btn-success" href="javascript:void(0)" onclick="saveGrainStain(<?php echo $test->id;?>, <?php echo Auth::user()->id; ?>)">{{ trans('messages.save'); }}</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
                                 <!--Biochemical Tests-->
                                 <p><strong>{{ trans("messages.biochemical-test")}}</strong></p>
                                 <div class="form-group">
@@ -191,8 +210,10 @@
                                                 <td>Some date</td>
                                                 <td>{{ Auth::user()->name }}</td>
                                                 <td>{{ $value->name }}</td>
-                                                <td>{{ Form::select('result', array('positive', 'negative'))}}</td>
-                                                <td><a class="btn btn-xs btn-success"  href="javascript:void(0)" onclick="saveObservation(<?php echo $value->id; ?>, <?php echo Auth::user()->id; ?>, <?php echo "'".Auth::user()->name."'"; ?>)">{{ trans('messages.save') }}</a></td>
+                                                <td>{{ Form::select('result', 
+                                                    array(1 => 'positive', 0 => 'negative'),null,
+                                                    array('id' => 'biochemical_'.$test->id)) }}</td>
+                                                <td><a id="{{ 'save_'.$test->id }}" class="btn btn-xs btn-success"  href="javascript:void(0)" onclick="saveBiochemicalTest(<?php echo $test->id;?>, <?php echo Auth::user()->id; ?>, <?php echo $value->id; ?>)">{{ trans('messages.save') }}</a></td>
                                             </tr>
                                         {{ Form::close() }} 
                                     @endforeach
