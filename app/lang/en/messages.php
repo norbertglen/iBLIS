@@ -253,6 +253,10 @@ return array(
     'success-updating-drug' => 'The Drug was successfully updated!',
     'drug-details' => 'Drug Details',
     'list-drugs' => 'List Drugs',
+    'disc-diffusion-guidelines' => 'Disc Diffusion Guidelines',
+    'resistant' => 'resistant',
+    'intermediate' => 'intermediate',
+    'susceptible' => 'susceptible',
 
     /* Organisms */
 
@@ -278,6 +282,7 @@ return array(
     'susceptibility-test-results'   =>  'SUSCEPTIBILITY TEST RESULTS',
     'select-isolates'   =>  'Select Isolated Organisms',
     'zone-size' =>  'Zone size (mm)',
+    'Not-Done' => 'Not Done',
     'interp'    =>  'Interpretation (S, I, R)',
 
     /**

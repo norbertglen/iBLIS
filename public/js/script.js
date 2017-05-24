@@ -739,7 +739,7 @@ $(function(){
 	function saveObservation(tid, user, username){
 		txtarea = "observation_"+tid;
 		observation = $("#"+txtarea).val();
-		if (1) return console.log(tid, user, username);
+		// if (1) return console.log(tid, user, username);
 
 		$.ajax({
 			type: 'POST',
@@ -820,6 +820,25 @@ $(function(){
 		);
 	}
 	/*End drug susceptibility table rendering script*/
+
+	/*Begin save drug diffusion guideline */
+	function saveDrugDiffusionGuideline(drugId, existing) {
+		// drug Id, resistant, intermediate, susceptible
+		var resistant =  $("#resistant_"+drugId).val();
+		var intermediate = $("#intermediate_"+drugId).val();
+		var susceptible = $("#susceptible_"+drugId).val();
+		console.log(drugId, resistant, intermediate, susceptible);
+
+		$.ajax({
+			type: 'POST',
+			url:  '/drug/disc-diffusion-guidelines',
+			data: {drugId: drugId, resistant: resistant, intermediate: intermediate, susceptible: susceptible},
+			success: function(){
+				alert('saved to db');
+			}
+		});
+	}
+	
 	/*Function to toggle possible isolates*/
 	function toggle(className, obj){
 		var $input = $(obj);

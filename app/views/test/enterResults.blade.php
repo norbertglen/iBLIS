@@ -255,8 +255,8 @@
                                         </tr>
                                         <tr>
                                             <th width="50%">{{ Lang::choice('messages.drug',1) }}</th>
-                                            <th>{{ trans('messages.zone-size')}}</th>
-                                            <th>{{ trans('messages.interp')}}</th>
+                                            <th>{{ trans('messages.zone-size'), ' or ',  trans('messages.Not-Done')}}</th>
+                                            <th>{{ trans('messages.interp'), ' or ',  trans('messages.Not-Done')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody id="enteredResults_<?php echo $value->id; ?>">
@@ -267,9 +267,9 @@
                                         <tr>
                                             <td>{{ $drug->name }}</td>
                                             <td>
-                                                {{ Form::select('zone[]', ['' => '']+range(0, 50), '', ['class' => 'form-control', 'id' => 'zone[]', 'style'=>'width:auto']) }}
+                                                {{ Form::select('zone[]', ['Not Done' => 'Not Done']+range(6, 50), '', ['class' => 'form-control', 'id' => 'zone[]', 'style'=>'width:auto']) }}
                                             </td>
-                                            <td>{{ Form::select('interpretation[]', array('' => '', 'S' => 'S', 'I' => 'I', 'R' => 'R'),'', ['class' => 'form-control', 'id' => 'interpretation[]', 'style'=>'width:auto']) }}</td>
+                                            <td>{{ Form::select('interpretation[]', array('' => '', 'S' => 'S', 'I' => 'I', 'R' => 'R', 'Not Done' => 'Not Done'),'', ['class' => 'form-control', 'id' => 'interpretation[]', 'style'=>'width:auto']) }}</td>
                                         </tr>
                                         @endforeach
                                         <tr id="submit_drug_susceptibility_<?php echo $value->id; ?>">

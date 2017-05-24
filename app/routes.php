@@ -103,12 +103,26 @@ Route::group(array("before" => "auth"), function()
             "as"   => "specimenrejection.delete",
             "uses" => "SpecimenRejectionController@delete"
         ));
-        Route::resource('drug', 'DrugController');
+
+        Route::get("/drug/disc-diffusion-guidelines", array(
+            "as"   => "drug.disc-diffusion-guidelines",
+            "uses" => "DrugController@discDiffusionGuidelines"
+        ));
+
+        Route::post("/drug/disc-diffusion-guidelines", array(
+            "as"   => "drug.save-disc-diffusion-guidelines",
+            "uses" => "DrugController@saveDiscDiffusionGuidelines"
+        ));
         
+        Route::resource('drug', 'DrugController');
+
+
         Route::get("/drug/{id}/delete", array(
             "as"   => "drug.delete",
             "uses" => "DrugController@delete"
         ));
+
+        
         Route::resource('organism', 'OrganismController');
         
         Route::get("/organism/{id}/delete", array(

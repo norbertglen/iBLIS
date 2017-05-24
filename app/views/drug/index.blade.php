@@ -18,6 +18,10 @@
 				<span class="glyphicon glyphicon-plus-sign"></span>
 				{{ trans('messages.create-drug') }}
 			</a>
+			<a class="btn btn-sm btn-info" href="{{ URL::to("drug/disc-diffusion-guidelines") }}" >
+				<!--<span class="glyphicon glyphicon-plus-sign"></span>-->
+				{{ trans('messages.disc-diffusion-guidelines') }}
+			</a>
 		</div>
 	</div>
 	<div class="panel-body">

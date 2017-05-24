@@ -95,7 +95,6 @@ class DrugController extends \BaseController {
 		return View::make('drug.edit')->with('drug', $drug);
 	}
 
-
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -164,5 +163,36 @@ class DrugController extends \BaseController {
             
             return Redirect::to($url)
 			->with('message', trans('messages.success-deleting-drug'));
+	}
+
+	public function discDiffusionGuidelines() 
+	{
+		// return 'hello';
+		$guidelines = DiscDiffusionGuideline::orderBy('id', 'ASC')->get();
+		$drugs = Drug::orderBy('name', 'ASC')
+						->select('drugs.id', 'drugs.name', 'disc_diffusion_guidelines.drug_id', 'disc_diffusion_guidelines.resistant', 'disc_diffusion_guidelines.intermediate', 'disc_diffusion_guidelines.susceptible')
+						->leftJoin('disc_diffusion_guidelines', 'drugs.id', '=', 'disc_diffusion_guidelines.drug_id')
+						->get();
+        // dd($drugs);
+
+		return View::make('drug.disc-diffusion-guidelines')
+					->with('drugs', $drugs)
+					->with('guidelines', $guidelines);
+	}
+
+	public function saveDiscDiffusionGuidelines() {
+			$guidelines = new DiscDiffusionGuideline;
+			$guidelines->drug_id = Input::get('drugId');
+			$guidelines->resistant = Input::get('resistant');
+			$guidelines->intermediate = Input::get('intermediate');
+			$guidelines->susceptible = Input::get('susceptible');
+			$guidelines->save();
+	}
+
+	public function updateDiscDiffusionGuidelines() {
+		$data = DiscDiffusionGuideline::find(Input::get('drugId'));
+		$data->update(array('resistant'    => Input::get('resistant'),
+								'intermediate' => Input::get('intermediate'),
+								'susceptible' => Input::get('susceptible')));
 	}
 }
