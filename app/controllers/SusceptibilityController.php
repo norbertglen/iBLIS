@@ -39,6 +39,8 @@ class SusceptibilityController extends \BaseController {
 		$zone = Input::get('zone');
 		$interpretation = Input::get('interpretation');
 
+		// dd($interpretation);
+
 		for($i=0; $i<count($test); $i++){
 			$sensitivity = Susceptibility::getDrugSusceptibility($test[$i], $organism[$i], $drug[$i]);
 			if(count($sensitivity)>0){

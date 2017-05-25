@@ -667,3 +667,20 @@ table.table.report-table-border > tbody > tr > td{
         opacity: .8;
     }
     /*** End button colors ***/
+
+/* Disable td */
+.disabled-td {
+    position: relative;
+}
+
+.disabled-td:hover {
+    cursor: not-allowed;
+}
+
+.select-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}

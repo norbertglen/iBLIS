@@ -288,9 +288,18 @@
                                         <tr>
                                             <td>{{ $drug->name }}</td>
                                             <td>
-                                                {{ Form::select('zone[]', ['Not Done' => 'Not Done']+range(6, 50), '', ['class' => 'form-control', 'id' => 'zone[]', 'style'=>'width:auto']) }}
+                                                {{ Form::select('zone[]', 
+                                                    ['Not Done' => 'Not Done']+range(6, 50), 
+                                                    '', 
+                                                    ['class' => 'form-control', 'onchange' => 'onZoneChange('.$value->id.','.$drug->id.')' , 'id' => 'zone_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
                                             </td>
-                                            <td>{{ Form::select('interpretation[]', array('' => '', 'S' => 'S', 'I' => 'I', 'R' => 'R', 'Not Done' => 'Not Done'),'', ['class' => 'form-control', 'id' => 'interpretation[]', 'style'=>'width:auto']) }}</td>
+                                            <td class="disabled-td">
+                                                <div class="select-cover"></div>
+                                                {{ Form::select('interpretation[]', 
+                                                    ['Not Done' => 'Not Done', 'S' => 'S', 'I' => 'I', 'R' => 'R'],
+                                                    '',
+                                                    ['class' => 'form-control', 'id' => 'interpretation_'.$value->id.$drug->id, 'style'=>'width:auto', 'readonly' => true]) }}
+                                            </td>
                                         </tr>
                                         @endforeach
                                         <tr id="submit_drug_susceptibility_<?php echo $value->id; ?>">

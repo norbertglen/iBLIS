@@ -819,8 +819,7 @@ function saveGrainStain(tid, userId){
 	}
 
 	/*Begin save drug susceptibility*/	
-	function saveDrugSusceptibility(tid, oid){
-		console.log(oid);
+	function saveDrugSusceptibility(tid, oid) {
 		var dataString = $("#drugSusceptibilityForm_"+oid).serialize();
 		$.ajax({
 			type: 'POST',
@@ -861,6 +860,7 @@ function saveGrainStain(tid, userId){
 	/*Begin save drug diffusion guideline */
 	function saveDrugDiffusionGuideline(drugId, existing) {
 		// drug Id, resistant, intermediate, susceptible
+		// if (1) return console.log(drugId, existing);
 		var resistant =  $("#resistant_"+drugId).val();
 		var intermediate = $("#intermediate_"+drugId).val();
 		var susceptible = $("#susceptible_"+drugId).val();
@@ -900,8 +900,30 @@ function saveGrainStain(tid, userId){
 	function addSelectedTests(id) {
 		$('#selected_test'+id).toggle(this.checked);
 	}
-
 	/*End toggle susceptibility*/
+
+	/* Susceptibility on zone change*/
+	function onZoneChange(id, drugId) {
+		var observation = $("#zone_"+ id + '' + drugId + ' option:selected').text();
+		$("#zone_"+ id + '' + drugId + ' option:selected').val(observation);
+
+		if (observation == 'Not Done') return $('#interpretation_' + id + '' + drugId).val(observation);
+
+		// get the discDiffusionGuideline based on the selected observation
+		$.ajax({
+			type: 'POST',
+			url: '/drug/disc-diffusion-guideline',
+			data: {drugId: drugId, observation: observation},
+			success: function(res) {
+				console.log(res);
+				if (res == 'No guideline found') return alert('No Diffusion Guideline set for this drug');
+
+
+				$('#interpretation_' + id + '' + drugId).val(res);
+			}
+		});
+	}
+	/* End onZoneChange*/ 
 	/* Fetch equipment details without page reload */
 	function fetch_equipment_details()
 	{

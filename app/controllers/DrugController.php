@@ -181,18 +181,52 @@ class DrugController extends \BaseController {
 	}
 
 	public function saveDiscDiffusionGuidelines() {
-			$guidelines = new DiscDiffusionGuideline;
-			$guidelines->drug_id = Input::get('drugId');
-			$guidelines->resistant = Input::get('resistant');
-			$guidelines->intermediate = Input::get('intermediate');
-			$guidelines->susceptible = Input::get('susceptible');
-			$guidelines->save();
+		    
+			$drug_id = Input::get('drugId');
+			$resistant = Input::get('resistant');
+			$intermediate = Input::get('intermediate');
+			$susceptible = Input::get('susceptible');
+
+			//  Find if record exists
+			$guidelines = DiscDiffusionGuideline::where('drug_id','=', $drug_id)->first();
+
+			// return $guidelines;
+			// update
+			if ($guidelines && $guidelines->id) {
+				$guidelines->resistant = $resistant;
+				$guidelines->intermediate = $intermediate;
+				$guidelines->susceptible = $susceptible;
+				$guidelines->save();
+				return $guidelines;
+			} else {
+				// create a new record
+				$guidelines = new DiscDiffusionGuideline;
+				$guidelines->drug_id = $drug_id;
+				$guidelines->resistant = $resistant;
+				$guidelines->intermediate = $intermediate;
+				$guidelines->susceptible = $susceptible;
+				$guidelines->save();
+
+				return $guidelines;
+			}
 	}
 
-	public function updateDiscDiffusionGuidelines() {
-		$data = DiscDiffusionGuideline::find(Input::get('drugId'));
-		$data->update(array('resistant'    => Input::get('resistant'),
-								'intermediate' => Input::get('intermediate'),
-								'susceptible' => Input::get('susceptible')));
+	public function fetchDiscDiffusionGuideline() {
+		$drug_id = Input::get('drugId');
+		$observation = Input::get('observation');
+
+		$guideline = DiscDiffusionGuideline::where('drug_id','=', $drug_id)->first();
+
+		if (!$guideline) return 'No guideline found';
+
+		if ($observation <= $guideline->resistant) {
+			return 'R';
+		} else if ($observation <= $guideline->intermediate) {
+			return 'I';
+		} else if ($observation >= $guideline->susceptible) {
+			return 'S';
+		} else {
+			return 'Not Done';
+		}
 	}
 }
