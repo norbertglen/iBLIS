@@ -118,6 +118,16 @@ Route::group(array("before" => "auth"), function()
             "as"   => "drug.save-disc-diffusion-guidelines",
             "uses" => "DrugController@saveDiscDiffusionGuidelines"
         ));
+
+        Route::get("/drug/concentration", array(
+            "as"   => "drug.concentration",
+            "uses" => "DrugController@fetchConcentrations"
+        ));
+
+        Route::post("/drug/concentration", array(
+            "as"   => "drug.store-concentration",
+            "uses" => "DrugController@storeConcentration"
+        ));
         
         Route::resource('drug', 'DrugController');
 
@@ -292,6 +302,11 @@ Route::group(array("before" => "auth"), function()
     Route::any("/susceptibility/saveSusceptibility", array(
         "as"   => "drug.susceptibility",
         "uses" => "SusceptibilityController@store"
+    ));
+
+    Route::any("/susceptibility/saveMinimumInhibitory", array(
+        "as"   => "drug.save-minimum-inhibitory",
+        "uses" => "SusceptibilityController@storeInhibitory"
     ));
     Route::group(array("before" => "admin"), function()
     {

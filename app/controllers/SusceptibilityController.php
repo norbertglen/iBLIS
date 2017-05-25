@@ -90,6 +90,71 @@ class SusceptibilityController extends \BaseController {
 	}
 
 	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function storeInhibitory()
+	{
+		$action = Input::get('action');
+		$user_id = Auth::user()->id;
+		$test = Input::get('test');
+		$organism = Input::get('organism');
+		$drug = Input::get('drug');
+		$concentration = Input::get('concentration');
+		$interpretation = Input::get('interpretation');
+
+		// dd($interpretation);
+
+		for($i=0; $i<count($test); $i++){
+			$sensitivity = MinimumInhibitoryConcentration::getDrugSusceptibility($test[$i], $organism[$i], $drug[$i]);
+			if(count($sensitivity)>0){
+				$drugSusceptibility = MinimumInhibitoryConcentration::find($sensitivity->id);
+				$drugSusceptibility->user_id = $user_id;
+				$drugSusceptibility->test_id = $test[$i];
+				$drugSusceptibility->organism_id = $organism[$i];
+				$drugSusceptibility->drug_id = $drug[$i];
+				$drugSusceptibility->concentration = $concentration[$i];
+				$drugSusceptibility->interpretation = $interpretation[$i];
+				$drugSusceptibility->save();
+			}else{
+				$drugSusceptibility = new MinimumInhibitoryConcentration;
+				$drugSusceptibility->user_id = $user_id;
+				$drugSusceptibility->test_id = $test[$i];
+				$drugSusceptibility->organism_id = $organism[$i];
+				$drugSusceptibility->drug_id = $drug[$i];
+				$drugSusceptibility->concentration = $concentration[$i];
+				$drugSusceptibility->interpretation = $interpretation[$i];
+				$drugSusceptibility->save();
+			}
+			
+		}
+		if ($action == "results"){
+			$test_id = Input::get('testId');
+			$organism_id = Input::get('organismId');
+			$susceptibility = MinimumInhibitoryConcentration::where('test_id', $test_id)
+											->where('organism_id', $organism_id)
+											->where('concentration', '!=', 0)
+											->get();
+			foreach ($susceptibility as $drugSusceptibility) {
+				$drugSusceptibility->drugName = Drug::find($drugSusceptibility->drug_id)->name;
+				$drugSusceptibility->pathogen = Organism::find($drugSusceptibility->organism_id)->name;
+				if($drugSusceptibility->interpretation == 'I'){
+					$drugSusceptibility->sensitivity = 'Intermediate';
+				}
+				else if($drugSusceptibility->interpretation == 'R'){
+					$drugSusceptibility->sensitivity = 'Resistant';
+				}
+				else if($drugSusceptibility->interpretation == 'S'){
+					$drugSusceptibility->sensitivity = 'Sensitive';
+				}
+			}
+
+			return json_encode($susceptibility);
+		}
+	}
+
+	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id

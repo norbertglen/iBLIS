@@ -831,6 +831,22 @@ function saveGrainStain(tid, userId){
 		});
 	}
 	/*End save drug susceptibility*/
+
+	/*Begin save drug inhibitory concentration*/	
+	function saveDrugMinimumInhibitory(tid, oid) {
+		var dataString = $("#minimumInhibitoryForm_"+oid).serialize();
+		
+		$.ajax({
+			type: 'POST',
+			url:  '/susceptibility/saveMinimumInhibitory',
+			data: dataString,
+			success: function(){
+				drawIhibitoryTable(tid, oid);
+			}
+		});
+	}
+	/*End save drug inhibitory concentration*/
+
 	/*Function to render drug susceptibility table after successfully saving the results*/
 	function drawSusceptibility(tid, oid){
 		$.getJSON('/susceptibility/saveSusceptibility', { testId: tid, organismId: oid, action: "results"}, 
@@ -856,6 +872,34 @@ function saveGrainStain(tid, userId){
 		);
 	}
 	/*End drug susceptibility table rendering script*/
+
+	/*Function to render inhibitory table*/
+	function drawIhibitoryTable(tid, oid){
+		$.getJSON('/susceptibility/saveMinimumInhibitory', { testId: tid, organismId: oid, action: "results"}, 
+			function(data){
+				var tableRow ="";
+				var tableBody ="";
+				var suscept = "";
+				$.each(data, function(index, elem){
+					tableRow += "<tr>"
+					+" <td>"+elem.drugName+" </td>"
+					+" <td>"+elem.concentration+"</td>"
+					+" <td>"+elem.interpretation+"</td>"
+					+"</tr>";
+					suscept+=elem.drugName+" - "+elem.sensitivity+", ";
+				});
+
+				//$(".sense"+tid).val($(".sense"+tid).val()+elem.drugName+" - "+elem.sensitivity+", ");
+				$(".sense"+tid).val(suscept);
+				//tableBody +="<tbody>"+tableRow+"</tbody>";
+				$( "#enteredInhibitoryResults_"+oid).html(tableRow);
+				$("#submit_inhibitory_results_"+oid).hide();
+
+				alert('Saved successfully');
+			}
+		);
+	}
+	/*End render inhibitory */
 
 	/*Begin save drug diffusion guideline */
 	function saveDrugDiffusionGuideline(drugId, existing) {

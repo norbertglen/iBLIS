@@ -37,7 +37,7 @@
 				<tbody>
 					@foreach($drugs as $key => $drug)
 					<tr>
-						<td>{{ $drug->name, $drug->id }}</td>
+						<td>{{ $drug->name }}</td>
 						<td>
 								{{ Form::selectRange('resistant', 0, 
 									50, $drug->resistant,

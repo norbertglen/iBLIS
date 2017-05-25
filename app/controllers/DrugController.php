@@ -229,4 +229,25 @@ class DrugController extends \BaseController {
 			return 'Not Done';
 		}
 	}
+                    
+	public function fetchConcentrations() {
+		$concentrations = DrugConcentration::orderBy('id', 'ASC')->get();
+
+		// dd($concentrations);
+		return View::make('drug.drug-concentrations')
+					->with('concentrations', $concentrations);
+	}
+
+	public function storeConcentration() {
+		$concentrations = new DrugConcentration;
+
+		$concentrations->value = Input::get('concentration');
+		$concentrations->save();
+
+		// redirect
+		$url = Session::get('SOURCE_URL');
+		
+		return Redirect::to('/drug/concentration')
+				->with('message', trans('messages.success-creating-concentration'));
+	}
 }

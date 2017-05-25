@@ -257,6 +257,10 @@ return array(
     'resistant' => 'resistant',
     'intermediate' => 'intermediate',
     'susceptible' => 'susceptible',
+    'drug-concentration' => 'Drug Concentration',
+    'concentration' => 'Concentration',
+    'concentration-id' => 'ID',
+    'success-creating-concentration' => 'Success creating concentration',
 
     /* Organisms */
 
@@ -343,6 +347,9 @@ return array(
     'audit-report' => 'Audit Report',
     'entered-by' => 'Entered by',
     'results' => 'Results',
+    'disc-diffusion-techniques' => 'Disc Diffusion Techniques',
+    'mic' => 'MIC μg/mL',
+    'minimum-inhibitory-concentration-techniques' => 'Minimum Inhibitory Concentration (MIC)  Techniques',
 
 
     /** 
