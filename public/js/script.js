@@ -775,8 +775,6 @@ function saveGrainStain(tid, userId){
 		select = "biochemical_"+tid;
 		result = $("#"+select).find(":selected").val();
 		
-		// if (1) return console.log(tid, result,userId);
-
 		$.ajax({
 			type: 'POST',
 			url:  '/biochemical/saveresults',
