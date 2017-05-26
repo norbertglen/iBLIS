@@ -273,8 +273,8 @@
                                     <?php if($checker=='checked'){$display='display:block';}else if($checker!='checked'){$display='display:none';} ?>
                                 
                                  <!-- Disc Diffusion Techniques -->
-                                <p><strong>{{ trans('messages.disc-diffusion-techniques') }}</strong></p>
                                 {{ Form::open(array('','id' => 'drugSusceptibilityForm_'.$value->id, 'name' => 'drugSusceptibilityForm_'.$value->id, 'style'=>$display)) }}
+                                <p><strong>{{ trans('messages.disc-diffusion-techniques') }}</strong></p>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -323,8 +323,8 @@
                                 {{ Form::close() }}
 
                                 <!-- Minimum Inhibitory Concentration () MIC Techniques -->
-                                <p><strong> {{ trans('messages.minimum-inhibitory-concentration-techniques')}} </strong></p>
                                 {{ Form::open(array('','id' => 'minimumInhibitoryForm_'.$value->id, 'name' => 'minimumInhibitoryForm_'.$value->id, 'style'=>$display)) }}
+                                <p><strong> {{ trans('messages.minimum-inhibitory-concentration-techniques')}} </strong></p>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
