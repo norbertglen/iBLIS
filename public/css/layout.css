@@ -684,3 +684,9 @@ table.table.report-table-border > tbody > tr > td{
     top: 0;
     left: 0;
 }
+
+.concentration-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

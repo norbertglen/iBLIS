@@ -44,7 +44,7 @@
             @endif
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="">
                     {{ Form::open(array('route' => array('test.saveResults',$test->id), 'method' => 'POST',
                         'id' => 'form-enter-results')) }}
                         @foreach($test->testType->measures as $measure)
@@ -271,7 +271,8 @@
                                         @endforeach
                                     @endif
                                     <?php if($checker=='checked'){$display='display:block';}else if($checker!='checked'){$display='display:none';} ?>
-                                
+                                <div class="row">
+                                 <div class="col-md-6">
                                  <!-- Disc Diffusion Techniques -->
                                 {{ Form::open(array('','id' => 'drugSusceptibilityForm_'.$value->id, 'name' => 'drugSusceptibilityForm_'.$value->id, 'style'=>$display)) }}
                                 <p><strong>{{ trans('messages.disc-diffusion-techniques') }}</strong></p>
@@ -321,8 +322,10 @@
                                 <!-- End Disc Diffusion Techiniques-->
 
                                 {{ Form::close() }}
+                                </div>
 
                                 <!-- Minimum Inhibitory Concentration () MIC Techniques -->
+                                <div class="col-md-6">
                                 {{ Form::open(array('','id' => 'minimumInhibitoryForm_'.$value->id, 'name' => 'minimumInhibitoryForm_'.$value->id, 'style'=>$display)) }}
                                 <p><strong> {{ trans('messages.minimum-inhibitory-concentration-techniques')}} </strong></p>
                                 <table class="table table-bordered">
@@ -338,24 +341,24 @@
                                     </thead>
                                     <tbody id="enteredInhibitoryResults_<?php echo $value->id; ?>">
                                         @foreach($value->drugs as $drug)
-                                        {{ Form::hidden('test[]', $test->id, array('id' => 'test[]', 'name' => 'test[]')) }}
-                                        {{ Form::hidden('drug[]', $drug->id, array('id' => 'drug[]', 'name' => 'drug[]')) }}
-                                        {{ Form::hidden('organism[]', $value->id, array('id' => 'organism[]', 'name' => 'organism[]')) }}
-                                        <tr>
-                                            <td>{{ $drug->name }}</td>
-                                            <td>
-                                                {{ Form::select('concentration[]', 
-                                                   $concentrations->lists('value'), 
-                                                    '', 
-                                                    ['class' => 'form-control', 'id' => 'concentration_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
-                                            </td>
-                                            <td>
-                                                {{ Form::select('interpretation[]', 
-                                                    ['Not Done' => 'Not Done', 'S' => 'S', 'I' => 'I', 'R' => 'R'],
-                                                    '',
-                                                    ['class' => 'form-control', 'id' => 'interpretation_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
-                                            </td>
-                                        </tr>
+                                            {{ Form::hidden('test[]', $test->id, array('id' => 'test[]', 'name' => 'test[]')) }}
+                                            {{ Form::hidden('drug[]', $drug->id, array('id' => 'drug[]', 'name' => 'drug[]')) }}
+                                            {{ Form::hidden('organism[]', $value->id, array('id' => 'organism[]', 'name' => 'organism[]')) }}
+                                            <tr>
+                                                <td>{{ $drug->name }}</td>
+                                                <td>
+                                                    {{ Form::select('concentration[]', 
+                                                    $concentrations->lists('value'), 
+                                                        '', 
+                                                        ['class' => 'form-control', 'id' => 'concentration_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
+                                                </td>
+                                                <td>
+                                                    {{ Form::select('interpretation[]', 
+                                                        ['Not Done' => 'Not Done', 'S' => 'S', 'I' => 'I', 'R' => 'R'],
+                                                        '',
+                                                        ['class' => 'form-control', 'id' => 'interpretation_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
+                                                </td>
+                                            </tr>
                                         @endforeach
                                         <tr id="submit_inhibitory_results_<?php echo $value->id; ?>">
                                             <td colspan="3" align="right">
@@ -370,7 +373,8 @@
                                 <!-- End Minimum Inhibitory Concentration () MIC Techniques-->
 
                                 {{ Form::close() }}
-                                 
+                                </div>
+                                </div>
                                 <!---->
                                 @endforeach
                             </div><!-- ./ panel-body -->

@@ -28,9 +28,9 @@
 				<thead>
 					<tr>
 					   <th>{{ Lang::choice('messages.drug',1) }}</th>
-					   <th>{{ trans('messages.resistant') }}</th>
-					   <th>{{ trans('messages.intermediate') }} </th>
-					   <th>{{ trans('messages.susceptible') }} </th>
+					   <th width="12%">{{ trans('messages.resistant') }} (Min-Max)</th>
+					   <th width="12%">{{ trans('messages.intermediate') }} (Min-Max)</th>
+					   <th width="8%">{{ trans('messages.susceptible') }} (Min-Max)</th>
 					   <th>{{ trans('messages.save') }}</th>
 					</tr>
 				</thead>
@@ -39,19 +39,32 @@
 					<tr>
 						<td>{{ $drug->name }}</td>
 						<td>
-								{{ Form::selectRange('resistant', 0, 
-									50, $drug->resistant,
-									array('class' => 'form-control', 'id' => 'resistant_'.$drug->id) )}}
+								<div class="row concentration-row">
+									<span class="col-md-2">6</span>
+									<span class="col-md-2"><=</span>
+									<span class="col-md-6">
+									{{ Form::selectRange('resistant', 6, 
+											50, $drug->resistant,
+											array('class' => 'form-control', 'id' => 'resistant_'.$drug->id, 'onchange' => 'updateIntermediate('.$drug->id.', "resistant")') )}}
+									</span>
+								</div>
 						</td>
 						<td>
-								{{ Form::selectRange('intermediate', 0, 
-									50, $drug->intermediate, 
-									array('class' => 'form-control', 'id' => 'intermediate_'.$drug->id) )}}
+						    <div class="row concentration-row">
+									<span class="col-md-2" id="min_intermediate_<?php echo $drug->id ?>"> {{ ($drug->resistant) ? $drug->resistant + 1 : 6 }}  </span>
+									<span class="col-md-2"><=</span>
+									<span class="col-md-6">
+										{{ Form::selectRange('intermediate', ($drug->resistant) ? $drug->resistant : 6, 
+										50, $drug->intermediate, 
+										array('class' => 'form-control', 'id' => 'intermediate_'.$drug->id, 'onchange' => 'updateIntermediate('.$drug->id.')' ) )}}
+										</span>
+								</div>
 						</td>
 						<td>
-								{{ Form::selectRange('susceptible', 0, 
-									50, $drug->susceptible, 
-									array('class' => 'form-control', 'id' => 'susceptible_'.$drug->id) )}}
+								<div class="row concentration-row">
+								   <span class="col-md-2">>=</span>
+									 <span class="col-md-2" id="susceptible_<?php echo $drug->id ?>">{{ $drug->susceptible or 7 }}</span>
+								</div>
 						</td>
 						<td>
 							<a class="btn btn-xs btn-success" href="javascript:void(0)" onclick="saveDrugDiffusionGuideline(<?php echo $drug->id; ?>, <?php echo $drug->drug_id?>)">

@@ -905,7 +905,7 @@ function saveGrainStain(tid, userId){
 		// if (1) return console.log(drugId, existing);
 		var resistant =  $("#resistant_"+drugId).val();
 		var intermediate = $("#intermediate_"+drugId).val();
-		var susceptible = $("#susceptible_"+drugId).val();
+		var susceptible = $("#susceptible_"+drugId).text();
 		console.log(drugId, resistant, intermediate, susceptible);
 
 		$.ajax({
@@ -937,6 +937,7 @@ function saveGrainStain(tid, userId){
 	/*Toggle susceptibility tables*/
 	function showSusceptibility(id){
 		$('#drugSusceptibilityForm_'+id).toggle(this.checked);
+		$('#minimumInhibitoryForm_'+id).toggle(this.checked);
 	}
 
 	function addSelectedTests(id) {
@@ -1036,3 +1037,30 @@ function saveGrainStain(tid, userId){
 	}
 
 /*End toggle Admission Date on test registration form*/
+
+function updateIntermediate(id, type) {
+		// get the value from select box;
+		// update the span
+		if (type == 'resistant') {
+			var max_resistant = Number($('#resistant_' + id).val()) + 1;
+
+			$('#min_intermediate_' + id).text(max_resistant);
+
+			// clear the options
+			$('#intermediate_' + id)
+			.find('option')
+			.remove();
+
+			// add the options
+			for (var i = max_resistant; i <= 50; i++) {
+						$('#intermediate_' + id)
+						.append($("<option></option>")
+            .attr("value", i)
+            .text(i)); 
+			}
+		}
+
+		var max_intermediate = Number($('#intermediate_' + id).val()) + 1;
+		$('#susceptible_'+id).text(max_intermediate);
+		console.log(max_intermediate, id);
+}
