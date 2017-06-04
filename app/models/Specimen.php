@@ -186,14 +186,4 @@ class Specimen extends Eloquent
         $dt = Carbon::parse($datetime);
         return $dt->hour.':'.$dt->minute;
     }
-
-	public function getLocationIdAttribute($id) {
-		$location = SpecimenCollectionLocation::find($id);
-		return $location['name'];
-	}
-
-	public function getSiteCollectedIdAttribute($id) {
-		$site = SpecimenCollectionSite::find($id);
-		return $site['name'];
-	}
 }
