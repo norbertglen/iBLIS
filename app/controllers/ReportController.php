@@ -47,6 +47,7 @@ class ReportController extends \BaseController {
 		}
 		else{
 			$tests = Test::join('visits', 'visits.id', '=', 'tests.visit_id')
+                            ->join('specimens', 'specimens.id', '=', 'tests.specimen_id')
 							->where('patient_id', '=', $id);
 		}
 		//	Begin filters - include/exclude pending tests
