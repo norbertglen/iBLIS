@@ -346,7 +346,7 @@ return array(
     'current-result' => 'Current result',
     'audit-report' => 'Audit Report',
     'entered-by' => 'Entered by',
-    'results' => 'Results',
+    'results' => 'Results|Result',
     'disc-diffusion-techniques' => 'Disc Diffusion Techniques',
     'mic' => 'MIC μg/mL',
     'minimum-inhibitory-concentration-techniques' => 'Minimum Inhibitory Concentration (MIC)  Techniques',
@@ -384,6 +384,11 @@ return array(
     'success-saving-results' => 'The results have been successfully saved!',
     'success-verifying-results' => 'The results have been successfully verified!',
     'test-results' => 'Results',
+
+    /**
+     *   Susceptibility Test Results
+     */
+     'susceptibility-results' => 'SUSCEPTIBILITY RESULTS',
 
     /** 
      *   Access Controls
