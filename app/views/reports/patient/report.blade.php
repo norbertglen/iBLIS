@@ -196,7 +196,40 @@
 					</tr>
 				@endforelse
 			</tbody>
-		</table></div>
+		</table>
+		<table class="table table-bordered">
+		<strong>{{trans('messages.susceptibility-results')}}</strong>
+			<tbody>
+				<tr>
+					<th colspan="8">{{trans('messages.disc-diffusion-techniques')}}</th><br/>
+				</tr>
+				<tr>
+					<th>{{Lang::choice('messages.drug', 1)}}</th>
+					<th>{{trans('messages.zone-size')}}</th>
+					<th>{{Lang::choice('messages.results', 0)}}</th>
+					<th>{{trans('messages.results-entry-date')}}</th>
+					<th>{{trans('messages.date-tested')}}</th>
+					<th>{{trans('messages.verified-by')}}</th>
+					<th>{{trans('messages.date-verified')}}</th>
+				</tr>
+				@forelse($susceptibility as $susceptibility)
+						<tr>
+							<td>{{ $susceptibility->drug_id }}</td>
+							<td>{{ $susceptibility->zone }}</td>
+							<td>{{ $susceptibility->interpretation == '' ? 'N/A' : $susceptibility->interpretation }}</td>
+							<td>{{ $susceptibility->zone }}</td>
+							<td>{{ $susceptibility->zone }}</td>
+							<td>{{ $susceptibility->zone }}</td>
+							<td>{{ $susceptibility->zone }}</td>
+						</tr>
+				@empty
+					<tr>
+						<td colspan="8">{{trans("messages.no-records-found")}}</td>
+					</tr>
+				@endforelse
+			</tbody>
+		</table>
+		</div>
 		@endif
 		</div>
 	</div>

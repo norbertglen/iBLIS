@@ -73,6 +73,15 @@ class ReportController extends \BaseController {
 		}
 		//	Get tests collection
 		$tests = $tests->get(array('tests.*'));
+
+		$test_ids = array();
+		
+		foreach ($tests as $test) {
+				array_push($test_ids, $test->id);
+		}
+
+		//Get susceptibility results
+		$susceptibility = Susceptibility::join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')->whereIn('test_id', $test_ids)->get();
 		//	Get patient details
 		$patient = Patient::find($id);
 
@@ -122,6 +131,7 @@ class ReportController extends \BaseController {
 		else {
 			return View::make('reports.patient.report')
 						->with('patient', $patient)
+						->with('susceptibility', $susceptibility)
 						->with('tests', $tests)
 						->with('pending', $pending)
 						->with('error', $error)
