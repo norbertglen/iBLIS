@@ -175,7 +175,7 @@ class Specimen extends Eloquent
 		$date_to_save = $date_collected.' '.$time;
 		$this->attributes['time_collected'] = Carbon::createFromFormat('Y-m-d H:i', $date_to_save);
 	}
-    
+
     /**
      * Get the speciment's time collected.
      *
@@ -186,6 +186,7 @@ class Specimen extends Eloquent
         $dt = Carbon::parse($datetime);
         return $dt->hour.':'.$dt->minute;
     }
+    
 	public function getLocationIdAttribute($id) {
 		$location = SpecimenCollectionLocation::find($id);
 		return $location['name'];
