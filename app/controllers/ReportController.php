@@ -34,6 +34,7 @@ class ReportController extends \BaseController {
 		$error = '';
 		$visitId = Input::get('visit_id');
 		//	Check checkbox if checked and assign the 'checked' value
+
 		if (Input::get('tests') === '1') {
 		    $pending='checked';
 		}
@@ -89,6 +90,9 @@ class ReportController extends \BaseController {
 					->whereIn('test_id', $test_ids)->get();
 		//	Get patient details
 		$patient = Patient::find($id);
+
+        $visit = Visit::where('patient_id', '=', $id)->orderBy('id', 'DESC')->first();
+        // dd($visit);
 		//	Check if tests are accredited
 		$accredited = $this->accredited($tests);
 		$verified = array();
