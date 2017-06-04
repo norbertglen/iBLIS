@@ -88,12 +88,16 @@
 					@endif
 					<th>{{ trans('messages.gender')}}</th>
 					<td>{{ $patient->getGender(false) }}</td>
+                    <th>{{ trans('messages.visit-type') }} <th>
+                    <td>{{ $visit->visit_type }}</td>
 				</tr>
 				<tr>
 					<th>{{ trans('messages.patient-id')}}</th>
 					<td>{{ $patient->id}}</td>
 					<th>{{ trans('messages.age')}}</th>
 					<td>{{ $patient->getAge()}}</td>
+                    <th>{{ trans('messages.date-of-admission')}}</th>
+                    <td>{{ $visit->admission_date }} <td>
 				</tr>
 				<tr>
 					<th>{{ trans('messages.patient-number')}}</th>
@@ -116,6 +120,10 @@
 					<th>{{ trans('messages.specimen-status')}}</th>
 					<th>{{ trans('messages.collected-by')."/".trans('messages.rejected-by')}}</th>
 					<th>{{ trans('messages.date-checked')}}</th>
+                    <th>{{ trans('messages.date-collected') }}</th>
+                    <th>{{ trans('messages.time-collected') }}</th>
+                    <th>{{ trans('messages.site-of-collection') }}</th>
+                    <th>{{ trans('messages.source-of-specimen') }}</th>
 				</tr>
 				@forelse($tests as $test)
 						<tr>
@@ -136,6 +144,10 @@
 								<td>{{$test->specimen->rejectedBy->name}}</td>
 								<td>{{$test->specimen->time_rejected}}</td>
 							@endif
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
 						</tr>
 				@empty
 					<tr>
