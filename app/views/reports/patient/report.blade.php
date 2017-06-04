@@ -144,10 +144,10 @@
 								<td>{{$test->specimen->rejectedBy->name}}</td>
 								<td>{{$test->specimen->time_rejected}}</td>
 							@endif
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $test->specimen->date_collected }}</td>
+                            <td>{{ $test->specimen->time_collected }}</td>
+                            <td>{{ $test->specimen->site_collected_id }}</td>
+                            <td>{{ $test->specimen->location_id }}</td>
 						</tr>
 				@empty
 					<tr>
