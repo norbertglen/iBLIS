@@ -474,10 +474,12 @@ return array(
     'less-five'    =>  '< 5 Years',
     'greater-five'    =>  '>=5 Years',
     'laboratory-report' => 'LABORATORY REPORT',
+    'visit-type' => 'Visit Type',
+    'date-of-admission' => 'Date of Admission',
     'date-collected' => 'Date Collected',
     'time-collected' => 'Time Collected',
     'site-of-collection' => 'Site of collection',
-    'source-of-specimen' => 'Source of Specimen',
+    'source-of-speciment' => 'Source of Specimen',
 
     /* Infection Report*/
     'age-ranges'    =>  'Age Ranges',

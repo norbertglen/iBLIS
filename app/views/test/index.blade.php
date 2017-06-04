@@ -188,7 +188,7 @@
                             <a class="btn btn-sm btn-info sample-specimen" href="#sample-details-modal"
                                     data-toggle="modal" data-url="{{ URL::route('test.sampleSpecimenDetails') }}"
                                     data-test-id="{{$test->id}}" data-target="#sample-details-modal"
-                                    title="{{trans('messages.sample-details')}}">
+                                    title="{{trans('messages.sample-details')}}" onclick="fetchSpecimenSample(<?php echo $test->specimen_id; ?>)">
                                     <!-- <span class="glyphicon glyphicon-transfer"></span> -->
                                     {{trans('messages.sample-details')}}
                                 </a>
@@ -215,8 +215,8 @@
                                                         <strong>{{ Lang::choice('messages.date-of-collection',1) }}</strong>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        {{ Form::text('date_collected', Input::old('date_collected'), 
-                                                                array('class' => 'form-control standard-datepicker')) }}
+                                                        {{ Form::text('date_collected', $test->specimen_id, 
+                                                                array('class' => 'form-control standard-datepicker', 'id' => 'date_collected')) }}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
@@ -236,7 +236,8 @@
                                                     </div>
 
                                                     <div class="col-md-8">
-                                                        {{ Form::select('location', $locations->lists('name', 'id'),  array($test->specimen->site_collected_id), array('class' => 'form-control') )}}
+                                                        {{ Form::select('location', $locations->lists('name', 'id'),  array($test->specimen->site_collected_id), 
+                                                            array('class' => 'form-control', 'id' => 'location') )}}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
@@ -245,7 +246,7 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ Form::select('collection_site', $collection_site->lists('name','id'),
-                                                            array($test->specimen->site_collected_id), array('class' => 'form-control')) }}
+                                                            array($test->specimen->site_collected_id), array('class' => 'form-control', 'id' => 'collection_site')) }}
                                                     </div>
                                                 </div>
                                             </div>

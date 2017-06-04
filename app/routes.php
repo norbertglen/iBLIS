@@ -137,7 +137,7 @@ Route::group(array("before" => "auth"), function()
             "uses" => "DrugController@delete"
         ));
 
-        
+                
         Route::resource('organism', 'OrganismController');
         
         Route::get("/organism/{id}/delete", array(
@@ -278,6 +278,13 @@ Route::group(array("before" => "auth"), function()
         "as"   => "test.saveResults",
         "uses" => "TestController@saveResults"
     ));
+
+     Route::get("/specimen/{id}", array(
+            "as" => "test.specimen",
+            "uses" => "TestController@getSpecimenDetails"
+      ));
+
+
     Route::post("/grainstain/saveresults", array(
         "as"   => "graintest.saveResults",
         "uses" => "GrainStainController@saveResults"
