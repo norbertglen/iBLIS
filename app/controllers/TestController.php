@@ -434,8 +434,19 @@ class TestController extends \BaseController {
     public function edit($testID)
     {
         $test = Test::find($testID);
+        $biochemical_tests = BiochemicalTest::orderBy('id', 'ASC')->get();
+        $selected_tests = array('Culture test', 'Blood test', 'Sugar test');
+        $concentrations = DrugConcentration::orderBy('id', 'ASC')->get();
 
-        return View::make('test.edit')->with('test', $test);
+        // find drug susceptibility
+        $drug_susceptibility =  Susceptibility::where('test_id', '=', $testID)->get();
+
+        return View::make('test.edit')
+            ->with('test', $test)
+            ->with('biochemical_tests', $biochemical_tests)
+            ->with('selected_tests', $selected_tests)
+            ->with('concentrations', $concentrations)
+            ->with('drug_susceptibility', $drug_susceptibility);
     }
 
     /**

@@ -59,7 +59,7 @@
 			@endif
 			<div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="">
 					{{ Form::open(array('route' => array('test.saveResults', $test->id), 'method' => 'POST')) }}
 						@foreach($test->testType->measures as $measure)
 							<div class="form-group">
@@ -202,6 +202,7 @@
 									</div>
 								</div>
 							</div>
+
 							@foreach($test->testType->organisms as $key=>$value)
 								<?php $chckd = null; ?>
 								@if(count($test->susceptibility)>0)
@@ -211,53 +212,121 @@
 								?>
 								@endif
 								<?php if($chckd){$display='display:block';}else{$display='display:none';} ?>
-							{{ Form::open(array('','id' => 'drugSusceptibilityForm_'.$value->id, 'name' => 'drugSusceptibilityForm_'.$value->id, 'style'=>$display)) }}
-							<table class="table table-bordered">
-								<thead>
-									<tr>
-										<th colspan="3">{{ $value->name }}</th>
-									</tr>
-									<tr>
-										<th width="50%">{{ Lang::choice('messages.drug',1) }}</th>
-										<th>{{ trans('messages.zone-size')}}</th>
-										<th>{{ trans('messages.interp')}}</th>
-									</tr>
-								</thead>
-								<tbody id="enteredResults_<?php echo $value->id; ?>">
-									@foreach($value->drugs as $drug)
-									{{ Form::hidden('test[]', $test->id, array('id' => 'test[]', 'name' => 'test[]')) }}
-									{{ Form::hidden('drug[]', $drug->id, array('id' => 'drug[]', 'name' => 'drug[]')) }}
-									{{ Form::hidden('organism[]', $value->id, array('id' => 'organism[]', 'name' => 'organism[]')) }}
-									@if($sensitivity=Susceptibility::getDrugSusceptibility($test->id, $value->id, $drug->id))
-										<?php
-										$defaultZone = $sensitivity->zone;
-										$defaultInterp = $sensitivity->interpretation;
-										?>
-									@endif
-									<tr>
-										<td>{{ $drug->name }}</td>
-										<td>
-											{{ Form::selectRange('zone[]', 0, 50, $defaultZone, ['class' => 'form-control', 'id' => 'zone[]', 'style'=>'width:auto']) }}
-										</td>
-										<td>{{ Form::select('interpretation[]', array($defaultInterp=>$defaultInterp, 'S' => 'S', 'I' => 'I', 'R' => 'R'),'', ['class' => 'form-control', 'id' => 'interpretation[]', 'style'=>'width:auto']) }}</td>
-									</tr>
-									@endforeach
-									<tr id="submit_drug_susceptibility_<?php echo $value->id; ?>">
-										<td colspan="3" align="right">
-											<div class="col-sm-offset-2 col-sm-10">
-												<a class="btn btn-default" href="javascript:void(0)" onclick="saveDrugSusceptibility(<?php echo $test->id; ?>, <?php echo $value->id; ?>)">
-												{{ trans('messages.save') }}</a>
-										    </div>
-									    </td>
-									</tr>
-								</tbody>
-							</table>
-							{{ Form::close() }}
+							<div class="row">
+								<div class="col-md-6">
+									{{ Form::open(array('','id' => 'drugSusceptibilityForm_'.$value->id, 'name' => 'drugSusceptibilityForm_'.$value->id, 'style'=>$display)) }}
+									<p><strong>{{ trans('messages.disc-diffusion-techniques') }}</strong></p>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th colspan="3">{{ $value->name }}</th>
+											</tr>
+											<tr>
+												<th width="50%">{{ Lang::choice('messages.drug',1) }}</th>
+												<th>{{ trans('messages.zone-size')}}</th>
+												<th>{{ trans('messages.interp')}}</th>
+											</tr>
+										</thead>
+										<tbody id="enteredResults_<?php echo $value->id; ?>">
+											@foreach($value->drugs as $drug)
+											{{ Form::hidden('test[]', $test->id, array('id' => 'test[]', 'name' => 'test[]')) }}
+											{{ Form::hidden('drug[]', $drug->id, array('id' => 'drug[]', 'name' => 'drug[]')) }}
+											{{ Form::hidden('organism[]', $value->id, array('id' => 'organism[]', 'name' => 'organism[]')) }}
+											@if($sensitivity=Susceptibility::getDrugSusceptibility($test->id, $value->id, $drug->id))
+												<?php
+												$defaultZone = $sensitivity->zone;
+												$defaultInterp = $sensitivity->interpretation;
+												?>
+											@endif
+											<tr>
+												<td>{{ $drug->name }}</td>
+												<td>
+													{{ Form::select('zone[]', 
+														['Not Done' => 'Not Done']+range(6, 50), 
+														'', 
+														['class' => 'form-control', 'onchange' => 'onZoneChange('.$value->id.','.$drug->id.')' , 'id' => 'zone_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
+                                            	</td>
+												<td class="disabled-td">
+                                                <div class="select-cover"></div>
+													{{ Form::select('interpretation[]', 
+														['Not Done' => 'Not Done', 'S' => 'S', 'I' => 'I', 'R' => 'R'],
+														'',
+														['class' => 'form-control', 'id' => 'interpretation_'.$value->id.$drug->id, 'style'=>'width:auto', 'readonly' => true]) }}
+												</td>
+												<!--<td>{{ Form::select('interpretation[]', array($defaultInterp=>$defaultInterp, 'S' => 'S', 'I' => 'I', 'R' => 'R'),'', ['class' => 'form-control', 'id' => 'interpretation[]', 'style'=>'width:auto']) }}</td>-->
+											</tr>
+											@endforeach
+											<tr id="submit_drug_susceptibility_<?php echo $value->id; ?>">
+												<td colspan="3" align="right">
+													<div class="col-sm-offset-2 col-sm-10">
+														<a class="btn btn-default" href="javascript:void(0)" onclick="saveDrugSusceptibility(<?php echo $test->id; ?>, <?php echo $value->id; ?>)">
+														{{ trans('messages.save') }}</a>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									{{ Form::close() }}
+								</div>
+
+								<!--Minimum Inhibitory Techniques-->
+								<div class="col-md-6">
+									{{ Form::open(array('','id' => 'minimumInhibitoryForm_'.$value->id, 'name' => 'minimumInhibitoryForm_'.$value->id, 'style'=>$display)) }}
+									<p><strong> {{ trans('messages.minimum-inhibitory-concentration-techniques')}} </strong></p>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th colspan="3">{{ $value->name }}</th>
+											</tr>
+											<tr>
+												<th width="50%">{{ Lang::choice('messages.drug',1) }}</th>
+												<th>{{ trans('messages.mic'), ' or ',  trans('messages.Not-Done')}}</th>
+												<th>{{ trans('messages.interp'), ' or ',  trans('messages.Not-Done')}}</th>
+											</tr>
+										</thead>
+										<tbody id="enteredInhibitoryResults_<?php echo $value->id; ?>">
+											@foreach($value->drugs as $drug)
+												{{ Form::hidden('test[]', $test->id, array('id' => 'test[]', 'name' => 'test[]')) }}
+												{{ Form::hidden('drug[]', $drug->id, array('id' => 'drug[]', 'name' => 'drug[]')) }}
+												{{ Form::hidden('organism[]', $value->id, array('id' => 'organism[]', 'name' => 'organism[]')) }}
+												<tr>
+													<td>{{ $drug->name }}</td>
+													<td>
+														{{ Form::select('concentration[]', 
+														$concentrations->lists('value'), 
+															'', 
+															['class' => 'form-control', 'id' => 'concentration_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
+													</td>
+													<td>
+														{{ Form::select('interpretation[]', 
+															['Not Done' => 'Not Done', 'S' => 'S', 'I' => 'I', 'R' => 'R'],
+															'',
+															['class' => 'form-control', 'id' => 'interpretation_'.$value->id.$drug->id, 'style'=>'width:auto']) }}
+													</td>
+												</tr>
+											@endforeach
+											<tr id="submit_inhibitory_results_<?php echo $value->id; ?>">
+												<td colspan="3" align="right">
+													<div class="col-sm-offset-2 col-sm-10">
+														<a class="btn btn-default" href="javascript:void(0)" onclick="saveDrugMinimumInhibitory(<?php echo $test->id; ?>, <?php echo $value->id; ?>)">
+														{{ trans('messages.save') }}</a>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<!-- End Minimum Inhibitory Concentration () MIC Techniques-->
+
+									{{ Form::close() }}
+								</div>	
+							</div>
+
 							@endforeach
                           </div>
                         </div> <!-- ./ panel-body -->
                     @endif
                     </div>
+					
 	                <div class="col-md-6">
 	                    <div class="panel panel-info">  <!-- Patient Details -->
 	                        <div class="panel-heading">
