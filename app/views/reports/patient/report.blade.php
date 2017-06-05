@@ -214,13 +214,42 @@
 				</tr>
 				@forelse($susceptibility as $susceptibility)
 						<tr>
-							<td>{{ $susceptibility->drug_id }}</td>
+							<td>{{ $susceptibility->name }}</td>
 							<td>{{ $susceptibility->zone }}</td>
 							<td>{{ $susceptibility->interpretation == '' ? 'N/A' : $susceptibility->interpretation }}</td>
+							<td>{{ $susceptibility->created_at}}</td>
 							<td>{{ $susceptibility->zone }}</td>
 							<td>{{ $susceptibility->zone }}</td>
-							<td>{{ $susceptibility->zone }}</td>
-							<td>{{ $susceptibility->zone }}</td>
+						</tr>
+				@empty
+					<tr>
+						<td colspan="8">{{trans("messages.no-records-found")}}</td>
+					</tr>
+				@endforelse
+			</tbody>
+		</table>
+				<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<th colspan="8">{{trans('messages.minimum-inhibitory-concentration-techniques')}}</th>
+				</tr>
+				<tr>
+					<th>{{Lang::choice('messages.drug', 1)}}</th>
+					<th>{{trans('messages.mic')}}</th>
+					<th>{{Lang::choice('messages.results', 0)}}</th>
+					<th>{{trans('messages.results-entry-date')}}</th>
+					<th>{{trans('messages.date-tested')}}</th>
+					<th>{{trans('messages.verified-by')}}</th>
+					<th>{{trans('messages.date-verified')}}</th>
+				</tr>
+				@forelse($minimuminhibitory as $minimuminhibitory)
+						<tr>
+							<td>{{ $minimuminhibitory->name }}</td>
+							<td>{{ $susceptibility->concentration }}</td>
+							<td>{{ $susceptibility->interpretation == '' ? 'N/A' : $susceptibility->interpretation }}</td>
+							<td>{{ $susceptibility->updated_at->diffForHumans() }}</td>
+							<td>{{ $susceptibility->concentration }}</td>
+							<td>{{ $susceptibility->concentration }}</td>
 						</tr>
 				@empty
 					<tr>

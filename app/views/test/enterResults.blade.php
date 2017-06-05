@@ -240,7 +240,7 @@
                                                         <?php
                                                         array_push($susOrgIds, $drugSusceptibility->organism_id);
                                                         if(in_array($value->id, $susOrgIds))
-                                                            $checked='checked';
+                                                            $checked='';
                                                         ?>
                                                     @endforeach
                                                 @endif
@@ -266,7 +266,7 @@
                                             <?php
                                             array_push($susOrgIds, $drugSusceptibility->organism_id);
                                             if(in_array($value->id, $susOrgIds))
-                                                $checker='checked';
+                                                $checker='';
                                             ?>
                                         @endforeach
                                     @endif
