@@ -146,8 +146,8 @@
 							@endif
                             <td>{{ $test->specimen->date_collected }}</td>
                             <td>{{ $test->specimen->time_collected }}</td>
-                            <td>{{ $test->specimen->site_collected_id }}</td>
-                            <td>{{ $test->specimen->location_id }}</td>
+                            <td>{{ $test->specimen->site_collected_id['name'] }}</td>
+                            <td>{{ $test->specimen->location_id['name'] }}</td>
 						</tr>
 				@empty
 					<tr>

@@ -189,11 +189,11 @@ class Specimen extends Eloquent
     
 	public function getLocationIdAttribute($id) {
 		$location = SpecimenCollectionLocation::find($id);
-		return $location['name'];
+		return array('name' => $location['name'], 'id' => $id) ;
 	}
 
 	public function getSiteCollectedIdAttribute($id) {
 		$site = SpecimenCollectionSite::find($id);
-		return $site['name'];
+		return array('name' => $site['name'], 'id' => $id) ;
 	}
 }

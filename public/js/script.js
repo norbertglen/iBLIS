@@ -1105,7 +1105,7 @@ function fetchSpecimenSample(specimenId) {
     $.get('/specimen/' + specimenId, function (res) {
         $('#date_collected').val(res.date_collected);
         $('#timepicker').val(res.time_collected);
-        $('#location').val(res.location_id);
-        $('#collection_site').val(res.site_collected_id);
+        $('#location').val(res.location_id.id);
+        $('#collection_site').val(res.site_collected_id.id);
     });
 }
