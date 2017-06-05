@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Carbon\Carbon;
 
 class MinimumInhibitoryConcentration extends Eloquent
 {
@@ -53,4 +54,11 @@ class MinimumInhibitoryConcentration extends Eloquent
                                                                         ->where('interpretation', $interpretation);
     	return $susceptibility->count();
     }
+
+		public function getCreatedAtAttribute($date) {
+			$val = Carbon::parse($date);
+			dd($val);
+
+			return Carbon::createFromFormat('Y:m:d', $val);
+		}
 }

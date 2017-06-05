@@ -79,7 +79,14 @@ class ReportController extends \BaseController {
 		}
 
 		//Get susceptibility results
-		$susceptibility = Susceptibility::join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')->whereIn('test_id', $test_ids)->get();
+		$susceptibility = Susceptibility::join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')
+					->where('interpretation', '!=', '')
+					->whereIn('test_id', $test_ids)->get();
+
+		//Get Minimimum drug Inhibitory
+		$minimuminhibitory = MinimumInhibitoryConcentration::join('drugs', 'minimum_drug_inhibitory_concentrations.drug_id', '=', 'drugs.id')
+					->where('interpretation', '!=', 'Not Done')
+					->whereIn('test_id', $test_ids)->get();
 		//	Get patient details
 		$patient = Patient::find($id);
 		//	Check if tests are accredited
@@ -127,6 +134,7 @@ class ReportController extends \BaseController {
 			return View::make('reports.patient.report')
 						->with('patient', $patient)
 						->with('susceptibility', $susceptibility)
+						->with('minimuminhibitory', $minimuminhibitory)
 						->with('tests', $tests)
 						->with('pending', $pending)
 						->with('error', $error)

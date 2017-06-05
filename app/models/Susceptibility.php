@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Carbon\Carbon;
 
 class Susceptibility extends Eloquent
 {
@@ -53,4 +55,10 @@ class Susceptibility extends Eloquent
                                                                         ->where('interpretation', $interpretation);
     	return $susceptibility->count();
     }
+
+			// public function getCreatedAtAttribute($datetime) {
+			// 	// dd($datetime);
+			// 	// dd(Carbon::createFromFormat('Y-m-d', $datetime));
+			// 	return $datetime;
+			// }
 }
