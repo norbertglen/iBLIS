@@ -937,7 +937,6 @@ class ReportController extends \BaseController {
                 $progression_val[$key][3] = $progression_val[$key][3]/(60*60);// Percentile ???
 
                 $progression_val[$key][2] = $goal_tat[$key];
-
             }
         }
         # Return {month=>[avg tat, percentile tat, goal tat, [overdue specimen_ids], [pending specimen_ids], avg wait time]}
