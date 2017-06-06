@@ -92,8 +92,11 @@ class ReportController extends \BaseController {
 		//	Get patient details
 		$patient = Patient::find($id);
 
-        $visit = Visit::where('patient_id', '=', $id)->orderBy('id', 'DESC')->first();
-        // dd($visit);
+       // get patient's in-patient visits 
+        $visits = Visit::where('patient_id', '=', $id)
+                ->where('visit_type', '=', 'in-patient')
+                ->get();
+                
 		//	Check if tests are accredited
 		$accredited = $this->accredited($tests);
 		$verified = array();
@@ -115,7 +118,7 @@ class ReportController extends \BaseController {
 							->with('tests', $tests)
 							->with('from', $from)
 							->with('to', $to)
-							->with('visit', $visit)
+							->with('visits', $visits)
 							->with('accredited', $accredited);
 	    	return Response::make($content,200, $headers);
 		}
@@ -131,7 +134,7 @@ class ReportController extends \BaseController {
 							->with('tests', $tests)
 							->with('from', $from)
 							->with('to', $to)
-							->with('visit', $visit)
+							->with('visits', $visits)
 							->with('accredited', $accredited);
 	    	return Response::make($content,200, $headers);
 		}
@@ -143,7 +146,7 @@ class ReportController extends \BaseController {
 						->with('tests', $tests)
 						->with('pending', $pending)
 						->with('error', $error)
-						->with('visit', $visit)
+						->with('visits', $visits)
 						->with('accredited', $accredited)
 						->with('verified', $verified)
 						->withInput(Input::all());

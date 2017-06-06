@@ -55,7 +55,7 @@
 			    </div>
 		    </div>
 	    </div>
-	    {{ Form::hidden('visit_id', $visit, array('id'=>'visit_id')) }}
+	    {{ Form::hidden('visit_id', '', array('id'=>'visit_id')) }}
 	{{ Form::close() }}
 </div>
 <br />
@@ -88,16 +88,12 @@
 					@endif
 					<th>{{ trans('messages.gender')}}</th>
 					<td>{{ $patient->getGender(false) }}</td>
-                    <th>{{ trans('messages.visit-type') }} <th>
-                    <td>{{ $visit->visit_type }}</td>
 				</tr>
 				<tr>
 					<th>{{ trans('messages.patient-id')}}</th>
 					<td>{{ $patient->id}}</td>
 					<th>{{ trans('messages.age')}}</th>
-					<td>{{ $patient->getAge()}}</td>
-                    <th>{{ trans('messages.date-of-admission')}}</th>
-                    <td>{{ $visit->admission_date }} <td>
+					<td>{{ $patient->getAge() || 'N/A'}}</td>
 				</tr>
 				<tr>
 					<th>{{ trans('messages.patient-number')}}</th>
@@ -107,6 +103,26 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<!-- visit types-->
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>{{ trans('messages.visit-type') }}</th>
+					<th>{{ trans('messages.date-of-admission')}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($visits as $visit)
+				<tr>
+					<td>{{ $visit->visit_type }}</td>
+					<td>{{ $visit->admission_date }}</td>
+				</tr>
+				@endforeach
+			</tbody>
+		</table>
+
+		<!---->
 		<table class="table table-bordered">
 			<tbody>
 				<tr>
