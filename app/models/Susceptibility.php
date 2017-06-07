@@ -24,14 +24,14 @@ class Susceptibility extends Eloquent
 	 */
 	public function user()
 	{
-	  return $this->belongsTo('User', 'user_id');
+	  return $this->belongsTo('User', 'user_id', 'id');
 	}
 	/**
 	 * Test relationship
 	 */
 	public function test()
     {
-        return $this->hasOne('Test', 'test_id');
+        return $this->hasOne('Test', 'test_id', 'id');
     }
     /*
     *	Function to return drug susceptibility given testId, organismId and drugId

@@ -746,4 +746,9 @@ return array(
     'add-new'       =>      'Add New',
     'crit-val'      =>      'Critical Values',
     'biochemical-tests'  =>'Biochemical Tests',
+
+     /** 
+     *   Antibiogram Report
+     */
+     'anti-biogram-report' => 'Antibiogram Report',
 );

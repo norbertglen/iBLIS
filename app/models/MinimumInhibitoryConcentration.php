@@ -23,14 +23,14 @@ class MinimumInhibitoryConcentration extends Eloquent
 	 */
 	public function user()
 	{
-	  return $this->belongsTo('User', 'user_id');
+	  return $this->belongsTo('User', 'user_id', 'id');
 	}
 	/**
 	 * Test relationship
 	 */
 	public function test()
     {
-        return $this->hasOne('Test', 'test_id');
+        return $this->hasOne('Test', 'test_id', 'id');
     }
     /*
     *	Function to return drug susceptibility given testId, organismId and drugId
@@ -54,11 +54,4 @@ class MinimumInhibitoryConcentration extends Eloquent
                                                                         ->where('interpretation', $interpretation);
     	return $susceptibility->count();
     }
-
-		public function getCreatedAtAttribute($date) {
-			$val = Carbon::parse($date);
-			dd($val);
-
-			return Carbon::createFromFormat('Y:m:d', $val);
-		}
 }
