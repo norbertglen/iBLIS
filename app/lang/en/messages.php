@@ -498,6 +498,7 @@ return array(
     'monthly'   =>  'Monthly',
     'weekly'    =>  'Weekly',
     'daily' =>  'Daily',
+    'antibiogram-report' => 'Antibiogram Report',
 
     /* Usage Statistics Reports*/ 
     'accepted-specimen' => 'Specimen Collected',
@@ -524,7 +525,10 @@ return array(
     'monthly-stock-level-report-title' => 'Monthly Stock Levels (Period: [FROM] - [TO])',
     'quarterly-stock-level-report-title' => 'Quarterly Stock Levels (Period: [FROM] - [TO] )',
     
- 
+    /* Antibiogram Reports */ 
+    'all-isolates' => 'All Isolates',
+    'specimen-location' => 'Specimen Location',
+    'specimen-types' => 'Specimen Types',
 
     /** 
      *   Configurations

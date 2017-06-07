@@ -407,6 +407,11 @@ Route::group(array("before" => "auth"), function()
             "as"   => "reports.aggregate.infection",
             "uses" => "ReportController@infectionReport"
         ));
+
+        Route::any("/antibiogram", array(
+            "as" => "reports.aggregate.antibiogram",
+            "uses" => "ReportController@antibiogramReport"
+        ));
         
         Route::any("/userstatistics", array(
             "as"   => "reports.aggregate.userStatistics",

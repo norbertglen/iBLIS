@@ -1,163 +1,163 @@
 <?php
 set_time_limit(0); //60 seconds = 1 minute
 class ReportController extends \BaseController {
-	//	Begin patient report functions
-	/**
-	 * Display a listing of the resource.
-	 * Called loadPatients because the same controller shall be used for all other reports
-	 * @return Response
-	 */
-	public function loadPatients()
-	{
-		$search = Input::get('search');
+    //  Begin patient report functions
+    /**
+     * Display a listing of the resource.
+     * Called loadPatients because the same controller shall be used for all other reports
+     * @return Response
+     */
+    public function loadPatients()
+    {
+        $search = Input::get('search');
 
-		$patients = Patient::search($search)->orderBy('id','DESC')->paginate(Config::get('kblis.page-items'));
+        $patients = Patient::search($search)->orderBy('id','DESC')->paginate(Config::get('kblis.page-items'));
 
-		if (count($patients) == 0) {
-		 	Session::flash('message', trans('messages.no-match'));
-		}
+        if (count($patients) == 0) {
+            Session::flash('message', trans('messages.no-match'));
+        }
 
-		// Load the view and pass the patients
-		return View::make('reports.patient.index')->with('patients', $patients)->withInput(Input::all());
-	}
+        // Load the view and pass the patients
+        return View::make('reports.patient.index')->with('patients', $patients)->withInput(Input::all());
+    }
 
-	/**
-	 * Display data after applying the filters on the report uses patient ID
-	 *
-	 * @return Response
-	 */
-	public function viewPatientReport($id, $visit = null, $testId = null){
-		$from = Input::get('start');
-		$to = Input::get('end');
-		$pending = Input::get('pending');
-		$date = date('Y-m-d');
-		$error = '';
-		$visitId = Input::get('visit_id');
-		//	Check checkbox if checked and assign the 'checked' value
+    /**
+     * Display data after applying the filters on the report uses patient ID
+     *
+     * @return Response
+     */
+    public function viewPatientReport($id, $visit = null, $testId = null){
+        $from = Input::get('start');
+        $to = Input::get('end');
+        $pending = Input::get('pending');
+        $date = date('Y-m-d');
+        $error = '';
+        $visitId = Input::get('visit_id');
+        //  Check checkbox if checked and assign the 'checked' value
 
-		if (Input::get('tests') === '1') {
-		    $pending='checked';
-		}
-		//	Query to get tests of a particular patient
-		if (($visit || $visitId) && $id && $testId){
-			$tests = Test::where('id', '=', $testId);
-		}
-		else if(($visit || $visitId) && $id){
-			$tests = Test::where('visit_id', '=', $visit?$visit:$visitId);
-		}
-		else{
-			$tests = Test::join('visits', 'visits.id', '=', 'tests.visit_id')
-                            ->join('specimens', 'specimens.id', '=', 'tests.specimen_id')
-							->where('patient_id', '=', $id);
-		}
-		//	Begin filters - include/exclude pending tests
-		if($pending){
-			$tests=$tests->where('tests.test_status_id', '!=', Test::NOT_RECEIVED);
-		}
-		else{
-			$tests = $tests->whereIn('tests.test_status_id', [Test::COMPLETED, Test::VERIFIED]);
-		}
-		//	Date filters
-		if($from||$to){
+        if (Input::get('tests') === '1') {
+            $pending='checked';
+        }
+        //  Query to get tests of a particular patient
+        if (($visit || $visitId) && $id && $testId){
+            $tests = Test::where('id', '=', $testId);
+        }
+        else if(($visit || $visitId) && $id){
+            $tests = Test::where('visit_id', '=', $visit?$visit:$visitId);
+        }
+        else{
+            $tests = Test::join('visits', 'visits.id', '=', 'tests.visit_id')
+                ->join('specimens', 'specimens.id', '=', 'tests.specimen_id')
+                ->where('patient_id', '=', $id);
+        }
+        //  Begin filters - include/exclude pending tests
+        if($pending){
+            $tests=$tests->where('tests.test_status_id', '!=', Test::NOT_RECEIVED);
+        }
+        else{
+            $tests = $tests->whereIn('tests.test_status_id', [Test::COMPLETED, Test::VERIFIED]);
+        }
+        //  Date filters
+        if($from||$to){
 
-			if(!$to) $to = $date;
+            if(!$to) $to = $date;
 
-			if(strtotime($from)>strtotime($to)||strtotime($from)>strtotime($date)||strtotime($to)>strtotime($date)){
-					$error = trans('messages.check-date-range');
-			}
-			else
-			{
-				$toPlusOne = date_add(new DateTime($to), date_interval_create_from_date_string('1 day'));
-				$tests=$tests->whereBetween('time_created', array($from, $toPlusOne->format('Y-m-d H:i:s')));
-			}
-		}
-		//	Get tests collection
-		$tests = $tests->get(array('tests.*'));
+            if(strtotime($from)>strtotime($to)||strtotime($from)>strtotime($date)||strtotime($to)>strtotime($date)){
+                $error = trans('messages.check-date-range');
+            }
+            else
+            {
+                $toPlusOne = date_add(new DateTime($to), date_interval_create_from_date_string('1 day'));
+                $tests=$tests->whereBetween('time_created', array($from, $toPlusOne->format('Y-m-d H:i:s')));
+            }
+        }
+        //  Get tests collection
+        $tests = $tests->get(array('tests.*'));
 
-		$test_ids = array();
-		
-		foreach ($tests as $test) {
-				array_push($test_ids, $test->id);
-		}
+        $test_ids = array();
 
-		//Get susceptibility results
-		$susceptibility = Susceptibility::join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')
-					->where('interpretation', '!=', '')
-					->whereIn('test_id', $test_ids)->get();
+        foreach ($tests as $test) {
+            array_push($test_ids, $test->id);
+        }
 
-		//Get Minimimum drug Inhibitory
-		$minimuminhibitory = MinimumInhibitoryConcentration::join('drugs', 'minimum_drug_inhibitory_concentrations.drug_id', '=', 'drugs.id')
-					->where('interpretation', '!=', 'Not Done')
-					->whereIn('test_id', $test_ids)->get();
-		//	Get patient details
-		$patient = Patient::find($id);
+        //Get susceptibility results
+        $susceptibility = Susceptibility::join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')
+            ->where('interpretation', '!=', '')
+            ->whereIn('test_id', $test_ids)->get();
 
-       // get patient's in-patient visits 
+        //Get Minimimum drug Inhibitory
+        $minimuminhibitory = MinimumInhibitoryConcentration::join('drugs', 'minimum_drug_inhibitory_concentrations.drug_id', '=', 'drugs.id')
+            ->where('interpretation', '!=', 'Not Done')
+            ->whereIn('test_id', $test_ids)->get();
+        //  Get patient details
+        $patient = Patient::find($id);
+
+        // get patient's in-patient visits
         $visits = Visit::where('patient_id', '=', $id)
-                ->where('visit_type', '=', 'in-patient')
-                ->get();
-                
-		//	Check if tests are accredited
-		$accredited = $this->accredited($tests);
-		$verified = array();
-		foreach ($tests as $test) {
-			if($test->isVerified())
-				array_push($verified, $test->id);
-			else
-				continue;
-		}
-		if(Input::has('word')){
-			$date = date("Ymdhi");
-			$fileName = "blispatient_".$id."_".$date.".doc";
-			$headers = array(
-			    "Content-type"=>"text/html",
-			    "Content-Disposition"=>"attachment;Filename=".$fileName
-			);
-			$content = View::make('reports.patient.export')
-							->with('patient', $patient)
-							->with('tests', $tests)
-							->with('from', $from)
-							->with('to', $to)
-							->with('visits', $visits)
-							->with('accredited', $accredited);
-	    	return Response::make($content,200, $headers);
-		}
-		else if(Input::has('excel')){
-			$date = date("Ymdhi");
-			$fileName = "blispatient_".$id."_".$date.".xls";
-			$headers = array(
-			    "Content-type"=>"text/html",
-			    "Content-Disposition"=>"attachment;Filename=".$fileName
-			);
-			$content = View::make('reports.patient.export')
-							->with('patient', $patient)
-							->with('tests', $tests)
-							->with('from', $from)
-							->with('to', $to)
-							->with('visits', $visits)
-							->with('accredited', $accredited);
-	    	return Response::make($content,200, $headers);
-		}
-		else {
-			return View::make('reports.patient.report')
-						->with('patient', $patient)
-						->with('susceptibility', $susceptibility)
-						->with('minimuminhibitory', $minimuminhibitory)
-						->with('tests', $tests)
-						->with('pending', $pending)
-						->with('error', $error)
-						->with('visits', $visits)
-						->with('accredited', $accredited)
-						->with('verified', $verified)
-						->withInput(Input::all());
-		}
-	}
-	//	End patient report functions
+            ->where('visit_type', '=', 'in-patient')
+            ->get();
 
-	/**
-	*	Function to return test types of a particular test category to fill test types dropdown
-	*/
-	public function reportsDropdown(){
+        //  Check if tests are accredited
+        $accredited = $this->accredited($tests);
+        $verified = array();
+        foreach ($tests as $test) {
+            if($test->isVerified())
+                array_push($verified, $test->id);
+            else
+                continue;
+        }
+        if(Input::has('word')){
+            $date = date("Ymdhi");
+            $fileName = "blispatient_".$id."_".$date.".doc";
+            $headers = array(
+                "Content-type"=>"text/html",
+                "Content-Disposition"=>"attachment;Filename=".$fileName
+            );
+            $content = View::make('reports.patient.export')
+                ->with('patient', $patient)
+                ->with('tests', $tests)
+                ->with('from', $from)
+                ->with('to', $to)
+                ->with('visits', $visits)
+                ->with('accredited', $accredited);
+            return Response::make($content,200, $headers);
+        }
+        else if(Input::has('excel')){
+            $date = date("Ymdhi");
+            $fileName = "blispatient_".$id."_".$date.".xls";
+            $headers = array(
+                "Content-type"=>"text/html",
+                "Content-Disposition"=>"attachment;Filename=".$fileName
+            );
+            $content = View::make('reports.patient.export')
+                ->with('patient', $patient)
+                ->with('tests', $tests)
+                ->with('from', $from)
+                ->with('to', $to)
+                ->with('visits', $visits)
+                ->with('accredited', $accredited);
+            return Response::make($content,200, $headers);
+        }
+        else {
+            return View::make('reports.patient.report')
+                ->with('patient', $patient)
+                ->with('susceptibility', $susceptibility)
+                ->with('minimuminhibitory', $minimuminhibitory)
+                ->with('tests', $tests)
+                ->with('pending', $pending)
+                ->with('error', $error)
+                ->with('visits', $visits)
+                ->with('accredited', $accredited)
+                ->with('verified', $verified)
+                ->withInput(Input::all());
+        }
+    }
+    //  End patient report functions
+
+    /**
+     *   Function to return test types of a particular test category to fill test types dropdown
+     */
+    public function reportsDropdown(){
 
         $input = Input::get('option');
         $testCategory = TestCategory::find($input);
@@ -2432,4 +2432,15 @@ class ReportController extends \BaseController {
             ->with('options', $options)
             ->withInput(Input::all());
     }
+
+    public function antibiogramReport() {
+        $specimen_collection_location = SpecimenCollectionLocation::orderBy('id', 'ASC')->get();
+        $specimen_types = SpecimenType::orderBy('id', 'ASC')->get();
+
+        return View::make('reports.antibiogram.index')
+            ->with('specimen_collection_location', $specimen_collection_location)
+            ->with('specimen_types', $specimen_types);
+        
+    }
+
 }
