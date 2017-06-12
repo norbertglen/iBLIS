@@ -33,6 +33,12 @@ class CultureSensitivitySeeder extends DatabaseSeeder
         $cefoxitin = Drug::create(array('name' => "CEFOXITIN"));
         $tobramycin = Drug::create(array('name' => "TOBRAMYCIN"));
         $sulbactam = Drug::create(array('name' => "AMPICILLIN-SULBACTAM"));
+        $sulfisoxazole = Drug::create(array('name' => "SULFISOXAZOLE"));
+        $meropenem = Drug::create(array('name' => "MEROPENEM"));
+        $nalidixic = Drug::create(array('name' => "NALIDIXIC"));
+        $gentamycin = Drug::create(array('name' => "GENTAMYCIN"));
+        $Azythromycin = Drug::create(array('name' => "AZYTHROMYCIN"));
+        $Norfloxacin = Drug::create(array('name' => "NORFLOXACIN"));
         
         $this->command->info('Drugs table seeded');
         //Seed for organisims
@@ -269,5 +275,39 @@ class CultureSensitivitySeeder extends DatabaseSeeder
             array("organism_id" => $grampositive->id, "drug_id" => $vancomycin->id));
         
         $this->command->info('Gram positive cocci seeded');
+
+        //disc diffussion guideline
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 17, "susceptible" => 18, "drug_id" => $chloramphenicol->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 10, "intermediate" => 15, "susceptible" => 16, "drug_id" => $trimeth->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 11, "intermediate" => 14, "susceptible" => 15, "drug_id" => $tetracycline->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 15, "intermediate" => 20, "susceptible" => 21, "drug_id" => $ciprofloxacin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 13, "intermediate" => 16, "susceptible" => 17, "drug_id" => $ampicillin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 16, "susceptible" => 17, "drug_id" =>$sulfisoxazole->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 14, "susceptible" => 15, "drug_id" => $gentamicin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 13, "intermediate" => 17, "susceptible" => 18, "drug_id" => $amoxicillin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 19, "intermediate" => 22, "susceptible" => 23, "drug_id" => $meropenem->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 15, "intermediate" => 21, "susceptible" => 22, "drug_id" => $erythromycin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 17, "susceptible" => 18, "drug_id" => $chloramphenicol->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 13, "intermediate" => 18, "susceptible" => 19, "drug_id" => $nalidixic->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 14, "susceptible" => 15, "drug_id" => $gentamycin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 13, "susceptible" => 14, "drug_id" => $Azythromycin->id));
+        DB::table('disc_diffusion_guidelines')->insert(
+            array("resistant" => 12, "intermediate" => 13, "susceptible" => 16, "drug_id" => $Norfloxacin->id));
+
+        $this->command->info('Disc diffusion guidelines seeded');
     }
 }
