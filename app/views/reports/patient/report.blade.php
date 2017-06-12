@@ -213,7 +213,7 @@
 				@endforelse
 			</tbody>
 		</table>
-		<table class="table table-bordered">
+			<table class="table table-bordered">
 		<strong>{{trans('messages.susceptibility-results')}}</strong>
 			<tbody>
 				<tr>
@@ -230,12 +230,13 @@
 				</tr>
 				@forelse($susceptibility as $susceptibility)
 						<tr>
-							<td>{{ $susceptibility->name }}</td>
-							<td>{{ $susceptibility->zone }}</td>
-							<td>{{ $susceptibility->interpretation == '' ? 'N/A' : $susceptibility->interpretation }}</td>
-							<td>{{ $susceptibility->created_at}}</td>
-							<td>{{ $susceptibility->zone }}</td>
-							<td>{{ $susceptibility->zone }}</td>
+							<td>{{ $susceptibility['name'] }}</td>
+							<td>{{ $susceptibility['zone'] }}</td>
+							<td>{{ $susceptibility['interpretation'] == '' ? 'N/A' : $susceptibility->interpretation }}</td>
+							<td>{{ $susceptibility['created_at']}}</td>
+							<td>{{ $susceptibility['created_at']}}</td>
+							<td>{{ $susceptibility['username'] }}</td>
+							<td>{{ $susceptibility['updated_at'] }}</td>
 						</tr>
 				@empty
 					<tr>
@@ -260,12 +261,13 @@
 				</tr>
 				@forelse($minimuminhibitory as $minimuminhibitory)
 						<tr>
-							<td>{{ $minimuminhibitory->name }}</td>
-							<td>{{ $susceptibility->concentration }}</td>
-							<td>{{ $susceptibility->interpretation == '' ? 'N/A' : $susceptibility->interpretation }}</td>
-							<td>{{ $susceptibility->updated_at->diffForHumans() }}</td>
-							<td>{{ $susceptibility->concentration }}</td>
-							<td>{{ $susceptibility->concentration }}</td>
+							<td>{{ $minimuminhibitory['name'] }}</td>
+							<td>{{ $minimuminhibitory['concentration'] }}</td>
+							<td>{{ $minimuminhibitory['interpretation'] == '' ? 'N/A' : $susceptibility->interpretation }}</td>
+							<td>{{ $minimuminhibitory['created_at'] }}</td>
+							<td>{{ $minimuminhibitory['updated_at'] }}</td>
+							<td>{{ $minimuminhibitory['username'] }}</td>
+							<td>{{ $minimuminhibitory['updated_at'] }}</td>
 						</tr>
 				@empty
 					<tr>
