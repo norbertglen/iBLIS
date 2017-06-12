@@ -82,19 +82,19 @@ class ReportController extends \BaseController {
         }
 
         //Get susceptibility results
-       $susceptibility = Susceptibility::select('drugs.name','users.username','interpretation', 'zone', 'drug_susceptibility.created_at', 'drug_susceptibility.updated_at')
- 						->join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')
- 						->join('users', 'drug_susceptibility.user_id', '=', 'users.id')
-  					->where('interpretation', '!=', '')
- 						->where('zone', '!=', 'Not D')
-  					->whereIn('test_id', $test_ids)->get();
+        $susceptibility = Susceptibility::select('drugs.name','users.username','interpretation', 'zone', 'drug_susceptibility.created_at', 'drug_susceptibility.updated_at')
+            ->join('drugs', 'drug_susceptibility.drug_id', '=', 'drugs.id')
+            ->join('users', 'drug_susceptibility.user_id', '=', 'users.id')
+            ->where('interpretation', '!=', '')
+            ->where('zone', '!=', 'Not D')
+            ->whereIn('test_id', $test_ids)->get();
 
         //Get Minimimum drug Inhibitory
         $minimuminhibitory = MinimumInhibitoryConcentration::select('drugs.name','users.username','interpretation', 'concentration', 'minimum_drug_inhibitory_concentrations.created_at', 'minimum_drug_inhibitory_concentrations.updated_at')
- 						->join('drugs', 'minimum_drug_inhibitory_concentrations.drug_id', '=', 'drugs.id')
- 						->join('users', 'minimum_drug_inhibitory_concentrations.user_id', '=', 'users.id')
-  					->where('interpretation', '!=', 'Not Done')
-  					->whereIn('test_id', $test_ids)->get();
+            ->join('drugs', 'minimum_drug_inhibitory_concentrations.drug_id', '=', 'drugs.id')
+            ->join('users', 'minimum_drug_inhibitory_concentrations.user_id', '=', 'users.id')
+            ->where('interpretation', '!=', 'Not Done')
+            ->whereIn('test_id', $test_ids)->get();
         //  Get patient details
         $patient = Patient::find($id);
 
@@ -2442,13 +2442,13 @@ class ReportController extends \BaseController {
     public function antibiogramReport() {
         $specimen_collection_location = SpecimenCollectionLocation::orderBy('id', 'ASC')->get();
         $specimen_types = SpecimenType::orderBy('id', 'ASC')->get();
-        
+
         $specimen_location_ids = Input::get('location');
         $specimen_type_ids = Input::get('specimen_type');
         $all_isolates = Input::get('all_isolates');
-        
+
         $organisms = '';
-        $drugs = ''; 
+        $drugs = '';
         // get
         if ($all_isolates) {
             $organisms = Organism::orderBy('id', 'ASC')->get();
@@ -2462,9 +2462,29 @@ class ReportController extends \BaseController {
 
         if(Input::has('excel')) {
             Excel::create('antibiogram', function($excel) {
-              // set the title
+                // set the title
                 $excel->setTitle('Antibiogram Report');
                 $excel->sheet('antibiogram report', function($sheet) {
+                    // add values to the header
+                    $sheet->prependRow(1, array('Organism', 'No of Isolates'));
+                    // append rows to
+                    $organisms = Organism::orderBy('id', 'ASC')->get();
+
+                    forEach($organisms as $key => $organism) {
+                         $containerArray = array($organism->name, $organism->getCount());
+                         $drugs = Drug::orderBy('id', 'ASC') ->get();
+                         $drug_names = array();
+                        // push drug values to the array
+                        forEach($drugs as $drug) {
+                            $val = $organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2) : 0 ;
+                            array_push($containerArray, $val);
+                            array_push($drug_names, $drug->name);
+                         }
+
+                         $sheet_headers = array_merge(array('Organisms', 'No of Isolates'), $drug_names);
+                         $sheet->row(1, $sheet_headers);
+                         $sheet->appendRow($key + 2, $containerArray);
+                    }
                 });
             })->download('xls');
         }
@@ -2477,6 +2497,6 @@ class ReportController extends \BaseController {
             ->with('accredited', $accredited)
             ->with('error', $error)
             ->with('all_isolates', $all_isolates);
-        
+
     }
 }
