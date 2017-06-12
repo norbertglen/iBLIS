@@ -24,7 +24,7 @@ class CreateBiochemicalWorksheet extends Migration {
 
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('test_id')->references('id')->on('tests');
-			$table->foreign('biochemical_id')->references('id')->on('bio_chemical_tests');
+			// $table->foreign('biochemical_id')->references('id')->on('bio_chemical_tests');
 		});
 	}
 
