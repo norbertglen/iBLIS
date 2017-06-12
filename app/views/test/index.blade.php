@@ -188,7 +188,7 @@
                             <a class="btn btn-sm btn-info sample-specimen" href="#sample-details-modal"
                                     data-toggle="modal" data-url="{{ URL::route('test.sampleSpecimenDetails') }}"
                                     data-test-id="{{$test->id}}" data-target="#sample-details-modal"
-                                    title="{{trans('messages.sample-details')}}" onclick="fetchSpecimenSample(<?php echo $test->specimen_id; ?>)">
+                                                                 title="{{trans('messages.sample-details')}}" onclick="fetchSpecimenSample(<?php echo $test->specimen->id; ?>)">
                                     <!-- <span class="glyphicon glyphicon-transfer"></span> -->
                                     {{trans('messages.sample-details')}}
                                 </a>
@@ -208,7 +208,7 @@
                                       </div>
                                       <div class="modal-body">
                                         <div class="display-details">
-                                            {{ Form::hidden('specimen_id', $test->specimen_id) }}
+                                             {{ Form::hidden('specimen_id', '', array('id' => 'specimen-id')) }}
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-md-4">
@@ -275,14 +275,14 @@
                                     {{trans('messages.receive-test')}}
                                 </a>
                             @endif
-                        @elseif ($test->specimen->isNotCollected())
+                        @elseif ($test->specimen->isNotCollected() && $test->specimen->hasDetails())
                             @if(Auth::user()->can('accept_test_specimen'))
                                 <a class="btn btn-sm btn-info accept-specimen" href="javascript:void(0)"
                                     data-test-id="{{$test->id}}" data-specimen-id="{{$test->specimen->id}}"
                                     title="{{trans('messages.accept-specimen-title')}}"
                                     data-url="{{ URL::route('test.acceptSpecimen') }}">
                                     <span class="glyphicon glyphicon-thumbs-up"></span>
-                                    {{trans('messages.accept-specimen')}}
+                                          {{trans('messages.accept-specimen')}}
                                 </a>
                             @endif
                             @if(count($test->testType->specimenTypes) > 1 && Auth::user()->can('change_test_specimen'))

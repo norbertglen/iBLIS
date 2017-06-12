@@ -170,11 +170,11 @@ class Specimen extends Eloquent
         }
     }
 
-	public function setTimeCollectedAttribute($time) {
-		$date_collected = $this->attributes['date_collected'];
-		$date_to_save = $date_collected.' '.$time;
-		$this->attributes['time_collected'] = Carbon::createFromFormat('Y-m-d H:i', $date_to_save);
-	}
+    public function setTimeCollectedAttribute($time) {
+        $date_collected = $this->attributes['date_collected'];
+        $date_to_save = $date_collected.' '.$time;
+        $this->attributes['time_collected'] = Carbon::createFromFormat('Y-m-d H:i', $date_to_save);
+    }
 
     /**
      * Get the speciment's time collected.
@@ -186,14 +186,23 @@ class Specimen extends Eloquent
         $dt = Carbon::parse($datetime);
         return $dt->hour.':'.$dt->minute;
     }
-    
-	public function getLocationIdAttribute($id) {
-		$location = SpecimenCollectionLocation::find($id);
-		return array('name' => $location['name'], 'id' => $id) ;
-	}
 
-	public function getSiteCollectedIdAttribute($id) {
-		$site = SpecimenCollectionSite::find($id);
-		return array('name' => $site['name'], 'id' => $id) ;
-	}
+    public function getLocationIdAttribute($id) {
+        $location = SpecimenCollectionLocation::find($id);
+        return array('name' => $location['name'], 'id' => $id) ;
+    }
+
+    public function getSiteCollectedIdAttribute($id) {
+        $site = SpecimenCollectionSite::find($id);
+        return array('name' => $site['name'], 'id' => $id) ;
+    }
+
+    /**
+     * Check if specimen has details i.e. has location and type set
+     *
+     * @return boolean
+     */
+    public function hasDetails() {
+        return ($this->location_id['name'] && $this->site_collected_id['name']);
+    }
 }

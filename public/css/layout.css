@@ -690,3 +690,7 @@ table.table.report-table-border > tbody > tr > td{
     justify-content: center;
     align-items: center;
 }
+
+#antibiogram-report {
+    overflow-x: scroll;
+}

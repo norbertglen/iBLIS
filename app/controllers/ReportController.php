@@ -1,4 +1,5 @@
 <?php
+
 set_time_limit(0); //60 seconds = 1 minute
 class ReportController extends \BaseController {
     //  Begin patient report functions
@@ -2436,11 +2437,41 @@ class ReportController extends \BaseController {
     public function antibiogramReport() {
         $specimen_collection_location = SpecimenCollectionLocation::orderBy('id', 'ASC')->get();
         $specimen_types = SpecimenType::orderBy('id', 'ASC')->get();
+        
+        $specimen_location_ids = Input::get('location');
+        $specimen_type_ids = Input::get('specimen_type');
+        $all_isolates = Input::get('all_isolates');
+        
+        $organisms = '';
+        $drugs = ''; 
+        // get
+        if ($all_isolates) {
+            $organisms = Organism::orderBy('id', 'ASC')->get();
+            $drugs = Drug::orderBy('id', 'ASC') ->get();
+        }
+
+        // report errors
+        $error = '';
+        $accredited = '';
+
+
+        if(Input::has('excel')) {
+            Excel::create('antibiogram', function($excel) {
+              // set the title
+                $excel->setTitle('Antibiogram Report');
+                $excel->sheet('antibiogram report', function($sheet) {
+                });
+            })->download('xls');
+        }
 
         return View::make('reports.antibiogram.index')
             ->with('specimen_collection_location', $specimen_collection_location)
-            ->with('specimen_types', $specimen_types);
+            ->with('specimen_types', $specimen_types)
+            ->with('organisms', $organisms)
+            ->with('drugs', $drugs)
+            ->with('accredited', $accredited)
+            ->with('error', $error)
+            ->with('all_isolates', $all_isolates);
         
     }
-
 }

@@ -499,6 +499,9 @@ return array(
     'weekly'    =>  'Weekly',
     'daily' =>  'Daily',
     'antibiogram-report' => 'Antibiogram Report',
+    'organisms' => 'Organisms',
+    'no-of-isolates' => 'No of Isolates',
+    'percentage-of-isolates-susceptible-to-drug' => '% of isolates susceptible to drug',
 
     /* Usage Statistics Reports*/ 
     'accepted-specimen' => 'Specimen Collected',
