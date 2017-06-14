@@ -289,6 +289,32 @@ class KBLISSeeder extends DatabaseSeeder
             $specimen_location[] = SpecimenCollectionLocation::create($specimen_location);
         }
         $this->command->info('specimen_location seeded');
+
+        /* Biochemical tests table */
+        $user = DB::table('users')->where('username', 'administrator')->first();
+        $biochemical_tests = array(
+            array("name" => "Beta-glucuronidase test (MUG Test)", "user_id" => $user->id),
+            array("name" => "Bacitracin Sensitivity Test:", "user_id" => $user->id),
+            array("name" => "Bile solubility test", "user_id" => $user->id),
+            array("name" => "CAMP Test:", "user_id" => $user->id),
+            array("name" => "Catalase test:", "user_id" => $user->id),
+            array("name" => "Citrate utilization test", "user_id" => $user->id),
+            array("name" => "Coagulase test", "user_id" => $user->id),
+            array("name" => "DNase test", "user_id" => $user->id),
+            array("name" => "Indole test", "user_id" => $user->id),
+            array("name" => "Litmus milk decolorization test: ", "user_id" => $user->id),
+            array("name" => "Oxidase test", "user_id" => $user->id),
+            array("name" => "Urease test", "user_id" => $user->id),
+            array("name" => "Voges Proskauer/Methyl Red", "user_id" => $user->id),
+            array("name" => "Triple Sugar Iron Agar Test", "user_id" => $user->id),
+            array("name" => "Nitrate Reduction Test", "user_id" => $user->id),
+        );
+         foreach ($biochemical_tests as $biochemical_test)
+        {
+            BiochemicalTest::create($biochemical_test);
+        }
+
+        $this->command->info('biochemical tests seeded');
     }
 
 }

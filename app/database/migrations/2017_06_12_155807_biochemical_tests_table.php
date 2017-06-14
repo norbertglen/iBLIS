@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BioChemical extends Migration {
+class BiochemicalTestsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -32,7 +32,7 @@ class BioChemical extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('bio_chemical_tests');
+		Schema::dropIfExists('bio_chemical_tests');
 	}
 
 }
