@@ -932,16 +932,17 @@ function drawIhibitoryTable(tid, oid) {
 function saveDrugDiffusionGuideline(drugId, existing) {
     // drug Id, resistant, intermediate, susceptible
     // if (1) return console.log(drugId, existing);
+    var min_resistant = $('#min_resistant_' + drugId).val();
     var resistant = $("#resistant_" + drugId).val();
     var intermediate = $("#intermediate_" + drugId).val();
     var susceptible = $("#susceptible_" + drugId).text();
-    console.log(drugId, resistant, intermediate, susceptible);
 
     $.ajax({
         type: 'POST',
         url: '/drug/disc-diffusion-guidelines',
         data: {
             drugId: drugId,
+            min_resistant: min_resistant,
             resistant: resistant,
             intermediate: intermediate,
             susceptible: susceptible
@@ -1073,6 +1074,16 @@ function toggleAdmissionDate(className, obj) {
 }
 
 /*End toggle Admission Date on test registration form*/
+function updateResistant(id) {
+    var min_resistant = Number($('#min_resistant_' + id).val());
+    // update the resistant field
+    var max_resistant = Number($('#resistant_' + id).val());
+
+    if (min_resistant >= max_resistant) {
+        $('#resistant_'+id).val(min_resistant + 1);
+        updateIntermediate(id, 'resistant');
+    }
+}
 
 function updateIntermediate(id, type) {
     // get the value from select box;
@@ -1093,6 +1104,13 @@ function updateIntermediate(id, type) {
                 .append($("<option></option>")
                     .attr("value", i)
                     .text(i));
+        }
+
+        // update the min value
+        var min_resistant = $('#min_resistant_' + id).val();
+
+        if (max_resistant <= min_resistant) {
+            $('#min_resistant_' + id).val(max_resistant - 1);
         }
     }
 
