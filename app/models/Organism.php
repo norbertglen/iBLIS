@@ -96,4 +96,9 @@ class Organism extends Eloquent
         $drugCount = Susceptibility::where('drug_id', '=', $drugId)->where('organism_id', '=', $this->id)->count();
         return $drugCount;
     }
+
+    public function getName($id) {
+        $organism = $this->where('id', '=', $id)->first();
+        return $organism->name;
+    }
 }

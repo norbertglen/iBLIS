@@ -107,7 +107,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
-    'Maatwebsite\Excel\ExcelServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider'
 	),
 
 	/*
@@ -175,7 +175,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'SoftDeletingTrait'     => 'Illuminate\Database\Eloquent\SoftDeletingTrait',
     'Entrust'         => 'Zizaco\Entrust\EntrustFacade',
-    'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
+    'Excel'           => 'Maatwebsite\Excel\Facades\Excel'
 	),
 
 );

@@ -2448,17 +2448,14 @@ class ReportController extends \BaseController {
         $all_isolates = Input::get('all_isolates');
 
         $organisms = '';
-        $drugs = '';
         // get
         if ($all_isolates) {
             $organisms = Organism::orderBy('id', 'ASC')->get();
-            $drugs = Drug::orderBy('id', 'ASC') ->get();
         }
 
         // report errors
         $error = '';
         $accredited = '';
-
 
         if(Input::has('excel')) {
             Excel::create('antibiogram', function($excel) {
@@ -2471,22 +2468,70 @@ class ReportController extends \BaseController {
                     $organisms = Organism::orderBy('id', 'ASC')->get();
 
                     forEach($organisms as $key => $organism) {
-                         $containerArray = array($organism->name, $organism->getCount());
-                         $drugs = Drug::orderBy('id', 'ASC') ->get();
-                         $drug_names = array();
-                        // push drug values to the array
-                        forEach($drugs as $drug) {
-                            $val = $organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2) : 0 ;
-                            array_push($containerArray, $val);
-                            array_push($drug_names, $drug->name);
-                         }
+                    $containerArray = array($organism->name, $organism->getCount());
+                    $drugs = Drug::orderBy('id', 'ASC') ->get();
+                    $drug_names = array();
+                    // push drug values to the array
+                    forEach($drugs as $drug) {
+                    $val = $organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2) : 0 ;
+                    array_push($containerArray, $val);
+                    array_push($drug_names, $drug->name);
+                    }
 
-                         $sheet_headers = array_merge(array('Organisms', 'No of Isolates'), $drug_names);
-                         $sheet->row(1, $sheet_headers);
-                         $sheet->appendRow($key + 2, $containerArray);
+                    $sheet_headers = array_merge(array('Organisms', 'No of Isolates'), $drug_names);
+                    $sheet->row(1, $sheet_headers);
+                    $sheet->appendRow($key + 2, $containerArray);
                     }
                 });
             })->download('xls');
+        }
+
+        $all_organisms = array();
+
+        $drugs = Drug::orderBy('id', 'ASC') ->get();
+        $organisms = Organism::orderBy('id', 'ASC')->get();
+        forEach($organisms as $organism) {
+            $specimen_locations = array();
+            if ($specimen_location_ids && $specimen_type_ids) {
+                forEach($specimen_location_ids as $locationId) {
+                    $row = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
+                        ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
+                        ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
+                        ->where('organism_id', '=', $organism->id)
+                        ->where('specimens.location_id', '=', $locationId)
+                        ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
+                        ->get();
+                    $specimen_locations[$locationId] = $row;
+                //array_push($specimen_locations, $row);
+                }
+                $all_organisms[$organism->id] = $specimen_locations;
+            } else if ($specimen_location_ids) {
+                forEach($specimen_location_ids as $locationId) {
+                    $row = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
+                        ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
+                        ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
+                        ->where('organism_id', '=', $organism->id)
+                        ->where('specimens.location_id', '=', $locationId)
+                        ->get();
+                    $specimen_locations[$locationId] = $row;
+                //array_push($specimen_locations, $row);
+                }
+                $all_organisms[$organism->id] = $specimen_locations;
+            }
+        }
+
+        //echo '<pre>';
+        // print_r($all_organisms);
+        //echo '</pre>';
+        //if (1) return;
+        $organism_model = Organism::find(1);
+        $specimen_location_model = SpecimenCollectionLocation::find(1);
+        $susceptibility_model = Susceptibility::find(1);
+
+        // create column chart
+        $chart_data = '';
+        if ($specimen_location_ids) {
+            $chart_data = $this->getBarChartData($specimen_location_ids);
         }
 
         return View::make('reports.antibiogram.index')
@@ -2496,7 +2541,112 @@ class ReportController extends \BaseController {
             ->with('drugs', $drugs)
             ->with('accredited', $accredited)
             ->with('error', $error)
-            ->with('all_isolates', $all_isolates);
+            ->with('all_isolates', $all_isolates)
+            ->with('all_organisms', $all_organisms)
+            ->with('organism_model', $organism_model)
+            ->with('specimen_location_model', $specimen_location_model)
+            ->with('susceptibility_model', $susceptibility_model)
+            ->with('specimen_location_ids', $specimen_location_ids)
+            ->with('specimen_type_ids', $specimen_type_ids)
+            ->with('chart_data', $chart_data);
+    }
 
+
+    public function getBarChartData($specimen_location_ids) {
+
+        $chart = array('type' => 'column' );
+        $title = array('text' => 'Antibiogram' );
+        $subtitle = array('text' => 'Chart subtitle' );
+        
+        $xAxis = array(
+            'categories' => array(),
+            'crosshair' => true
+        );
+        
+        $yAxis = array(
+            'min' => 0,
+            'title' => array('text' => 'Resistance')
+        );
+
+        $plotOptions = array(
+            'column' => array(
+                'pointPadding' => 0.2,
+                'borderWidth' => 0
+                )
+        );
+
+        $credits= array('enabled' => false);
+
+        $series = array();
+       
+        $final_series = array();
+        $series = array();
+
+        if ($specimen_location_ids) {
+
+            forEach($specimen_location_ids as $locationId) {
+                // get the organisms for locations
+                $resultSet = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
+                    ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
+                    ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
+                    ->where('specimens.location_id', '=', $locationId)
+                    ->where('drug_susceptibility.interpretation', '=', 'R')
+                    ->groupBy('organism_id')
+                    ->select(DB::raw('organism_id, count(drug_susceptibility.interpretation) as count'))
+                    ->get();
+                
+                $organism_data = array();
+
+                if (count($resultSet)) {
+                    $location = SpecimenCollectionLocation::where('id', '=', $locationId)->first();
+                    array_push($xAxis['categories'], $location->name);
+                }
+
+                forEach($resultSet as $result) {
+                    $location = SpecimenCollectionLocation::where('id', '=', $locationId)->first();
+                    $organism = Organism::where('id', '=', $result->organism_id)->first();
+                    
+                    $count = 3; // $result->count ? $result->count : 0;
+                    if (array_key_exists($organism->name, $series) ) {
+                        // append to existing data
+                        array_push($series[$organism->name],  $count);
+                    } else {
+                        // create new data
+                         $series[$organism->name] = array($count);
+                    }
+                   
+                }
+            }
+
+            // format data
+            $final_series = $this->formatSeries($series);
+        }
+
+        // build the json
+        $json = array(
+            'chart'    => $chart,
+            'title'    => $title,
+            'subtitle' => $subtitle,
+            'xAxis'    => $xAxis,
+            'yAxis'    => $yAxis,
+            'series'   => $final_series,
+            'plotOptions' => $plotOptions,
+            'credits'  => $credits
+        );
+
+        return json_encode($json);
+    }
+
+    public function formatSeries($data) {
+        $series = array();
+        forEach($data as $key => $value) {
+            $temp = array(
+                'name' => $key,
+                'data' => $value
+            );
+            array_push($series, $temp);
+        }
+
+        return $series;
     }
 }
