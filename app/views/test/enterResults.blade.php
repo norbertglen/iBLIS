@@ -207,7 +207,7 @@
                                     @foreach($biochemical_tests as $key => $value)
                                         {{ Form::open()}}
                                             <tr id="{{ 'selected_test'.$value->id}}" style="display:none;">
-                                                <td>Some date</td>
+                                                <td>{{ date("Y-m-d") }}</td>
                                                 <td>{{ Auth::user()->name }}</td>
                                                 <td>{{ $value->name }}</td>
                                                 <td>{{ Form::select('result', 
