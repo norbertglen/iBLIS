@@ -136,7 +136,7 @@
                 @foreach($locations as $locationId => $location)
                     <tr>
                         <td>{{ $specimen_location_model->getName($locationId) }}</td>
-                        <?php $total = $susceptibility_model->getResistanceCount($organismId, $locationId, $specimen_type_ids)?>
+                        <?php $total = $susceptibility_model ? $susceptibility_model->getResistanceCount($organismId, $locationId, $specimen_type_ids) : 0?>
                         <td> {{ $total }}</td>
                         @forelse($location as $drug)
                             <?php $drugCount = $susceptibility_model->getDrugResistanceCount($organismId, $locationId, $specimen_type_ids, $drug->drug_id) ?>
