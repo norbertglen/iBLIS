@@ -196,7 +196,7 @@
                                 <div class="modal fade" id="sample-details-modal">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
-                                    {{ Form::open(array('route' => 'test.updateSpecimenSampleDetails')) }}
+                                         {{ Form::open(array('route' => 'test.updateSpecimenSampleDetails', 'id' => '1234')) }}
                                       <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">
                                             <span aria-hidden="true">&times;</span>
@@ -216,7 +216,7 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ Form::text('date_collected', $test->specimen_id, 
-                                                                array('class' => 'form-control standard-datepicker', 'id' => 'date_collected')) }}
+                                                        array('class' => 'form-control standard-datepicker', 'id' => 'date_collected', 'required' => '')) }}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
@@ -227,7 +227,8 @@
                                                             {{ Form::text('time_collected', Input::old('time_collected'), 
                                                                 array(
                                                                     'class' => 'form-control',
-                                                                    'id' => 'timepicker')) }}
+                                                                    'id' => 'timepicker',
+                                                                'required' => '')) }}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
@@ -237,7 +238,7 @@
 
                                                     <div class="col-md-8">
                                                         {{ Form::select('location', $locations->lists('name', 'id'),  array($test->specimen->site_collected_id), 
-                                                            array('class' => 'form-control', 'id' => 'location') )}}
+                                                        array('class' => 'form-control', 'id' => 'location', 'required' => '') )}}
                                                     </div>
                                                 </div><br />
                                                 <div class="row">
@@ -246,7 +247,8 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ Form::select('collection_site', $collection_site->lists('name','id'),
-                                                            array($test->specimen->site_collected_id), array('class' => 'form-control', 'id' => 'collection_site')) }}
+                                                            array($test->specimen->site_collected_id),
+                                                        array('class' => 'form-control', 'id' => 'collection_site', 'required' => '')) }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,7 +256,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans('messages.save'),
-                                            array('class' => 'btn btn-primary', 'data-dismiss' => 'modal', 'onclick' => 'submit()')) }}
+                                        array('class' => 'btn btn-primary', 'data-dismiss' => 'modal', 'onclick' => 'submit()', 'type' => 'submit')) }}
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             {{trans('messages.close')}}</button>
                                       </div>

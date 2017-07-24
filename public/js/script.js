@@ -2,22 +2,22 @@
  * Custom javascript function
  * @author  (c) @iLabAfrica
  */
-$(function () {
+$(function() {
     /**	HEADER
      *   Username display
      */
-    $('.user-link').click(function () {
+    $('.user-link').click(function() {
         $('.user-settings').toggle();
     });
 
-    $('.user-profile .user-settings a').click(function () {
+    $('.user-profile .user-settings a').click(function() {
         $('.user-settings').toggle();
     });
 
     /*	LEFT SIDEBAR FUNCTIONS	*/
 
     /*  Click main menu */
-    $('.main-menu').click(function () {
+    $('.main-menu').click(function() {
 
         $('.main-menu').removeClass('active');
         $(this).addClass('active');
@@ -30,7 +30,7 @@ $(function () {
      *-  Load password reset input field
      */
 
-    $('a.reset-password').click(function () {
+    $('a.reset-password').click(function() {
         if ($('input.reset-password').hasClass('hidden')) {
             $('input.reset-password').removeClass('hidden');
         } else {
@@ -39,7 +39,7 @@ $(function () {
     });
 
     /*Submitting Profile edit, with password change validation*/
-    $('.update-reset-password').click(function () {
+    $('.update-reset-password').click(function() {
         editUserProfile();
     });
 
@@ -48,7 +48,7 @@ $(function () {
      */
 
     /* Add another surveillance */
-    $('.add-another-surveillance').click(function () {
+    $('.add-another-surveillance').click(function() {
         newSurveillanceNo = $(this).data('new-surveillance');
         var inputHtml = $('.addSurveillanceLoader').html();
         //Count new measures on the new measure button
@@ -60,7 +60,7 @@ $(function () {
     });
 
     /* Add another disease */
-    $('.add-another-disease').click(function () {
+    $('.add-another-disease').click(function() {
         newDiseaseNo = $(this).data('new-disease');
         var inputHtml = $('.addDiseaseLoader').html();
         //Count new measures on the new measure button
@@ -75,7 +75,7 @@ $(function () {
      *	Ordering measures  
      */
     if (typeof sortable('.sortable')[0] != 'undefined') {
-        sortable('.sortable')[0].addEventListener('sortupdate', function (e) {
+        sortable('.sortable')[0].addEventListener('sortupdate', function(e) {
             var items = e.detail.startparent.children;
             var start = 0;
             var mOrder = [];
@@ -90,14 +90,14 @@ $(function () {
             var url = location.protocol + "//" + location.host + "/measure/" + testID + "/reorder";
             $.post(url, {
                 'ordering': JSON.stringify(actualOrder)
-            }).done(function () {
+            }).done(function() {
                 location.reload();
             });
         });
     }
 
     /* Add another measure */
-    $('.add-another-measure').click(function () {
+    $('.add-another-measure').click(function() {
         newMeasureNo = $(this).data('new-measure');
         var inputHtml = $('.measureGenericLoader').html();
         //Count new measures on the new measure button
@@ -120,7 +120,7 @@ $(function () {
     });
 
     /* Add another measure range value */
-    $('.measure-container').on('click', '.add-another-range', function () {
+    $('.measure-container').on('click', '.add-another-range', function() {
         var inputClass = [
             '.numericInputLoader',
             '.alphanumericInputLoader',
@@ -158,11 +158,11 @@ $(function () {
     /** GLOBAL DELETE	
      *	Alert on irreversible delete
      */
-    $('.confirm-delete-modal').on('show.bs.modal', function (e) {
+    $('.confirm-delete-modal').on('show.bs.modal', function(e) {
         $('#delete-url').val($(e.relatedTarget).data('id'));
     });
 
-    $('.btn-delete').click(function () {
+    $('.btn-delete').click(function() {
         $('.confirm-delete-modal').modal('toggle');
         window.location.href = $('#delete-url').val();
     });
@@ -170,31 +170,31 @@ $(function () {
     UIComponents();
 
     /* Clicking the label of an radio/checkbox, checks the control*/
-    $('span.input-tag').click(function () {
+    $('span.input-tag').click(function() {
         $(this).siblings('input').trigger('click');
     });
 
     // Delete measure range
 
-    $('body').on('click', '.measure-input .close', function () {
+    $('body').on('click', '.measure-input .close', function() {
         $(this).parent().parent().remove();
     });
 
     // Delete measure
 
-    $('.measure-container').on('click', '.close', function () {
+    $('.measure-container').on('click', '.close', function() {
         $(this).parent().parent().remove();
     });
 
     // Delete Surveillance entry
 
-    $('.surveillance-input').on('click', '.close', function () {
+    $('.surveillance-input').on('click', '.close', function() {
         $(this).parent().parent().parent().remove();
     });
 
     // Delete Disease entry
 
-    $('.disease-input').on('click', '.close', function () {
+    $('.disease-input').on('click', '.close', function() {
         $(this).parent().parent().parent().remove();
     });
 
@@ -202,13 +202,13 @@ $(function () {
      * Fetch Test results
      */
 
-    $('.fetch-test-data').click(function () {
+    $('.fetch-test-data').click(function() {
         var testTypeID = $(this).data('test-type-id');
         var url = $(this).data('url');
         $.post(url, {
             test_type_id: testTypeID
-        }).done(function (data) {
-            $.each($.parseJSON(data), function (index, obj) {
+        }).done(function(data) {
+            $.each($.parseJSON(data), function(index, obj) {
                 console.log(index + " " + obj);
                 $('#' + index).val(obj);
             });
@@ -220,13 +220,13 @@ $(function () {
      * Fetch Test results
      */
 
-    $('.fetch-control-data').click(function () {
+    $('.fetch-control-data').click(function() {
         var controlID = $(this).data('control-id');
         var url = $(this).data('url');
         $.post(url, {
             control_id: controlID
-        }).done(function (data) {
-            $.each($.parseJSON(data), function (index, obj) {
+        }).done(function(data) {
+            $.each($.parseJSON(data), function(index, obj) {
                 $('#' + index).val(obj);
             });
         });
@@ -237,15 +237,15 @@ $(function () {
      * UI Rendering Logic here
      */
 
-    $('#new-test-modal .search-patient').click(function () {
+    $('#new-test-modal .search-patient').click(function() {
         var searchText = $('#new-test-modal .search-text').val();
         var url = location.protocol + "//" + location.host + "/patient/search";
         var output = "";
         var cnt = 0;
         $.post(url, {
             text: searchText
-        }).done(function (data) {
-            $.each($.parseJSON(data), function (index, obj) {
+        }).done(function(data) {
+            $.each($.parseJSON(data), function(index, obj) {
                 output += "<tr>";
                 output += "<td><input type='radio' value='" + obj.id + "' name='pat_id'></td>";
                 output += "<td>" + obj.patient_number + "</td>";
@@ -268,7 +268,7 @@ $(function () {
      * Prevent patient search modal form submit (default action) when the ENTER key is pressed
      */
 
-    $('#new-test-modal .search-text').keypress(function (event) {
+    $('#new-test-modal .search-text').keypress(function(event) {
         if (event.which == 13) {
             event.preventDefault();
             $('#new-test-modal .search-patient').click();
@@ -279,14 +279,14 @@ $(function () {
      *  - Fetch corresponding test and default specimen data
      *  - Display all in the modal.
      */
-    $('#change-specimen-modal').on('show.bs.modal', function (e) {
+    $('#change-specimen-modal').on('show.bs.modal', function(e) {
         //get data-id attribute of the clicked element
         var id = $(e.relatedTarget).data('test-id');
         var url = $(e.relatedTarget).data('url');
 
         $.post(url, {
             id: id
-        }).done(function (data) {
+        }).done(function(data) {
             //Show it in the modal
             $(e.currentTarget).find('.modal-body').html(data);
         });
@@ -312,7 +312,7 @@ $(function () {
      *  - Updates the Test status via an AJAX call
      *  - Changes the UI to show the right status and buttons
      */
-    $('.tests-log').on("click", ".receive-test", function (e) {
+    $('.tests-log').on("click", ".receive-test", function(e) {
 
         var testID = $(this).data('test-id');
         var specID = $(this).data('specimen-id');
@@ -320,7 +320,7 @@ $(function () {
         var url = location.protocol + "//" + location.host + "/test/" + testID + "/receive";
         $.post(url, {
             id: testID
-        }).done(function () {});
+        }).done(function() {});
 
         var parent = $(e.currentTarget).parent();
         // First replace the status
@@ -344,14 +344,14 @@ $(function () {
      *  - Updates the Specimen status via an AJAX call
      *  - Changes the UI to show the right status and buttons
      */
-    $('.tests-log').on("click", ".accept-specimen", function (e) {
+    $('.tests-log').on("click", ".accept-specimen", function(e) {
 
         var testID = $(this).data('test-id');
         var specID = $(this).data('specimen-id');
         var url = $(this).data('url');
         $.post(url, {
             id: specID
-        }).done(function () {});
+        }).done(function() {});
 
         var parent = $(e.currentTarget).parent();
         // First replace the status
@@ -384,7 +384,7 @@ $(function () {
      * Updates the test  result via ajax call
      */
 
-    $(".result-interpretation-trigger").focusout(function (event) {
+    $(".result-interpretation-trigger").focusout(function(event) {
         var interpretation = "";
         var url = $(this).data('url');
         var measureid = $(this).data('measureid');
@@ -398,11 +398,11 @@ $(function () {
             measurevalue: measurevalue,
             gender: gender,
             testId: testId
-        }).done(function (interpretation) {
+        }).done(function(interpretation) {
             //check if critical
             if (typeof interpretation === "string" && interpretation.toUpperCase() == "CRITICAL") {
                 event.target.style.color = "red"
-                //add to interpretation	
+                    //add to interpretation	
                 var comments = $(".result-interpretation").val();
                 if (comments.search("CRITICAL VALUES DETECTED")) {
                     $(".result-interpretation").val("CRITICAL VALUES DETECTED! " + comments);
@@ -420,12 +420,12 @@ $(function () {
      *  - Updates the Test status via an AJAX call
      *  - Changes the UI to show the right status and buttons
      */
-    $('.tests-log').on("click", ".start-test", function (e) {
+    $('.tests-log').on("click", ".start-test", function(e) {
         var testID = $(this).data('test-id');
         var url = $(this).data('url');
         $.post(url, {
             id: testID
-        }).done(function () {});
+        }).done(function() {});
 
         var parent = $(e.currentTarget).parent();
         // First replace the status
@@ -453,31 +453,31 @@ $(function () {
      */
 
     /*Dynamic loading of select list options*/
-    $('#section_id').change(function () {
+    $('#section_id').change(function() {
         $.get("/reports/dropdown", {
                 option: $(this).val()
             },
-            function (data) {
+            function(data) {
                 var test_type = $('#test_type');
                 test_type.empty();
                 test_type.append("<option value=''>Select Test Type</option>");
-                $.each(data, function (index, element) {
+                $.each(data, function(index, element) {
                     test_type.append("<option value='" + element.id + "'>" + element.name + "</option>");
                 });
             });
     });
     /*End dynamic select list options*/
     /*Dynamic loading of select list options*/
-    $('#commodity-id').change(function () {
+    $('#commodity-id').change(function() {
         $.get("/topup/" + $(this).val() + "/availableStock",
-            function (data) {
+            function(data) {
                 $('#current_bal').val(data.availableStock);
             });
     });
     /*End dynamic select list options*/
 
     /*Toggle summary div for reports*/
-    $('#reveal').click(function () {
+    $('#reveal').click(function() {
         if ($('#summary').hasClass('hidden')) {
             $('#summary').removeClass('hidden');
         } else {
@@ -508,11 +508,11 @@ $(function () {
  * Section for AJAX loaded components
  *-----------------------------------
  */
-$(document).ajaxComplete(function () {
+$(document).ajaxComplete(function() {
     /* - Identify the selected patient by setting the hidden input field
        - Enable the 'Next' button on the modal
     */
-    $('#new-test-modal .table input[type=radio]').click(function () {
+    $('#new-test-modal .table input[type=radio]').click(function() {
         $('#new-test-modal #patient_id').val($(this).val());
         $('#new-test-modal .modal-footer .next').prop('disabled', false);
 
@@ -521,7 +521,7 @@ $(document).ajaxComplete(function () {
        - Identify the selected patient by setting the hidden input field
        - Enable the 'Next' button on the modal
     */
-    $('#new-test-modal .patient-search-result tr td').click(function () {
+    $('#new-test-modal .patient-search-result tr td').click(function() {
         var theRadio = $(this).parent().find('td input[type=radio]');
         theRadio.prop("checked", true);
         $('#new-test-modal #patient_id').val(theRadio.val());
@@ -710,13 +710,13 @@ function editUserProfile() {
 }
 
 //DataTables search functionality
-$(document).ready(function () {
+$(document).ready(function() {
     $('.search-table').DataTable({
         'bStateSave': true,
-        'fnStateSave': function (oSettings, oData) {
+        'fnStateSave': function(oSettings, oData) {
             localStorage.setItem('.search-table', JSON.stringify(oData));
         },
-        'fnStateLoad': function (oSettings) {
+        'fnStateLoad': function(oSettings) {
             return JSON.parse(localStorage.getItem('.search-table'));
         }
     });
@@ -725,7 +725,7 @@ $(document).ready(function () {
 //Make sure all input fields are entered before submission
 function authenticate(form) {
     var empty = false;
-    $('form :input:not(button)').each(function () {
+    $('form :input:not(button)').each(function() {
 
         if ($(this).val() == '') {
             empty = true;
@@ -751,7 +751,7 @@ function saveObservation(tid, user, username) {
             userId: user,
             action: "add"
         },
-        success: function () {
+        success: function() {
             drawCultureWorksheet(tid, user, username);
         }
     });
@@ -772,9 +772,9 @@ function saveGrainStain(tid, userId) {
             userId: userId,
             action: "add"
         },
-        success: function () {
+        success: function() {
             alert("process sucess!")
-            // drawCultureWorksheet(tid , user, username);
+                // drawCultureWorksheet(tid , user, username);
         }
     });
 }
@@ -796,9 +796,9 @@ function saveBiochemicalTest(tid, userId, bioID) {
             bioID: bioID,
             action: "add"
         },
-        success: function () {
+        success: function() {
             alert("process sucess!")
-            // drawCultureWorksheet(tid , user, username);
+                // drawCultureWorksheet(tid , user, username);
         }
     });
 }
@@ -816,9 +816,9 @@ function drawCultureWorksheet(tid, user, username) {
             userId: user,
             action: "draw"
         },
-        function (data) {
+        function(data) {
             var tableBody = "";
-            $.each(data, function (index, elem) {
+            $.each(data, function(index, elem) {
                 tableBody += "<tr>" +
                     " <td>" + elem.timeStamp + " </td>" +
                     " <td>" + elem.user + "</td>" +
@@ -844,7 +844,7 @@ function saveDrugSusceptibility(tid, oid) {
         type: 'POST',
         url: '/susceptibility/saveSusceptibility',
         data: dataString,
-        success: function () {
+        success: function() {
             drawSusceptibility(tid, oid);
         }
     });
@@ -859,7 +859,7 @@ function saveDrugMinimumInhibitory(tid, oid) {
         type: 'POST',
         url: '/susceptibility/saveMinimumInhibitory',
         data: dataString,
-        success: function () {
+        success: function() {
             drawIhibitoryTable(tid, oid);
         }
     });
@@ -873,11 +873,11 @@ function drawSusceptibility(tid, oid) {
             organismId: oid,
             action: "results"
         },
-        function (data) {
+        function(data) {
             var tableRow = "";
             var tableBody = "";
             var suscept = "";
-            $.each(data, function (index, elem) {
+            $.each(data, function(index, elem) {
                 tableRow += "<tr>" +
                     " <td>" + elem.drugName + " </td>" +
                     " <td>" + elem.zone + "</td>" +
@@ -903,11 +903,11 @@ function drawIhibitoryTable(tid, oid) {
             organismId: oid,
             action: "results"
         },
-        function (data) {
+        function(data) {
             var tableRow = "";
             var tableBody = "";
             var suscept = "";
-            $.each(data, function (index, elem) {
+            $.each(data, function(index, elem) {
                 tableRow += "<tr>" +
                     " <td>" + elem.drugName + " </td>" +
                     " <td>" + elem.concentration + "</td>" +
@@ -947,7 +947,7 @@ function saveDrugDiffusionGuideline(drugId, existing) {
             intermediate: intermediate,
             susceptible: susceptible
         },
-        success: function () {
+        success: function() {
             alert('saved to db');
         }
     });
@@ -996,7 +996,7 @@ function onZoneChange(id, drugId) {
             drugId: drugId,
             observation: observation
         },
-        success: function (res) {
+        success: function(res) {
             console.log(res);
             if (res == 'No guideline found') return alert('No Diffusion Guideline set for this drug');
 
@@ -1014,7 +1014,7 @@ function fetch_equipment_details() {
         $.getJSON('blisclient/details', {
                 equip: id
             },
-            function (data) {
+            function(data) {
                 var html = "<h4 class='text-center'>EQUIPMENT</h4>" +
                     "<div class='form-group'>" +
                     "<label for='equipment_name'>Equipment Name</label>" +
@@ -1044,8 +1044,8 @@ function fetch_equipment_details() {
                 $.getJSON('blisclient/properties', {
                         client: id
                     },
-                    function (data) {
-                        $.each(data, function (index, elem) {
+                    function(data) {
+                        $.each(data, function(index, elem) {
                             html += "<div class='form-group'>" +
                                 "<label for='" + elem.config_prop + "'>" + elem.config_prop + "</label>" +
                                 "<input type='text' class='form-control' name = '" + elem.prop_id + "' value = '" + elem.prop_value + "'>" +
@@ -1080,7 +1080,7 @@ function updateResistant(id) {
     var max_resistant = Number($('#resistant_' + id).val());
 
     if (min_resistant >= max_resistant) {
-        $('#resistant_'+id).val(min_resistant + 1);
+        $('#resistant_' + id).val(min_resistant + 1);
         updateIntermediate(id, 'resistant');
     }
 }
@@ -1120,19 +1120,23 @@ function updateIntermediate(id, type) {
 }
 
 function fetchSpecimenSample(specimenId) {
-    var timeVal = $('#timepicker').val();
-    var len = timeVal.split('').length;
 
-    if (len <= 4) {
-        timeVal = timeVal + '0'; 
-        $('#timepicker').val(timeVal);
-    }
-
-    $.get('/specimen/' + specimenId, function (res) {
+    $.get('/specimen/' + specimenId, function(res) {
         $('#date_collected').val(res.date_collected);
         $('#timepicker').val(res.time_collected);
         $('#location').val(res.location_id.id);
         $('#collection_site').val(res.site_collected_id.id);
         $('#specimen-id').val(specimenId);
+        
+        var timeVal = res.time_collected; 
+        var len = timeVal.split('').length;
+        
+        if (len < 5) {
+            timeVal = timeVal.split('');
+            timeVal.splice(len - 1, 0, '0');
+            timeVal = timeVal.join('');
+            $('#timepicker').val(timeVal);
+        }
     });
 }
+
