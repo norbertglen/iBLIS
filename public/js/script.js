@@ -757,7 +757,7 @@ function saveObservation(tid, user, username) {
     });
 }
 
-function saveGrainStain(tid, userId) {
+function saveGramStain(tid, userId) {
     select = "grainstain_" + tid;
     result = $("#" + select).find(":selected").val();
 
@@ -773,7 +773,10 @@ function saveGrainStain(tid, userId) {
             action: "add"
         },
         success: function() {
-            alert("process sucess!")
+            $('<div class="alert alert-success alert-dismissible" id="gramStainSaveAlert">' +
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                    '<strong>Success!</strong> Gram stain result has been saved.' +
+                '</div>').insertBefore('#gram-stain-table');
                 // drawCultureWorksheet(tid , user, username);
         }
     });

@@ -162,7 +162,8 @@
 
                                 <!-- grainstain Tests-->
                                 <p><strong>{{trans("messages.gram-stain")}}</strong></p>
-                                <table class="table table-bordered">
+                                
+                                <table id="gram-stain-table" class="table table-bordered">
                                     <tbody>
                                         <tr>
                                             <td width="40%" class="form-group">
@@ -172,7 +173,7 @@
                                                     array(1 => 'positive', 0 => 'negative'),null,
                                                     array('id' => 'grainstain_'.$test->id)) }}</td>
                                             <td width="10%">
-                                                <a class="btn btn-xs btn-success" href="javascript:void(0)" onclick="saveGrainStain(<?php echo $test->id;?>, <?php echo Auth::user()->id; ?>)">{{ trans('messages.save'); }}</a>
+                                                <a class="btn btn-xs btn-success" href="javascript:void(0)" onclick="saveGramStain(<?php echo $test->id;?>, <?php echo Auth::user()->id; ?>)">{{ trans('messages.save'); }}</a>
                                             </td>
                                         </tr>
                                     </tbody>
