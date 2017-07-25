@@ -121,15 +121,21 @@ class TestController extends \BaseController {
      */
     public function saveNewTest()
     {
+
+        
         //Create New Test
         $rules = array(
             'visit_type' => 'required',
             'physician' => 'required',
-            'admission_date' => 'required',
             'testtypes' => 'required',
         );
-        $validator = Validator::make(Input::all(), $rules);
 
+        // admission_date is required only if visit_type is In-patient
+        if (Input::get('visit_type') == 1) {
+            $rules['admission_date'] = 'required';
+        }
+
+        $validator = Validator::make(Input::all(), $rules);
         // process the login
         if ($validator->fails()) {
             return Redirect::route('test.create',
