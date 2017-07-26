@@ -58,7 +58,7 @@ class SusceptibilityController extends \BaseController {
 				$drugSusceptibility->test_id = $test[$i];
 				$drugSusceptibility->organism_id = $organism[$i];
 				$drugSusceptibility->drug_id = $drug[$i];
-				$drugSusceptibility->zone = $zone[$i];
+				$drugSusceptibility->zone = $interpretation[$i] == 'Not Done' ? 'Not Done' : $zone[$i];
 				$drugSusceptibility->interpretation = $interpretation[$i];
 				$drugSusceptibility->save();
 			}

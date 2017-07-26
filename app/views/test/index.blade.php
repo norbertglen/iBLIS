@@ -241,16 +241,17 @@
                                                         array('class' => 'form-control', 'id' => 'location', 'required' => '') )}}
                                                     </div>
                                                 </div><br />
-                                                <div class="row">
+                                                <div class="row" id="specimen-collection-site">
                                                     <div class="col-md-4">
-                                                        <strong>{{ Lang::choice('messages.site-of-collection',2) }}</strong>
+                                                        <strong id="hiiden-label" display"none">{{ Lang::choice('messages.site-of-collection',2) }}</strong>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ Form::select('collection_site', $collection_site->lists('name','id'),
                                                             array($test->specimen->site_collected_id),
-                                                        array('class' => 'form-control', 'id' => 'collection_site', 'required' => '')) }}
+                                                        array('class' => 'form-control', 'id' => 'collection_site', 'required' => '', 'onchange' => 'onOtherSampleDetailsSelection()')) }}
                                                     </div>
-                                                </div>
+                                                </div><br/>
+                                                
                                             </div>
                                         </div>
                                       </div>
@@ -558,7 +559,9 @@
     
     <div id="count" style='display:none;'>0</div>
     <div id ="barcodeList" style="display:none;"></div>
+    <script>
 
+    </script>
     <!-- jQuery barcode script -->
     <script type="text/javascript" src="{{ asset('js/barcode.js') }} "></script>
 @stop

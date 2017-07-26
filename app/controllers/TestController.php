@@ -288,9 +288,17 @@ class TestController extends \BaseController {
      */
     public function updateSpecimenSampleDetails()
     {
+        $other = Input::get('other');
+        $id = Input::get('collection_site');
+        if ($other) {
+            $new_site_of_collection = new SpecimenCollectionSite;
+            $new_site_of_collection->name = $other;
+            $new_site_of_collection->save();
+            $id = $new_site_of_collection->id;
+        }
         $specimen = Specimen::find(Input::get('specimen_id'));
         $specimen->location_id = Input::get('location');
-        $specimen->site_collected_id = Input::get('collection_site');
+        $specimen->site_collected_id = $id;
         $specimen->date_collected = Input::get('date_collected');
         $specimen->time_collected = Input::get('time_collected');
         $specimen->save();

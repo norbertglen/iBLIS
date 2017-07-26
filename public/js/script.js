@@ -1133,8 +1133,8 @@ function fetchSpecimenSample(specimenId) {
         
         var timeVal = res.time_collected; 
         var len = timeVal.split('').length;
-        
-        if (len < 5) {
+        let hrs = new Date().getHours().toString();
+        if (len < 5 && hrs.length > 1) {
             timeVal = timeVal.split('');
             timeVal.splice(len - 1, 0, '0');
             timeVal = timeVal.join('');
@@ -1142,4 +1142,23 @@ function fetchSpecimenSample(specimenId) {
         }
     });
 }
+
+function onOtherSampleDetailsSelection() {
+    if ($('#collection_site option:selected').text().toLowerCase() == 'other') {
+        append();
+    } else {
+        $('#other-specimen-location').remove();
+    }
+}
+function append() {
+    $(' <br /><div class="row" id="other-specimen-location">' +
+            '<div class="col-md-4">' +
+                '<strong>Other</strong>' +
+            '</div>' +
+            '<div class="col-md-8">' +
+                '<input type="text" class="form-control" name="other">' +
+            '</div>' +
+        '</div>').insertAfter('#specimen-collection-site');
+}
+
 

@@ -81,7 +81,6 @@
                                     }
                                     ?>
                                     {{ Form::label($fieldName , $measure->name) }}
-                                    {{ var_dump($measure_values, true) }}
                                     {{ Form::select($fieldName, $measure_values, array_search($ans, $measure_values),
                                         array('class' => 'form-control result-interpretation-trigger',
                                         'data-url' => URL::route('test.resultinterpretation'),

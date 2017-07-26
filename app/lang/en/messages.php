@@ -160,6 +160,7 @@ return array(
     'recieved-by' => 'Recieved by',
     'sample-details' => 'Sample Details',
     'site-of-collection' => 'Site of collection',
+    'Other' => 'Other',
 
     /** 
      *   Test Catalog
