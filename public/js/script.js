@@ -951,7 +951,10 @@ function saveDrugDiffusionGuideline(drugId, existing) {
             susceptible: susceptible
         },
         success: function() {
-            alert('saved to db');
+            var drugName = $('#drug_disc_diffusion' + drugId).text();
+            var snackmessage = drugName + ' saved successfully';
+            openSnackBar(snackmessage);
+            // alert('saved to db');
         }
     });
 }
@@ -1159,6 +1162,18 @@ function append() {
                 '<input type="text" class="form-control" name="other">' +
             '</div>' +
         '</div>').insertAfter('#specimen-collection-site');
+}
+
+function openSnackBar(message) {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+    x.innerText = message;
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
 

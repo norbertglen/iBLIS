@@ -40,6 +40,8 @@
                 </div>
             </div>
         </div>
+        <!-- Toast Message-->
+        <div id="snackbar">Some text some message..</div>
         @include("footer")
     </body>
 </html>

@@ -37,7 +37,7 @@
                 <tbody>
                     @foreach($drugs as $key => $drug)
                         <tr>
-                            <td>{{ $drug->name }} {{ $drug->min_resistant }}</td>
+                            <td id={{ 'drug_disc_diffusion'.$drug->id }}>{{ $drug->name }}</td>
                             <td>
                                 <div class="row concentration-row">
                                     <span class="col-md-4">
