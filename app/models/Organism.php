@@ -88,7 +88,7 @@ class Organism extends Eloquent
     }
 
     public function getCount() {
-        $count = Susceptibility::where('organism_id', '=', $this->id)->where('zone', '!=', 'Not D')->count();
+        $count = Susceptibility::distinct('test_id')->where('organism_id', '=', $this->id)->where('zone', '!=', 'Not D')->count('test_id');
         return $count;
     }
 

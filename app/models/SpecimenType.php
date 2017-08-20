@@ -82,4 +82,14 @@ class SpecimenType extends Eloquent
 
 		return $specimens->count();
 	}
+
+	/**
+	* Return specimen type name given ID
+	*
+	* @param $id
+	*/
+	public function getName($id) {
+		$specimen_type = $this::where('id', '=', $id)->first();
+		return $specimen_type->name;
+  }
 }

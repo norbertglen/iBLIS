@@ -2490,6 +2490,7 @@ class ReportController extends \BaseController {
 
         $drugs = Drug::orderBy('id', 'ASC') ->get();
         $organisms = Organism::orderBy('id', 'ASC')->get();
+        
         forEach($organisms as $organism) {
             $specimen_locations = array();
             if ($specimen_location_ids && $specimen_type_ids) {
@@ -2534,6 +2535,7 @@ class ReportController extends \BaseController {
             $chart_data = $this->getBarChartData($specimen_location_ids);
         }
 
+        $specimen_type_model = SpecimenType::find(1);
         return View::make('reports.antibiogram.index')
             ->with('specimen_collection_location', $specimen_collection_location)
             ->with('specimen_types', $specimen_types)
@@ -2548,7 +2550,8 @@ class ReportController extends \BaseController {
             ->with('susceptibility_model', $susceptibility_model)
             ->with('specimen_location_ids', $specimen_location_ids)
             ->with('specimen_type_ids', $specimen_type_ids)
-            ->with('chart_data', $chart_data);
+            ->with('chart_data', $chart_data)
+            ->with('specimen_type_model', $specimen_type_model);
     }
 
 

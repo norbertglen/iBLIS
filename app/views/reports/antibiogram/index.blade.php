@@ -94,7 +94,7 @@
                                             <td>{{ $organism->name }}</td>
                                             <td>{{ $organism->getCount()  }}</td>
                                             @foreach($drugs as $drug)
-                                                <td>{{$organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2) : 0 }}</td>
+                                                <td>{{$organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2).'%' : '0%' }}</td>
                                             @endforeach
                                         </tr>
                                     @endforeach
@@ -111,7 +111,11 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th colspan="<?php echo count($drugs) + 3; ?>">Antibiogram report; isolate source; Blood </th>
+                <th colspan="<?php echo count($drugs) + 3; ?>">Antibiogram report; isolate source; 
+                @foreach($specimen_type_ids as $specimen_type_id)
+                {{ $specimen_type_model->getName($specimen_type_id).',' }}
+                @endforeach
+                </th>
             </tr>
             <tr>
                 <th rowspan="2">Organisms</th>
@@ -143,7 +147,7 @@
                             <td>{{ $drugCount ? round(($drugCount / $total) * 100, 2) .'%': 0 .'%'}}</td>
                         @empty
                             @foreach($drugs as $drug)
-                                <td>N/A</td>
+                                <td>0%</td>
                             @endforeach
                         @endforelse
 
