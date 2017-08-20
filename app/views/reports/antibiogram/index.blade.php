@@ -10,12 +10,33 @@
     <div class="container-fluid">
         <div class="form-group">
             {{ Form::open(array('url' => '/antibiogram', 'class' => 'form-inline', 'method' => 'POST')) }}
-            <div class="checkbox">
-                <label for="all_isolates">
-                    {{ Form::checkbox('all_isolates', 'true', $all_isolates) }}
-                    {{ trans('messages.all-isolates') }}
-                </label>
+            <div class="row">
+                <div class="checkbox col-sm-2 right">
+                    <label for="all_isolates">
+                        {{ Form::checkbox('all_isolates', 'true', $all_isolates) }}
+                        {{ trans('messages.all-isolates') }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="col-sm-4">
+                            {{ Form::label('start', trans("messages.from")) }}
+                    </div>
+                    <div class="col-sm-3">
+                            {{ Form::text('start', isset($start_date) ? $start_date : null, 
+                                array('class' => 'form-control standard-datepicker')) }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="col-sm-4">
+                        {{ Form::label('end', trans("messages.to")) }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ Form::text('end', isset($end_date) ? $end_date : null, 
+                            array('class' => 'form-control standard-datepicker')) }}
+                    </div>
+                </div>
             </div>
+            
 
             <p><strong>{{ trans('messages.specimen-location')  }}</strong></p>
             <div class="form-pane panel panel-default">
@@ -80,7 +101,11 @@
                                     <tr>
                                         <th rowspan="2">{{ trans('messages.organisms') }}</th>
                                         <th rowspan="3">{{ trans('messages.no-of-isolates')  }}</th>
-                                        <th colspan="<?php echo count($drugs); ?>">{{ trans('messages.percentage-of-isolates-susceptible-to-drug')  }}</th>
+                                        <th colspan="<?php echo count($drugs); ?>">
+                                            {{ trans('messages.percentage-of-isolates-susceptible-to-drug') }}  
+                                            &nbsp;  &nbsp;  &nbsp; 
+                                            {{ $start_date.' to '.$end_date }}
+                                        </th>
                                     </tr>
                                     <tr>
                                         @foreach($drugs as $drug)
@@ -92,9 +117,13 @@
                                     @foreach($organisms as $organism)
                                         <tr>
                                             <td>{{ $organism->name }}</td>
-                                            <td>{{ $organism->getCount()  }}</td>
+                                            <td>{{ $organism->getCount($start_date, $end_date)  }}</td>
                                             @foreach($drugs as $drug)
-                                                <td>{{$organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2).'%' : '0%' }}</td>
+                                                @if($organism->getCount($start_date, $end_date) > 0)
+                                                <td>{{$organism->getDrugOccurence($drug->id, $start_date, $end_date) ? round($organism->getDrugOccurence($drug->id, $start_date, $end_date) / $organism->getCount($start_date, $end_date) * 100, 2).'%' : '0%' }}</td>
+                                                @else 
+                                                    <td> {{ 0 }} </td>
+                                                @endif
                                             @endforeach
                                         </tr>
                                     @endforeach
@@ -106,8 +135,8 @@
             </div>
         </div>
     @endif
-    
-    @if($all_organisms && $specimen_location_ids[0])
+
+    @if($all_organisms && $specimen_location_ids[0] && $specimen_type_ids[0])
     <table class="table table-bordered">
         <thead>
             <tr>

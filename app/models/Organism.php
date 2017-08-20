@@ -87,13 +87,23 @@ class Organism extends Eloquent
         return $this->susceptibility()->where('test_id', $id)->count();
     }
 
-    public function getCount() {
-        $count = Susceptibility::distinct('test_id')->where('organism_id', '=', $this->id)->where('zone', '!=', 'Not D')->count('test_id');
+    public function getCount($from, $to) {
+        $count = Susceptibility::distinct('test_id')
+            ->where('organism_id', '=', $this->id)
+            ->where('zone', '!=', 'Not D')
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->count('test_id');
         return $count;
     }
 
-    public function getDrugOccurence($drugId) {
-        $drugCount = Susceptibility::where('drug_id', '=', $drugId)->where('organism_id', '=', $this->id)->where('zone', '!=', 'Not D')->count();
+    public function getDrugOccurence($drugId, $from, $to) {
+        $drugCount = Susceptibility::where('drug_id', '=', $drugId)
+            ->where('organism_id', '=', $this->id)
+            ->where('zone', '!=', 'Not D')
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->count();
         return $drugCount;
     }
 

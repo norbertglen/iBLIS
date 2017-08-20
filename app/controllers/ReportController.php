@@ -2446,7 +2446,10 @@ class ReportController extends \BaseController {
         $specimen_location_ids = Input::get('location');
         $specimen_type_ids = Input::get('specimen_type');
         $all_isolates = Input::get('all_isolates');
-
+        $today = date("Y-m-d");;
+        $start_date = Input::get('start') ? Input::get('start') : date('Y-m-d', strtotime('-1 month'));
+        $end_date = Input::get('end') ? Input::get('end') : $today;
+       
         $organisms = '';
         // get
         if ($all_isolates) {
@@ -2534,6 +2537,7 @@ class ReportController extends \BaseController {
         if ($specimen_location_ids) {
             $chart_data = $this->getBarChartData($specimen_location_ids);
         }
+        // dd($specimen_type_ids);
 
         $specimen_type_model = SpecimenType::find(1);
         return View::make('reports.antibiogram.index')
@@ -2551,7 +2555,9 @@ class ReportController extends \BaseController {
             ->with('specimen_location_ids', $specimen_location_ids)
             ->with('specimen_type_ids', $specimen_type_ids)
             ->with('chart_data', $chart_data)
-            ->with('specimen_type_model', $specimen_type_model);
+            ->with('specimen_type_model', $specimen_type_model)
+            ->with('start_date', $start_date)
+            ->with('end_date', $end_date);
     }
 
 

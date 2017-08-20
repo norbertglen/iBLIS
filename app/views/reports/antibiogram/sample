@@ -1,0 +1,64 @@
+ @if($all_organisms && $specimen_location_ids[0])
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="<?php echo count($drugs) + 3; ?>">Antibiogram report; isolate source; 
+                @foreach($specimen_type_ids as $specimen_type_id)
+                {{ $specimen_type_model->getName($specimen_type_id).',' }}
+                @endforeach
+                </th>
+            </tr>
+            <tr>
+                <th rowspan="2">Organisms</th>
+                <th colspan="<?php echo count($drugs) + 2; ?>">Percentage Resistant</th>
+            </tr>
+            @if($drugs)
+            <tr>
+                <th>Locations</th>
+                <th>N</th>
+                @foreach($drugs as $drug)
+                    <th>{{ $drug->name }}</th>
+                @endforeach
+            </tr>
+            @endif
+        </thead>
+        <tbody>
+            @foreach($all_organisms as $organismId => $locations)
+                <tr>
+                    <td rowspan="{{ count($locations) + 1 }}">{{ $organism_model->getName($organismId)  }}</td>
+                </tr>
+            
+                @foreach($locations as $locationId => $location)
+                    <tr>
+                        <td>{{ $specimen_location_model->getName($locationId) }}</td>
+                        <?php $total = $susceptibility_model ? $susceptibility_model->getResistanceCount($organismId, $locationId, $specimen_type_ids) : 0?>
+                        <td> {{ $total }}</td>
+                        @forelse($location as $drug)
+                            <?php $drugCount = $susceptibility_model->getDrugResistanceCount($organismId, $locationId, $specimen_type_ids, $drug->drug_id) ?>
+                            <td>{{ $drugCount ? round(($drugCount / $total) * 100, 2) .'%': 0 .'%'}}</td>
+                        @empty
+                            @foreach($drugs as $drug)
+                                <td>0%</td>
+                            @endforeach
+                        @endforelse
+
+                    </tr>
+                @endforeach
+            @endforeach
+        </tbody>
+    </table>
+    <div id="antibiogram-chart"></div>
+
+    <!-- Begin HighCharts scripts -->
+    {{ HTML::script('highcharts/highcharts.js') }}
+    {{ HTML::script('highcharts/exporting.js') }}
+
+    <!-- End HighCharts scripts -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		//	Load antibiogram chart
+        console.log(<?php echo $chart_data; ?>);
+		$('#antibiogram-chart').highcharts(<?php echo $chart_data; ?>);
+	});
+</script>
+    @endif
