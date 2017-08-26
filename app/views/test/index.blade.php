@@ -196,7 +196,7 @@
                                 <div class="modal fade" id="sample-details-modal">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
-                                         {{ Form::open(array('route' => 'test.updateSpecimenSampleDetails', 'id' => '1234')) }}
+                                         {{ Form::open(array('id' => '1234')) }}
                                       <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">
                                             <span aria-hidden="true">&times;</span>
@@ -210,6 +210,9 @@
                                         <div class="display-details">
                                              {{ Form::hidden('specimen_id', '', array('id' => 'specimen-id')) }}
                                             <div class="container-fluid">
+                                                 <div class="row" id="error-container">
+                                                 
+                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <strong>{{ Lang::choice('messages.date-of-collection',1) }}</strong>
@@ -257,7 +260,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans('messages.save'),
-                                        array('class' => 'btn btn-primary', 'data-dismiss' => 'modal', 'onclick' => 'submit()', 'type' => 'submit')) }}
+                                        array('class' => 'btn btn-primary',  'onclick' => 'updateSampleDetails()', 'type' => 'submit')) }}
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             {{trans('messages.close')}}</button>
                                       </div>

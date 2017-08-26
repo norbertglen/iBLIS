@@ -665,6 +665,7 @@ function UIComponents() {
         changeMonth: true,
         changeYear: true,
         maxDate: "0",
+        yearRange: "c-50:c+10"
     });
 }
 
@@ -775,9 +776,9 @@ function saveGramStain(tid, userId) {
         success: function() {
             $('<div class="alert alert-success alert-dismissible" id="gramStainSaveAlert">' +
                 '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                    '<strong>Success!</strong> Gram stain result has been saved.' +
+                '<strong>Success!</strong> Gram stain result has been saved.' +
                 '</div>').insertBefore('#gram-stain-table');
-                // drawCultureWorksheet(tid , user, username);
+            // drawCultureWorksheet(tid , user, username);
         }
     });
 }
@@ -1133,8 +1134,8 @@ function fetchSpecimenSample(specimenId) {
         $('#location').val(res.location_id.id);
         $('#collection_site').val(res.site_collected_id.id);
         $('#specimen-id').val(specimenId);
-        
-        var timeVal = res.time_collected; 
+
+        var timeVal = res.time_collected;
         var len = timeVal.split('').length;
         let hrs = new Date().getHours().toString();
         if (len < 5 && hrs.length > 1) {
@@ -1153,14 +1154,15 @@ function onOtherSampleDetailsSelection() {
         $('#other-specimen-location').remove();
     }
 }
+
 function append() {
     $(' <br /><div class="row" id="other-specimen-location">' +
-            '<div class="col-md-4">' +
-                '<strong>Other</strong>' +
-            '</div>' +
-            '<div class="col-md-8">' +
-                '<input type="text" class="form-control" name="other">' +
-            '</div>' +
+        '<div class="col-md-4">' +
+        '<strong>Other</strong>' +
+        '</div>' +
+        '<div class="col-md-8">' +
+        '<input type="text" class="form-control" name="other">' +
+        '</div>' +
         '</div>').insertAfter('#specimen-collection-site');
 }
 
@@ -1173,7 +1175,50 @@ function openSnackBar(message) {
     x.className = "show";
 
     // After 3 seconds, remove the show class from DIV
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    setTimeout(function() {
+        x.className = x.className.replace("show", "");
+    }, 3000);
 }
 
+function updateSampleDetails() {
+    console.log('called');
+    var date_collected = $('#date_collected').val();
+    var time_collected = $('#timepicker').val();
+    var location = $('#location').val();
+    var collection_site = $('#collection_site').val();
 
+    if (!date_collected || !time_collected || !location || !collection_site) {
+        return $(' <div class="alert alert-danger alert-dismissable">' +
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            '<strong>Danger!</strong>' +
+            'All input fields are required</div>').appendTo('#error-container');
+    }
+    console.log('this is happening');
+    var specimenId = $('#specimen-id').val();
+    console.log(collection_site, specimenId, location, date_collected, time_collected); 
+    $.ajax({
+        type: 'POST',
+        url: '/test/updatespecimensampledetails',
+        data: {
+            collection_site: collection_site,
+            location: location,
+            date_collected: date_collected,
+            time_collected: time_collected,
+            $other: 'same'
+        },
+        success: function() {
+            // dismiss 
+            console.log('request sent');
+        },
+        error: function(err) {
+            console.log();
+        }
+    });
+}
+
+$(function() {
+    // Remove error messages from the update sampleDetails Modal
+    $('#sample-details-modal').on('hidden.bs.modal', function() {
+        $('#error-container').empty();
+    });
+});

@@ -109,6 +109,7 @@
 			<thead>
 				<tr>
 					<th>{{ trans('messages.visit-type') }}</th>
+          <th>{{ trans('messages.provisional-diagnosis')}}</th>
 					<th>{{ trans('messages.date-of-admission')}}</th>
 				</tr>
 			</thead>
@@ -116,7 +117,8 @@
 				@foreach ($visits as $visit)
 				<tr>
 					<td>{{ $visit->visit_type }}</td>
-					<td>{{ $visit->admission_date }}</td>
+          <td>{{ $visit->provisional_diagnosis }}</td>
+					<td>{{ $visit->visit_type == 'Out-patient' ? '' : $visit->admission_date }}</td>
 				</tr>
 				@endforeach
 			</tbody>

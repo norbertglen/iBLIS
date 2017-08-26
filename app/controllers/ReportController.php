@@ -100,7 +100,6 @@ class ReportController extends \BaseController {
 
         // get patient's in-patient visits
         $visits = Visit::where('patient_id', '=', $id)
-            ->where('visit_type', '=', 'in-patient')
             ->get();
 
         //  Check if tests are accredited
