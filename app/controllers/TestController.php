@@ -290,8 +290,6 @@ class TestController extends \BaseController {
     {
         $other = Input::get('other');
         $id = Input::get('collection_site');
-
-        // validate the input
         
         if ($other) {
             $new_site_of_collection = new SpecimenCollectionSite;
@@ -305,7 +303,6 @@ class TestController extends \BaseController {
         $specimen->date_collected = Input::get('date_collected');
         $specimen->time_collected = Input::get('time_collected');
         $specimen->save();
-       dd($other, $id); 
         return Redirect::route('test.viewDetails', array($specimen->test->id));
     }
 
