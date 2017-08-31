@@ -46,7 +46,7 @@ class BiochemicalController extends \BaseController {
 			return Redirect::back()->withErrors($validator);
 		}else{
 			//store
-			$biochemical_test = new BioChemicalTest;
+			$biochemical_test = new BiochemicalTest;
 			$biochemical_test->name = Input::get('name');
 			$biochemical_test->user_id = Auth::user()->id;
 			try{

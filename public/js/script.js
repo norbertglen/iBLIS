@@ -1181,11 +1181,15 @@ function openSnackBar(message) {
 }
 
 function updateSampleDetails() {
-    console.log('called');
+    // clear any existing error message first
+    $('#error-container').empty();
+
     var date_collected = $('#date_collected').val();
     var time_collected = $('#timepicker').val();
     var location = $('#location').val();
     var collection_site = $('#collection_site').val();
+    var csrf_token = $('#csrf_token').val();
+    var specimenId = $('#specimen-id').val();
 
     if (!date_collected || !time_collected || !location || !collection_site) {
         return $(' <div class="alert alert-danger alert-dismissable">' +
@@ -1193,9 +1197,7 @@ function updateSampleDetails() {
             '<strong>Danger!</strong>' +
             'All input fields are required</div>').appendTo('#error-container');
     }
-    console.log('this is happening');
-    var specimenId = $('#specimen-id').val();
-    console.log(collection_site, specimenId, location, date_collected, time_collected); 
+    
     $.ajax({
         type: 'POST',
         url: '/test/updatespecimensampledetails',
@@ -1204,11 +1206,10 @@ function updateSampleDetails() {
             location: location,
             date_collected: date_collected,
             time_collected: time_collected,
-            $other: 'same'
+            specimen_id: specimenId,
         },
-        success: function() {
-            // dismiss 
-            console.log('request sent');
+        success: function(ss) {
+            console.log('request sent', ss);
         },
         error: function(err) {
             console.log();
