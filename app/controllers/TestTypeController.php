@@ -35,109 +35,102 @@ class TestTypeController extends \BaseController {
         $measuretype = MeasureType::all()->sortBy('id');
         $organisms = Organism::orderBy('name')->get();
 
-        //Create TestType
-        return View::make('testtype.create')
-            ->with('testcategory', $testcategory)
-            ->with('measures', $measures)
-            ->with('measuretype', $measuretype)
-            ->with('specimentypes', $specimentypes)
-            ->with('organisms', $organisms);
-    }
+		//Create TestType
+		return View::make('testtype.create')
+					->with('testcategory', $testcategory)
+					->with('measures', $measures)
+       				->with('measuretype', $measuretype)
+					->with('specimentypes', $specimentypes)
+					->with('organisms', $organisms);
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
-        $rules = array(
-            'name' => 'required|unique:test_types,name',
-            'test_category_id' => 'required|non_zero_key',
-            'specimentypes' => 'required',
-            'new-measures' => 'required',
-        );
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		//
+		$rules = array(
+			'name' => 'required|unique:test_types,name',
+			'test_category_id' => 'required|non_zero_key',
+			'specimentypes' => 'required',
+			'new-measures' => 'required',
+		);
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->fails()) {
+			return Redirect::route('testtype.create')->withErrors($validator)->WithInput();
+		} 
+		foreach(Input::get('new-measures') as $key => $value)
+		{
+			$rules['new-measures.'.$key.'.name'] = 'required';
+			$rules['new-measures.'.$key.'.measure_type_id'] = 'required';
+			if(Input::get('new-measures.'.$key.'.measure_type_id') == Measure::NUMERIC)
+			{
+				$rules['new-measures.'.$key.'.agemin'] = 'required';
+				$rules['new-measures.'.$key.'.agemax'] = 'required';
+				$rules['new-measures.'.$key.'.rangemin'] = 'required';
+				$rules['new-measures.'.$key.'.rangemax'] = 'required';
+			}
+		}
+			//array to be split here and sent to appropriate place! man! with ids and all possibilities
+		//dd(Input::get('new-measures'));
+		// process the login
+			// store 
+			$testtype = new TestType;
+			$testtype->name = trim(Input::get('name'));
+			$testtype->description = Input::get('description');
+			$testtype->test_category_id = Input::get('test_category_id');
+			$testtype->targetTAT = Input::get('targetTAT');
+			$testtype->prevalence_threshold = Input::get('prevalence_threshold');
+			$testtype->orderable_test = Input::get('orderable_test');
+			$testtype->accredited = Input::get('accredited');
+			try{
+				$testtype->save();
+				$measureIds = array();
+				$inputNewMeasures = Input::get('new-measures');
+				
+				$measures = New MeasureController;
+				$measureIds = $measures->store($inputNewMeasures);
+				$testtype->setMeasures($measureIds);
+				$testtype->setSpecimenTypes(Input::get('specimentypes'));
+				$testtype->setOrganisms(Input::get('organisms'));
 
-        $validator = Validator::make(Input::all(), $rules);
-        if ($validator->fails()) {
-            return Redirect::route('testtype.create')->withErrors($validator)->WithInput();
-        }
+				return Redirect::route('testtype.index')
+					->with('message', trans('messages.success-creating-test-type'));
 
-        foreach(Input::get('new-measures') as $key => $value)
-        {
-            $rules['new-measures.'.$key.'.name'] = 'required';
-            $rules['new-measures.'.$key.'.measure_type_id'] = 'required';
-            if(Input::get('new-measures.'.$key.'.measure_type_id') == Measure::NUMERIC)
-            {
-                $rules['new-measures.'.$key.'.agemin'] = 'required';
-                $rules['new-measures.'.$key.'.agemax'] = 'required';
-                $rules['new-measures.'.$key.'.rangemin'] = 'required';
-                $rules['new-measures.'.$key.'.rangemax'] = 'required';
-            }
-        }
+			}catch(QueryException $e){
+				Log::error($e);
+			}
+	}
 
-        //array to be split here and sent to appropriate place! man! with ids and all possibilities
-        //dd(Input::get('new-measures'));
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::route('testtype.create')->withErrors($validator)->WithInput();
-        } else {
-            // store
-            $testtype = new TestType;
-            $testtype->name = trim(Input::get('name'));
-            $testtype->description = Input::get('description');
-            $testtype->test_category_id = Input::get('test_category_id');
-            $testtype->targetTAT = Input::get('targetTAT');
-            $testtype->prevalence_threshold = Input::get('prevalence_threshold');
-            $testtype->orderable_test = Input::get('orderable_test');
-            $testtype->accredited = Input::get('accredited');
-            try{
-                $testtype->save();
-                $measureIds = array();
-                $inputNewMeasures = Input::get('new-measures');
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		//Show a testtype
+		$testtype = TestType::find($id);
 
-                $measures = New MeasureController;
-                $measureIds = $measures->store($inputNewMeasures);
-                $testtype->setMeasures($measureIds);
-                $testtype->setSpecimenTypes(Input::get('specimentypes'));
-                $testtype->setOrganisms(Input::get('organisms'));
+		//Show the view and pass the $testtype to it
+		return View::make('testtype.show')->with('testtype', $testtype);
+	}
 
-                return Redirect::route('testtype.index')
-                    ->with('message', trans('messages.success-creating-test-type'));
-
-            }catch(QueryException $e){
-                Log::error($e);
-            }
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //Show a testtype
-        $testtype = TestType::find($id);
-
-        //Show the view and pass the $testtype to it
-        return View::make('testtype.show')->with('testtype', $testtype);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //Get the testtype
-        $testtype = TestType::find($id);
-        $measures = Measure::all();
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		//Get the testtype
+		$testtype = TestType::find($id);
+		$measures = Measure::all();
         $measuretype = MeasureType::all()->sortBy('id');
         $specimentypes = SpecimenType::orderBy('name')->get();
         $testcategory = TestCategory::all();
