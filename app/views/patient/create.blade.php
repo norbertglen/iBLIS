@@ -28,8 +28,12 @@
 						array('class' => 'form-control', 'maxlength' => 16)) }}
 				</div>
 				<div class="form-group">
-					{{ Form::label('name', trans('messages.names')) }}
+					{{ Form::label('name', trans('messages.surname')) }}
 					{{ Form::text('name', Input::old('name'), array('class' => 'form-control', 'maxlength' => 50)) }}
+				</div>
+				<div class="form-group">
+					{{ Form::label('othernames', trans('messages.othernames')) }}
+					{{ Form::text('othernames', Input::old('name'), array('class' => 'form-control', 'maxlength' => 50)) }}
 				</div>
 				<div class="form-group">
 					{{ Form::label('dob', trans('messages.date-of-birth')) }}

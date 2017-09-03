@@ -23,8 +23,11 @@ class PatientController extends \BaseController {
 		 	Session::flash('message', trans('messages.no-match'));
 		}
 
-		// Load the view and pass the patients
-		return View::make('patient.index')->with('patients', $patients)->withInput(Input::all());
+		$patient_count = count($patients);
+		// Load the view and pass the patients together with the number of records
+		return View::make('patient.index')->with('patients', $patients)
+		->with('patient_count', $patient_count)
+		->withInput(Input::all());
 	}
 
 	/**
@@ -50,7 +53,10 @@ class PatientController extends \BaseController {
 		$rules = array(
 			'patient_number' => 'required|unique:patients,patient_number',
 			'name'       => 'required',
+			'othernames' => 'required',
 			'gender' => 'required',
+			'email' => 'required|email|unique:users',
+			'phone_number' => 'required|numeric|size:10',
 			'dob' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
@@ -63,6 +69,7 @@ class PatientController extends \BaseController {
 			$patient = new Patient;
 			$patient->patient_number = Input::get('patient_number');
 			$patient->name = Input::get('name');
+			$patient->othernames = Input::get('othernames');
 			$patient->gender = Input::get('gender');
 			$patient->dob = Input::get('dob');
 			$patient->email = Input::get('email');

@@ -28,8 +28,11 @@
 
 	<br>
 
-@if (Session::has('message'))
+@if (Session::has('message') && !$patient_count)
 	<div class="alert alert-info">{{ trans(Session::get('message')) }}</div>
+@endif
+@if ($patient_count)
+<div class="alert alert-info">{{ $patient_count }} Record(s)</div>
 @endif
 
 <div class="panel panel-primary">
@@ -61,7 +64,7 @@
 					@endif
 				>
 					<td>{{ $patient->patient_number }}</td>
-					<td>{{ $patient->name }}</td>
+					<td>{{ $patient->name.' '.$patient->othernames }}</td>
 					<td>{{ ($patient->gender==0?trans('messages.male'):trans('messages.female')) }}</td>
 					<td>{{ $patient->dob }}</td>
 

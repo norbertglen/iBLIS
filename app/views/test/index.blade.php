@@ -113,7 +113,7 @@
                                 $test->visit->id:
                                 $test->visit->visit_number
                             }}</td> <!--Visit Number -->
-                        <td>{{ $test->visit->patient->name.' ('.($test->visit->patient->getGender(true)).',
+                        <td>{{ $test->visit->patient->name.' '. $test->visit->patient->othernames.' ('.($test->visit->patient->getGender(true)).',
                             '.$test->visit->patient->getAge('Y'). ')'}}</td> <!--Patient Name -->
                         <td>{{ $test->getSpecimenId() }}</td> <!--Specimen ID -->
                         <td>{{ $test->testType->name }}</td> <!--Test-->

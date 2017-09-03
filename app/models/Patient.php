@@ -88,6 +88,7 @@ class Patient extends Eloquent
 	{
 		return Patient::where('patient_number', '=', $searchText)
 						->orWhere('name', 'LIKE', '%'.$searchText.'%')
+						->orWhere('othernames', 'LIKE', '%'.$searchText.'%')
 						->orWhere('external_patient_number', '=', $searchText);
 	}
 }

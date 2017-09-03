@@ -35,6 +35,8 @@ return array(
     'logout' => 'Logout',
     'name' => 'Name|Names',
     'names' => 'Names',
+    'surname' => 'Surname',
+    'othernames' => 'Other Names',
     'next' => 'Next',
     'password' => 'Password|Passwords',
     'photo' => 'Photo',

@@ -2439,8 +2439,8 @@ class ReportController extends \BaseController {
     }
 
     public function antibiogramReport() {
-        $specimen_collection_location = SpecimenCollectionLocation::orderBy('id', 'ASC')->get();
-        $specimen_types = SpecimenType::orderBy('id', 'ASC')->get();
+        $specimen_collection_location = SpecimenCollectionLocation::orderBy('name', 'ASC')->get();
+        $specimen_types = SpecimenType::orderBy('name', 'ASC')->get();
 
         $specimen_location_ids = Input::get('location');
         $specimen_type_ids = Input::get('specimen_type');

@@ -82,7 +82,7 @@
 				<tr>
 					<th>{{ trans('messages.patient-name')}}</th>
 					@if(Entrust::can('view_names'))
-						<td>{{ $patient->name }}</td>
+						<td>{{ $patient->name.' '.$patient->othernames }}</td>
 					@else
 						<td>N/A</td>
 					@endif

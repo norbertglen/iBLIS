@@ -47,7 +47,7 @@
 					<td>{{ $patient->id }}</td>
 					<td>{{ $patient->patient_number }}</td>
 					@if(Entrust::can('view_names'))
-						<td>{{ $patient->name }}</td>
+						<td>{{ $patient->name.' '.$patient->othernames }}</td>
 					@endif
 					<td>{{ $patient->getGender() }}</td>
 					<td>{{ $patient->getAge() }}</td>
