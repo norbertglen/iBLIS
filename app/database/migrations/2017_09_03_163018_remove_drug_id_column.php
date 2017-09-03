@@ -12,11 +12,13 @@ class RemoveDrugIdColumn extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('disc_diffusion_guidelines', function(Blueprint $table)
-		{
-			$table->dropForeign('disc_diffusion_guidelines_drug_id_foreign');
-			$table->dropColumn('drug_id');
-		});
+		if(Schema::hasColumn('disc_diffusion_guidelines', 'drug_id'))  {
+			Schema::table('disc_diffusion_guidelines', function(Blueprint $table)
+			{
+				$table->dropForeign('disc_diffusion_guidelines_drug_id_foreign');
+				$table->dropColumn('drug_id');
+			});
+		}
 	}
 
 	/**
