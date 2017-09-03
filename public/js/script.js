@@ -1012,8 +1012,7 @@ function onZoneChange(id, drugId) {
         },
         success: function(res) {
             console.log(res);
-            if (res == 'No guideline found') return alert('No Diffusion Guideline set for this drug');
-
+            if (res == 'No guideline found') return openSnackBar('No Diffusion Guideline set for this drug');
 
             $('#interpretation_' + id + '' + drugId).val(res);
         }
