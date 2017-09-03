@@ -895,6 +895,8 @@ function drawSusceptibility(tid, oid) {
             //tableBody +="<tbody>"+tableRow+"</tbody>";
             $("#enteredResults_" + oid).html(tableRow);
             $("#submit_drug_susceptibility_" + oid).hide();
+            var snackmessage = 'Saved successfully';
+            openSnackBar(snackmessage);
         }
     );
 }
@@ -926,7 +928,9 @@ function drawIhibitoryTable(tid, oid) {
             $("#enteredInhibitoryResults_" + oid).html(tableRow);
             $("#submit_inhibitory_results_" + oid).hide();
 
-            alert('Saved successfully');
+            // toast
+            var snackmessage = 'Saved successfully';
+            openSnackBar(snackmessage);
         }
     );
 }
@@ -940,11 +944,13 @@ function saveDrugDiffusionGuideline(drugId, existing) {
     var resistant = $("#resistant_" + drugId).val();
     var intermediate = $("#intermediate_" + drugId).val();
     var susceptible = $("#susceptible_" + drugId).text();
+    var organismId = $('#organism_disc_diff option:selected').val();
 
     $.ajax({
         type: 'POST',
         url: '/drug/disc-diffusion-guidelines',
         data: {
+            organismId: organismId,
             drugId: drugId,
             min_resistant: min_resistant,
             resistant: resistant,
@@ -955,7 +961,7 @@ function saveDrugDiffusionGuideline(drugId, existing) {
             var drugName = $('#drug_disc_diffusion' + drugId).text();
             var snackmessage = drugName + ' saved successfully';
             openSnackBar(snackmessage);
-            // alert('saved to db');
+            $('#guidelines_saved_' + drugId).addClass('glyphicon-ok');
         }
     });
 }
@@ -1001,7 +1007,8 @@ function onZoneChange(id, drugId) {
         url: '/drug/disc-diffusion-guideline',
         data: {
             drugId: drugId,
-            observation: observation
+            observation: observation,
+            organismId: id
         },
         success: function(res) {
             console.log(res);
@@ -1081,6 +1088,44 @@ function toggleAdmissionDate(className, obj) {
 }
 
 /*End toggle Admission Date on test registration form*/
+
+/* Fetch disc_diffusion_guidelines_for a given organism*/
+function fetchDiscDiffusionConfig() {
+    var organismId = $('#organism_disc_diff option:selected').val();
+    removeConfigIcons();
+    $.ajax({
+        type: 'POST',
+        url: '/drug/fetch-disc-diffusion-guidelines',
+        data: {
+            organismId: organismId,
+        },
+        success: function(guidelines) {
+            updateGuidelines(guidelines);
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
+
+function removeConfigIcons() {
+    var len = $('#drugs-length').val();
+    for(var i = 0; i < len; i++) {
+        $('#guidelines_saved_' + i).removeClass('glyphicon-ok');
+    }
+}
+
+function updateGuidelines(results) {
+    results.forEach(function(item) {
+        $('#min_resistant_' + item.drug_id).val(item.min_resistant);
+        $('#resistant_' + item.drug_id).val(item.resistant);
+        $('#intermediate_' + item.drug_id).val(item.intermediate);
+        $('#susceptible_' + item.drug_id).text(item.susceptible);
+
+        $('#guidelines_saved_' + item.drug_id).addClass('glyphicon-ok');
+    });
+}
+
 function updateResistant(id) {
     var min_resistant = Number($('#min_resistant_' + id).val());
     // update the resistant field
@@ -1197,7 +1242,7 @@ function updateSampleDetails() {
             '<strong>Danger!</strong>' +
             'All input fields are required</div>').appendTo('#error-container');
     }
-    
+
     $.ajax({
         type: 'POST',
         url: '/test/updatespecimensampledetails',

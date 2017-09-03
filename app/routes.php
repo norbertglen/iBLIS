@@ -111,8 +111,15 @@ Route::group(array("before" => "auth"), function()
         
         Route::post("/drug/disc-diffusion-guideline", array(
             "as"    => "drug.fetch-disc-diffusion-guideline",
+            "uses" => "DrugController@fetchDiscDiffusionGuidelineInterpretation"
+        ));
+
+ 
+        Route::post("/drug/fetch-disc-diffusion-guidelines", array(
+            "as"    => "drug.fetch-disc-diffusion-guideline",
             "uses" => "DrugController@fetchDiscDiffusionGuideline"
         ));
+
 
         Route::post("/drug/disc-diffusion-guidelines", array(
             "as"   => "drug.save-disc-diffusion-guidelines",

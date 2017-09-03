@@ -164,32 +164,41 @@ class DrugController extends \BaseController {
         return Redirect::to($url)
             ->with('message', trans('messages.success-deleting-drug'));
     }
+    
+    public function fetchDiscDiffusionGuideline() {
+        $organismId = Input::get('organismId');
+        
+        $disc_diff = DiscDiffusionGuideline::join('organism_drug_disc_diffusion', 'organism_drug_disc_diffusion.disc_diffusion_id', '=', 'disc_diffusion_guidelines.id')
+            ->where('organism_drug_disc_diffusion.organism_id', '=', $organismId)
+            ->get();
+
+        return $disc_diff;
+    }
 
     public function discDiffusionGuidelines()
     {
-        // return 'hello';
-        $guidelines = DiscDiffusionGuideline::orderBy('id', 'ASC')->get();
-        $drugs = Drug::orderBy('name', 'ASC')
-            ->select('drugs.id', 'drugs.name','disc_diffusion_guidelines.min_resistant', 'disc_diffusion_guidelines.drug_id', 'disc_diffusion_guidelines.resistant', 'disc_diffusion_guidelines.intermediate', 'disc_diffusion_guidelines.susceptible')
-            ->leftJoin('disc_diffusion_guidelines', 'drugs.id', '=', 'disc_diffusion_guidelines.drug_id')
-            ->get();
-        // dd($drugs);
-
+        $organisms = Organism::orderBy('id', 'ASC')->get();
+        
+        $drugs = Drug::orderBy('name', 'ASC')->get();
         return View::make('drug.disc-diffusion-guidelines')
-            ->with('drugs', $drugs)
-            ->with('guidelines', $guidelines);
+            ->with('organisms', $organisms)
+            ->with('drugs', $drugs);
     }
 
     public function saveDiscDiffusionGuidelines() {
 
         $drug_id = Input::get('drugId');
+        $organism_id = Input::get('organismId');
         $min_resistant = Input::get('min_resistant');
         $resistant = Input::get('resistant');
         $intermediate = Input::get('intermediate');
         $susceptible = Input::get('susceptible');
 
         //  Find if record exists
-        $guidelines = DiscDiffusionGuideline::where('drug_id','=', $drug_id)->first();
+        $guidelines = DiscDiffusionGuideline::join('organism_drug_disc_diffusion', 'organism_drug_disc_diffusion.disc_diffusion_id', '=', 'disc_diffusion_guidelines.id')
+        ->where('organism_drug_disc_diffusion.organism_id', '=', $organism_id)
+        ->where('organism_drug_disc_diffusion.drug_id', '=', $drug_id)
+        ->first();
 
         // return $guidelines;
         // update
@@ -203,22 +212,32 @@ class DrugController extends \BaseController {
         } else {
             // create a new record
             $guidelines = new DiscDiffusionGuideline;
-            $guidelines->drug_id = $drug_id;
+            //$guidelines->drug_id = $drug_id;
             $guidelines->min_resistant = $min_resistant;
             $guidelines->resistant = $resistant;
             $guidelines->intermediate = $intermediate;
             $guidelines->susceptible = $susceptible;
             $guidelines->save();
 
-            return $guidelines;
+            $organism_guidelines = new OrganismDrugDiscDiffusion;
+            $organism_guidelines->drug_id = $drug_id;
+            $organism_guidelines->organism_id = $organism_id;
+            $organism_guidelines->disc_diffusion_id = $guidelines->id;
+            $organism_guidelines->save();
+
+            return $organism_guidelines;
         }
     }
 
-    public function fetchDiscDiffusionGuideline() {
+    public function fetchDiscDiffusionGuidelineInterpretation() {
         $drug_id = Input::get('drugId');
+        $organism_id = Input::get('organismId');
         $observation = Input::get('observation');
 
-        $guideline = DiscDiffusionGuideline::where('drug_id','=', $drug_id)->first();
+        $guideline = DiscDiffusionGuideline::join('organism_drug_disc_diffusion', 'organism_drug_disc_diffusion.disc_diffusion_id', '=', 'disc_diffusion_guidelines.id')
+        ->where('organism_drug_disc_diffusion.organism_id', '=', $organism_id)
+        ->where('organism_drug_disc_diffusion.drug_id', '=', $drug_id)
+        ->first();
 
         if (!$guideline) return 'No guideline found';
 

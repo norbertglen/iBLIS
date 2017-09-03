@@ -24,6 +24,15 @@
             <div class="display-details">
 
             </div>
+            <div class="form-group">
+                <label for="">Organism</label>
+
+                <select name="organism" class="form-control" id="organism_disc_diff" onchange="fetchDiscDiffusionConfig()" >
+                    @foreach($organisms as $organism)
+                        <option value={{$organism->id}}>{{ $organism->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -35,50 +44,65 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($drugs as $key => $drug)
+                    @foreach($drugs as $drug)
                         <tr>
-                            <td id={{ 'drug_disc_diffusion'.$drug->id }}>{{ $drug->name }}</td>
+                            <td>{{ $drug->name }}</td>
                             <td>
                                 <div class="row concentration-row">
                                     <span class="col-md-4">
                                         {{ Form::selectRange('min_resistant', 0,
-                                            50, $drug->min_resistant,
+                                            50, 6,
                                         array('class' => 'form-control', 'id' => 'min_resistant_'.$drug->id, 'onchange' => 'updateResistant('.$drug->id.')') )}}
 
                                     </span>
                                     <span class="col-md-2"><=</span>
                                     <span class="col-md-4">
                                         {{ Form::selectRange('resistant', 6,
-                                            50, $drug->resistant,
+                                            50, 10,
                                         array('class' => 'form-control', 'id' => 'resistant_'.$drug->id, 'onchange' => 'updateIntermediate('.$drug->id.', "resistant")') )}}
                                     </span>
                                 </div>
                             </td>
+
+                            <!-- intermediate-->
                             <td>
                                 <div class="row concentration-row">
-                                    <span class="col-md-2" id="min_intermediate_<?php echo $drug->id ?>"> {{ ($drug->resistant) ? $drug->resistant + 1 : 6 }}  </span>
+                                    <span class="col-md-2" id="min_intermediate_<?php echo $drug->id ?>"> {{ 6 }}  </span>
                                     <span class="col-md-2"><=</span>
                                     <span class="col-md-6">
-                                        {{ Form::selectRange('intermediate', ($drug->resistant) ? $drug->resistant : 6,
-                                            50, $drug->intermediate,
+                                        {{ Form::selectRange('intermediate', 6,
+                                            50, 8,
                                         array('class' => 'form-control', 'id' => 'intermediate_'.$drug->id, 'onchange' => 'updateIntermediate('.$drug->id.')' ) )}}
                                     </span>
                                 </div>
                             </td>
+
+                            <!-- susceptible-->
                             <td>
                                 <div class="row concentration-row">
                                     <span class="col-md-2">>=</span>
-                                    <span class="col-md-2" id="susceptible_<?php echo $drug->id ?>">{{ $drug->susceptible or 7 }}</span>
+                                    <span class="col-md-2" id="susceptible_<?php echo $drug->id ?>">{{ 7 }}</span>
                                 </div>
                             </td>
-                            <td>
-                                <a class="btn btn-xs btn-success" href="javascript:void(0)" onclick="saveDrugDiffusionGuideline(<?php echo $drug->id; ?>, <?php echo $drug->drug_id?>)">
-                                                                                            {{ trans('messages.save') }}</a>
+
+                            <!-- save button-->
+                             <td>
+                                <a class="btn btn-xs btn-success" href="javascript:void(0)" onclick="saveDrugDiffusionGuideline(<?php echo $drug->id; ?>, <?php echo $drug->drug_id?>)">{{ trans('messages.save') }}</a>
+                                <span class="glyphicon" aria-hidden="true" id="guidelines_saved_<?php  echo $drug->id?>"></span>
                             </td>
                         </tr>
                     @endforeach
+                    {{ Form::hidden('drugs_len', count($drugs), array('id' => 'drugs-length'))}}
                 </tbody>
             </table>
         </div>
     </div>
+    <script type="text/javascript">
+    
+        $(document).ready(function() {
+            fetchDiscDiffusionConfig();
+        });
+        
+    </script>
 @stop
+
