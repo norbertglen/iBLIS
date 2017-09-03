@@ -15,15 +15,12 @@ class CreateDiscDiffusionGuidelines extends Migration {
 		Schema::create('disc_diffusion_guidelines', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('drug_id')->unsigned();
 			$table->integer('resistant')->unsigned();
 			$table->integer('intermediate')->unsigned();
 			$table->integer('susceptible')->unsigned();
 
 			$table->timestamps();
 			$table->softDeletes();
-			
-			$table->foreign('drug_id')->references('id')->on('drugs');
 		});
 	}
 
