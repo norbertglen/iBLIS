@@ -76,20 +76,20 @@
                                 <table class="table table-striped table-hover table-condensed search-table">
                                     <thead>
                                         <tr>
-                                            <th>{{ Lang::choice('messages.test',2) }}</th>
                                             <th>{{ trans('messages.actions') }}</th>
-
+                                            <th>{{ Lang::choice('messages.test',2) }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($testtypes as $key => $value)
                                             <tr>
-                                                <td>{{ $value->name }}</td>
-                                                <td><label  class="editor-active">
+                                                <td>
+                                                    <label  class="editor-active">
                                                         <!-- <input type="checkbox" name="testtypes[]" value="{{ $value->id}}" /> -->
                                                         {{ Form::checkbox('testtypes[]', $value->id, Input::old('testtypes') ? in_array($value->id, Input::old('testtypes')) : null, [])}}
                                                     </label>
                                                 </td>
+                                                <td>{{ $value->name }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -1171,22 +1171,16 @@ function updateIntermediate(id, type) {
 }
 
 function fetchSpecimenSample(specimenId) {
-
     $.get('/specimen/' + specimenId, function(res) {
         $('#date_collected').val(res.date_collected);
         $('#timepicker').val(res.time_collected);
         $('#location').val(res.location_id.id);
         $('#collection_site').val(res.site_collected_id.id);
         $('#specimen-id').val(specimenId);
-
-        var timeVal = res.time_collected;
-        var len = timeVal.split('').length;
-        let hrs = new Date().getHours().toString();
-        if (len < 5 && hrs.length > 1) {
-            timeVal = timeVal.split('');
-            timeVal.splice(len - 1, 0, '0');
-            timeVal = timeVal.join('');
-            $('#timepicker').val(timeVal);
+        
+        var time = moment().format('HH:mm');
+        if (!res.date_collected) {
+            return $('#timepicker').val(time);
         }
     });
 }

@@ -21,6 +21,7 @@
         <script type="text/javascript" src="{{ URL::asset('js/html.sortable.min.js') }} "></script>
         <!-- jQuery barcode script -->
         <script type="text/javascript" src="{{ asset('js/jquery-barcode-2.0.2.js') }} "></script>
+        <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
         <!-- JQuery timepicker-->
         <script src="{{ URL::asset('js/jquery.ui.timepicker.js') }}"></script>
 
