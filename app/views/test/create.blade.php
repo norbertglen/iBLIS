@@ -76,7 +76,7 @@
                                 <table class="table table-striped table-hover table-condensed search-table">
                                     <thead>
                                         <tr>
-                                            <th>{{ trans('messages.actions') }}</th>
+                                            <th width="10%" class="center-text">{{ trans('messages.actions') }}</th>
                                             <th>{{ Lang::choice('messages.test',2) }}</th>
                                         </tr>
                                     </thead>
@@ -84,7 +84,7 @@
                                         @foreach($testtypes as $key => $value)
                                             <tr>
                                                 <td>
-                                                    <label  class="editor-active">
+                                                    <label  class="centered">
                                                         <!-- <input type="checkbox" name="testtypes[]" value="{{ $value->id}}" /> -->
                                                         {{ Form::checkbox('testtypes[]', $value->id, Input::old('testtypes') ? in_array($value->id, Input::old('testtypes')) : null, [])}}
                                                     </label>

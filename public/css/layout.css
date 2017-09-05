@@ -745,3 +745,13 @@ However, delay the fade out process for 2.5 seconds */
 .checkbox {
     margin-left: 1.1em;
 }
+
+.centered {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.center-text {
+    text-align: center;
+}

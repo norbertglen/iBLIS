@@ -24,7 +24,6 @@
         <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
         <!-- JQuery timepicker-->
         <script src="{{ URL::asset('js/jquery.ui.timepicker.js') }}"></script>
-
         <title>{{ Config::get('kblis.name') }} {{ Config::get('kblis.version') }}</title>
     </head>
     <body>
