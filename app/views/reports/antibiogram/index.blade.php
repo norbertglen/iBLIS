@@ -78,8 +78,7 @@
     @if($all_isolates)
         <div class="panel panel-primary" id="antibiogramReport">
             <div class="panel-heading ">
-                <span class="glyphicon glyphicon-user"></span>
-                {{ trans('messages.patient-report') }}
+                {{ trans('messages.antibiogram-report') }}
             </div>
 
             <div class="panel-body">

@@ -143,7 +143,7 @@
 					@forelse($visits as $visit)
 					<tr>
 						<td>{{ $visit->patient->id }}</td>
-						<td>{{ $visit->patient->name }}</td>
+						<td>{{ $visit->patient->name.' '.$visit->patient->othernames }}</td>
 						<td>{{ $visit->patient->getAge() }}</td>
 						<td>{{ $visit->patient->getGender()}}</td>
 						<td>

@@ -56,7 +56,7 @@ class PatientController extends \BaseController {
 			'othernames' => 'required',
 			'gender' => 'required',
 			'email' => 'required|email|unique:users',
-			'phone_number' => 'required|numeric|size:10',
+			'phone_number' => 'required|numeric|digits:10',
 			'dob' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
