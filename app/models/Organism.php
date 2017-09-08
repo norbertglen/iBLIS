@@ -91,6 +91,7 @@ class Organism extends Eloquent
         $count = Susceptibility::distinct('test_id')
             ->where('organism_id', '=', $this->id)
             ->where('zone', '!=', 'Not D')
+            ->where('interpretation', '=', 'S')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
             ->count('test_id');
@@ -101,6 +102,7 @@ class Organism extends Eloquent
         $drugCount = Susceptibility::where('drug_id', '=', $drugId)
             ->where('organism_id', '=', $this->id)
             ->where('zone', '!=', 'Not D')
+            ->where('interpretation', '=', 'S')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
             ->count();

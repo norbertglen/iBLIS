@@ -2452,7 +2452,7 @@ class ReportController extends \BaseController {
         $organisms = '';
         // get
         if ($all_isolates) {
-            $organisms = Organism::orderBy('id', 'ASC')->get();
+            // $organisms = Organism::orderBy('id', 'ASC')->get();
         }
 
         // report errors
@@ -2500,9 +2500,9 @@ class ReportController extends \BaseController {
                     $row = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
                         ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                         ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
-                        ->where('organism_id', '=', $organism->id)
+                        ->where('drug_susceptibility.organism_id', '=', $organism->id)
                         ->where('specimens.location_id', '=', $locationId)
-                        ->where('drug_susceptibility.interpretation', '=', "S")
+                        ->where('drug_susceptibility.interpretation', '=', 'S')
                         ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
                         ->get();
                     $specimen_locations[$locationId] = $row;
@@ -2514,8 +2514,8 @@ class ReportController extends \BaseController {
                     $row = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
                         ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                         ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
-                        ->where('organism_id', '=', $organism->id)
-                        ->where('drug_susceptibility.interpretation', '=', "S")                        
+                        ->where('drug_susceptibility.organism_id', '=', $organism->id)
+                        ->where('drug_susceptibility.interpretation', '=', 'S')                        
                         ->where('specimens.location_id', '=', $locationId)
                         ->get();
                     $specimen_locations[$locationId] = $row;
