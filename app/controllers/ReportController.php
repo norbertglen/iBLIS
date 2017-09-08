@@ -2502,6 +2502,7 @@ class ReportController extends \BaseController {
                         ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
                         ->where('organism_id', '=', $organism->id)
                         ->where('specimens.location_id', '=', $locationId)
+                        -where('drug_susceptibility.interpretation', '=', "S")
                         ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
                         ->get();
                     $specimen_locations[$locationId] = $row;
@@ -2514,6 +2515,7 @@ class ReportController extends \BaseController {
                         ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                         ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
                         ->where('organism_id', '=', $organism->id)
+                        -where('drug_susceptibility.interpretation', '=', "S")                        
                         ->where('specimens.location_id', '=', $locationId)
                         ->get();
                     $specimen_locations[$locationId] = $row;
