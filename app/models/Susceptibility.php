@@ -73,7 +73,7 @@ class Susceptibility extends Eloquent
                 ->where('organism_id', '=', $organismId)
                 ->where('specimens.location_id', '=', $locationId)
                 ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
-                ->where('drug_susceptibility.interpretation', '=', 'R')
+                ->where('drug_susceptibility.interpretation', '=', 'S')
                 ->get();
 
             return count($resultSet);
@@ -83,7 +83,7 @@ class Susceptibility extends Eloquent
                     ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
                     ->where('organism_id', '=', $organismId)
                     ->where('specimens.location_id', '=', $locationId)
-                    ->where('drug_susceptibility.interpretation', '=', 'R')
+                    ->where('drug_susceptibility.interpretation', '=', 'S')
                     ->get();
 
             return count($resultSet);
@@ -101,7 +101,7 @@ class Susceptibility extends Eloquent
                     ->where('organism_id', '=', $organismId)
                     ->where('specimens.location_id', '=', $locationId)
                     ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
-                    ->where('drug_susceptibility.interpretation', '=', 'R')
+                    ->where('drug_susceptibility.interpretation', '=', 'S')
                     ->where('drug_susceptibility.drug_id', '=', $drugId)
                     ->get();
 
@@ -112,7 +112,7 @@ class Susceptibility extends Eloquent
                     ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
                     ->where('organism_id', '=', $organismId)
                     ->where('specimens.location_id', '=', $locationId)
-                    ->where('drug_susceptibility.interpretation', '=', 'R')
+                    ->where('drug_susceptibility.interpretation', '=', 'S')
                     ->where('drug_susceptibility.drug_id', '=', $drugId)
                     ->get();
 

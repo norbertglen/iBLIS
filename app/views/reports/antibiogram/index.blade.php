@@ -152,7 +152,7 @@
             @if($drugs)
             <tr>
                 <th>Locations</th>
-                <th>N</th>
+                <th>{{ trans('messages.all-isolates') }}</th>
                 @foreach($drugs as $drug)
                     <th>{{ $drug->name }}</th>
                 @endforeach
