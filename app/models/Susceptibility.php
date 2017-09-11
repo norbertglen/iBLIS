@@ -70,23 +70,26 @@ class Susceptibility extends Eloquent
             $resultSet = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
                 ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                 ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
-                ->where('organism_id', '=', $organismId)
+                ->where('drug_susceptibility.organism_id', '=', $organismId)
                 ->where('specimens.location_id', '=', $locationId)
                 ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
                 ->where('drug_susceptibility.interpretation', '=', 'S')
-                ->get();
-
-            return count($resultSet);
+                ->where('drug_susceptibility.zone', '!=', 'Not D')
+                ->distinct('drug_susceptibility.test_id')
+                ->count('drug_susceptibility.test_id');
+            return $resultSet;
         } else {
             $resultSet = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
                     ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                     ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
-                    ->where('organism_id', '=', $organismId)
+                    ->where('drug_susceptibility.organism_id', '=', $organismId)
                     ->where('specimens.location_id', '=', $locationId)
                     ->where('drug_susceptibility.interpretation', '=', 'S')
-                    ->get();
+                    ->where('drug_susceptibility.zone', '!=', 'Not D')
+                    ->distinct('drug_susceptibility.test_id')
+                    ->count('drug_susceptibility.test_id');
 
-            return count($resultSet);
+            return $resultSet;
         }
     }
      
@@ -98,25 +101,30 @@ class Susceptibility extends Eloquent
             $resultSet = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
                     ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                     ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
-                    ->where('organism_id', '=', $organismId)
+                    ->where('drug_susceptibility.organism_id', '=', $organismId)
                     ->where('specimens.location_id', '=', $locationId)
                     ->whereIn('specimens.specimen_type_id',  $specimen_type_ids)
+                    ->where('drug_susceptibility.zone', '!=', 'Not D')
                     ->where('drug_susceptibility.interpretation', '=', 'S')
                     ->where('drug_susceptibility.drug_id', '=', $drugId)
-                    ->get();
+                    ->distinct('drug_susceptibility.test_id')
+                    ->count('drug_susceptibility.test_id');
 
-            return count($resultSet);
+            return $resultSet;
+            
         } else {
             $resultSet = Susceptibility::join('tests', 'drug_susceptibility.test_id', '=', 'tests.id')
                     ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                     ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
-                    ->where('organism_id', '=', $organismId)
+                    ->where('drug_susceptibility.organism_id', '=', $organismId)
                     ->where('specimens.location_id', '=', $locationId)
+                    ->where('drug_susceptibility.zone', '!=', 'Not D')
                     ->where('drug_susceptibility.interpretation', '=', 'S')
                     ->where('drug_susceptibility.drug_id', '=', $drugId)
-                    ->get();
+                    ->distinct('drug_susceptibility.test_id')
+                    ->count('drug_susceptibility.test_id');
 
-            return count($resultSet);
+            return $resultSet;
         }
     }
 

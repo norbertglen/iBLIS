@@ -172,7 +172,7 @@
                         <td> {{ $total }}</td>
                         @forelse($location as $drug)
                             <?php $drugCount = $susceptibility_model->getDrugResistanceCount($organismId, $locationId, $specimen_type_ids, $drug->drug_id) ?>
-                            <td>{{ $drugCount ? round(($drugCount / $total) * 100, 2) .'%': 0 .'%'}}</td>
+                            <td>{{ $drugCount ? round(($drugCount / $total) * 100, 2) .'%' : 0 .'%'}}</td>
                         @empty
                             @foreach($drugs as $drug)
                                 <td>0%</td>
