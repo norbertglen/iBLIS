@@ -2459,22 +2459,23 @@ class ReportController extends \BaseController {
         if(Input::has('excel')) {
             $start_date = Input::get('start') ? Input::get('start') : date('Y-m-d', strtotime('-1 month'));
             $end_date = Input::get('end') ? Input::get('end') : $today;
-            Excel::create('antibiogram', function($excel) {
+            
+            Excel::create('antibiogram', function($excel) use ($start_date, $end_date) {
+                // dd($start_date);
                 // set the title
                 $excel->setTitle('Antibiogram Report');
-                $excel->sheet('antibiogram report', function($sheet) {
+                $excel->sheet('antibiogram report', function($sheet) use ($start_date, $end_date) {
                     // add values to the header
                     $sheet->prependRow(1, array('Organism', 'No of Isolates'));
                     // append rows to
                     $organisms = Organism::orderBy('id', 'ASC')->get();
-
                     forEach($organisms as $key => $organism) {
-                    $containerArray = array($organism->name, $organism->getCount());
+                    $containerArray = array($organism->name, $organism->getCount($start_date, $end_date));
                     $drugs = Drug::orderBy('id', 'ASC') ->get();
                     $drug_names = array();
                     // push drug values to the array
                     forEach($drugs as $drug) {
-                    $val = $organism->getDrugOccurence($drug->id) ? round($organism->getDrugOccurence($drug->id) / $organism->getCount() * 100, 2) : 0 ;
+                    $val = $organism->getDrugOccurence($drug->id, $start_date, $end_date) ? round($organism->getDrugOccurence($drug->id, $start_date, $end_date) / $organism->getCount($start_date, $end_date) * 100, 2) : 0 ;
                     array_push($containerArray, $val);
                     array_push($drug_names, $drug->name);
                     }
