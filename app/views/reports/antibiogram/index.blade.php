@@ -8,6 +8,12 @@
         </ol>
     </div>
     <div class="container-fluid">
+        <div class="alert alert-info">
+            <strong>
+                <p> To view the general antibiograms report check all isolates</p>
+                <p> To view the antibiogram report per specimen type and location select the filters under the Specimen Location and Specimen Types filters.</p>
+            </strong>
+        </div>
         <div class="form-group">
             {{ Form::open(array('url' => '/antibiogram', 'class' => 'form-inline', 'method' => 'POST')) }}
             <div class="row">

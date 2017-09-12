@@ -2451,15 +2451,14 @@ class ReportController extends \BaseController {
        
         $organisms = '';
         // get
-        if ($all_isolates) {
-            // $organisms = Organism::orderBy('id', 'ASC')->get();
-        }
 
         // report errors
         $error = '';
         $accredited = '';
 
         if(Input::has('excel')) {
+            $start_date = Input::get('start') ? Input::get('start') : date('Y-m-d', strtotime('-1 month'));
+            $end_date = Input::get('end') ? Input::get('end') : $today;
             Excel::create('antibiogram', function($excel) {
                 // set the title
                 $excel->setTitle('Antibiogram Report');
