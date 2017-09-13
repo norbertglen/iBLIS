@@ -176,15 +176,10 @@
                         <td>{{ $specimen_location_model->getName($locationId) }}</td>
                         <?php $total = $susceptibility_model ? $susceptibility_model->getResistanceCount($organismId, $locationId, $specimen_type_ids) : 0?>
                         <td> {{ $total }}</td>
-                        @forelse($location as $drug)
-                            <?php $drugCount = $susceptibility_model->getDrugResistanceCount($organismId, $locationId, $specimen_type_ids, $drug->drug_id) ?>
-                            <td>{{ $drugCount ? round(($drugCount / $total) * 100, 2) .'%' : 0 .'%'}}</td>
-                        @empty
-                            @foreach($drugs as $drug)
-                                <td>0%</td>
-                            @endforeach
-                        @endforelse
-
+                        @foreach($drugs as $drug)
+                        <?php $drugCount = $susceptibility_model->getDrugResistanceCount($organismId, $locationId, $specimen_type_ids, $drug->id) ?>
+                        <td>{{ $drugCount ? round(($drugCount / $total) * 100, 2) .'%' : 0 .'%'}}</td>
+                        @endforeach
                     </tr>
                 @endforeach
             @endforeach
