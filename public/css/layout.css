@@ -755,3 +755,7 @@ However, delay the fade out process for 2.5 seconds */
 .center-text {
     text-align: center;
 }
+/*quick fix to show year and month figures in datepicker select dropdown*/
+.ui-datepicker .ui-datepicker-title select {
+    color: #428bca;
+}
