@@ -181,7 +181,7 @@ class Measure extends Eloquent
 			if($to && $from){
 				$testResults = $testResults->whereBetween('time_created', [$from, $to]);
 			}
-			/*if($ageRange || $gender){
+			if($ageRange || $gender){
 				$testResults = $testResults->join('visits', 'tests.visit_id', '=', 'visits.id')
 							   ->join('patients', 'visits.patient_id', '=', 'patients.id');
 							   if($gender){
@@ -198,7 +198,7 @@ class Measure extends Eloquent
 									$startDate = $clonedDate->sub(new DateInterval('P'.$ageEnd.'Y'))->format('Y-m-d');
 							   		$testResults = $testResults->whereBetween('dob', [$startDate, $finishDate]);
 							   	}
-			}*/
+			}
 			if($range){
 				if ($this->isNumeric())
 				{
