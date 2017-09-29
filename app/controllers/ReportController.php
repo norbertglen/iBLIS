@@ -2014,7 +2014,7 @@ class ReportController extends \BaseController {
                 "Content-Disposition"=>"attachment;Filename=".$fileName
             );
             //$content = $table;
-            $content = View::make('reports.moh.706')
+            $content = View::make('reports.moh.report')
                 ->with('from', $from)
                 ->with('end', $end)
                 ->with('moh706List', $moh706List);
