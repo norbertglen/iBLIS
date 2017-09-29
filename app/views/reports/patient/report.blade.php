@@ -215,6 +215,7 @@
 				@endforelse
 			</tbody>
 		</table>
+			@forelse($susceptibility as $susceptibility)
 			<table class="table table-bordered">
 		<strong>{{trans('messages.susceptibility-results')}}</strong>
 			<tbody>
@@ -230,7 +231,6 @@
 					<th>{{trans('messages.verified-by')}}</th>
 					<th>{{trans('messages.date-verified')}}</th>
 				</tr>
-				@forelse($susceptibility as $susceptibility)
 						<tr>
 							<td>{{ $susceptibility['name'] }}</td>
 							<td>{{ $susceptibility['zone'] }}</td>
@@ -241,11 +241,10 @@
 							<td>{{ $susceptibility['updated_at'] }}</td>
 						</tr>
 				@empty
-					<tr>
-						<td colspan="8">{{trans("messages.no-records-found")}}</td>
-					</tr>
+				<!-- do nothing -->
 				@endforelse
 			</tbody>
+		@forelse($minimuminhibitory as $minimuminhibitory)
 		</table>
 				<table class="table table-bordered">
 			<tbody>
@@ -261,7 +260,6 @@
 					<th>{{trans('messages.verified-by')}}</th>
 					<th>{{trans('messages.date-verified')}}</th>
 				</tr>
-				@forelse($minimuminhibitory as $minimuminhibitory)
 						<tr>
 							<td>{{ $minimuminhibitory['name'] }}</td>
 							<td>{{ $minimuminhibitory['concentration'] }}</td>
@@ -272,9 +270,7 @@
 							<td>{{ $minimuminhibitory['updated_at'] }}</td>
 						</tr>
 				@empty
-					<tr>
-						<td colspan="8">{{trans("messages.no-records-found")}}</td>
-					</tr>
+					<!-- do nothing -->
 				@endforelse
 			</tbody>
 		</table>
