@@ -2600,7 +2600,7 @@ class ReportController extends \BaseController {
                     ->join('specimens', 'tests.specimen_id', '=', 'specimens.id')
                     ->join('specimen_types', 'specimens.specimen_type_id', '=', 'specimen_types.id')
                     ->where('specimens.location_id', '=', $locationId)
-                    ->where('drug_susceptibility.interpretation', '=', 'R')
+                    ->where('drug_susceptibility.interpretation', '=', 'S')
                     ->groupBy('organism_id')
                     ->select(DB::raw('organism_id, count(drug_susceptibility.interpretation) as count'))
                     ->get();
