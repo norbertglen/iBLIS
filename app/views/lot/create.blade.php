@@ -33,7 +33,7 @@
 			<div class="form-group">
 				{{ Form::label('expiry', trans('messages.expiry')) }}
 				{{ Form::text('expiry', Input::old('expiry'), 
-					array('class' => 'form-control standard-datepicker', 'rows' => '3' )) }}
+					array('class' => 'form-control future-datepicker', 'rows' => '3' )) }}
 			</div>
 			<div class="form-group" id="edit-control-ranges">
 			</div>
