@@ -34,7 +34,7 @@
             <div class="form-group">
                 {{ Form::label('expiry', trans('messages.expiry')) }}
                 {{ Form::text('expiry_date', Input::old('expiry_date'), 
-                        array('class' => 'form-control standard-datepicker')) }}
+                        array('class' => 'form-control future-datepicker')) }}
             </div>
             <div class="form-group">
                 {{ Form::label('manufacturer', trans('messages.manufacturer')) }}
