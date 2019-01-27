@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL ^ E_DEPRECATED);
 
 return array(
 
@@ -65,7 +66,7 @@ return array(
 	|
 	*/
 
-	'key' => 'LCiZpIvv0)E<}kmqm+:T)T8%&D3UJ8OS',
+	'key' => 'cHsLRns8mMUrH0XBmDY2XC3XB32yqRwJ',
 
 	/*
 	|--------------------------------------------------------------------------

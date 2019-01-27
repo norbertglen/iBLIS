@@ -216,6 +216,8 @@ class TestController extends \BaseController {
         $rules = array(
             'rejectionReason' => 'required|non_zero_key',
             'reject_explained_to' => 'required',
+            'date_rejected' => 'required',
+            'time_rejected' => 'required',
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -228,7 +230,7 @@ class TestController extends \BaseController {
             $specimen->rejection_reason_id = Input::get('rejectionReason');
             $specimen->specimen_status_id = Specimen::REJECTED;
             $specimen->rejected_by = Auth::user()->id;
-            $specimen->time_rejected = date('Y-m-d H:i:s');
+            $specimen->time_rejected = Input::get('date_rejected')." ".Input::get('time_rejected').":00";
             $specimen->reject_explained_to = Input::get('reject_explained_to');
             $specimen->save();
 

@@ -131,6 +131,8 @@ return array(
     'new-specimen-type' => 'New Specimen Type',
     'reject' => 'Reject',
     'reject-explained-to' => 'Person Talked To',
+    'date-rejected' => 'Date Rejected',
+    'time-rejected' => 'Time Rejected',
     'reject-title' => 'Reject Specimen',
     'rejection-reason' => 'Reason',
     'rejection-reason-title' => 'Rejection Reason',
