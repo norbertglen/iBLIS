@@ -794,9 +794,8 @@ function saveBiochemicalTest(tid, userId, bioID) {
     saveButton = "save_" + tid;
     console.log(saveButton);
     $("#" + saveButton).css("visibility", "hidden");
-    select = "biochemical_" + tid;
+    select = "biochemical_" + bioID;
     result = $("#" + select).find(":selected").val();
-
     $.ajax({
         type: 'POST',
         url: '/biochemical/saveresults',

@@ -212,8 +212,8 @@
                                                 <td>{{ Auth::user()->name }}</td>
                                                 <td>{{ $value->name }}</td>
                                                 <td>{{ Form::select('result', 
-                                                    array(1 => 'positive', 0 => 'negative'),null,
-                                                    array('id' => 'biochemical_'.$test->id)) }}</td>
+                                                    ($value->id==14 || $value->name=="Triple Sugar Iron Agar Test")?array(2 => 'acidic/ alkaline', 3 => 'acidic /acidic','4'=>'alkaline/alkaline','5'=>'alkaline/no change'):array(1 => 'positive', 0 => 'negative'),null,
+                                                    array('id' => 'biochemical_'.$value->id)) }}</td>
                                                 <td><a id="{{ 'save_'.$test->id }}" class="btn btn-xs btn-success"  href="javascript:void(0)" onclick="saveBiochemicalTest(<?php echo $test->id;?>, <?php echo Auth::user()->id; ?>, <?php echo $value->id; ?>)">{{ trans('messages.save') }}</a></td>
                                             </tr>
                                         {{ Form::close() }} 
