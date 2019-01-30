@@ -438,6 +438,7 @@ return array(
     'print' => 'Print',
     'rejected-by'   =>  'Rejected by',
     'requesting-facility-department' => 'Requesting Facility/Department',
+    'requesting-facility' => 'Requesting Facility',
     'results-entry-date' => 'Results Entry Date',
     'test-results-values' => 'Test:Result',
     'view-report' => 'View Report',

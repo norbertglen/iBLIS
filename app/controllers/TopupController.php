@@ -21,8 +21,12 @@ class TopupController extends \BaseController {
 	{
 		$items = Item::lists('name', 'id');
 		$testCategories = TestCategory::lists('name', 'id');
+		$facilities = Facility::lists('name', 'id');
+		$facilities['']='Optional';
+		ksort($facilities);
 		return View::make('inventory.request.create')
 			->with('testCategories', $testCategories)
+			->with('facilities', $facilities)
 			->with('items', $items);
 	}
 	/**
@@ -47,6 +51,7 @@ class TopupController extends \BaseController {
 			$request->item_id = Input::get('item_id');
 			$request->quantity_remaining = Input::get('quantity_remaining');
 			$request->test_category_id = Input::get('test_category_id');
+			$request->facility_id = Input::get('facility_id');
 			$request->tests_done = Input::get('tests_done');
 			$request->quantity_ordered = Input::get('quantity_ordered');
 			$request->remarks = Input::get('remarks');

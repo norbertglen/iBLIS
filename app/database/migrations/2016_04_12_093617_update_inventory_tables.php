@@ -81,7 +81,8 @@ class UpdateInventoryTables extends Migration {
             $table->integer('test_category_id')->unsigned();
             $table->integer('quantity_ordered');
             $table->integer('tests_done')->default(0);
-            $table->integer('user_id')->unsigned();
+	        $table->integer('user_id')->unsigned();
+	        $table->integer('facility_id')->nullable()->unsigned();
             $table->string('remarks', 100);
 
             $table->softDeletes();

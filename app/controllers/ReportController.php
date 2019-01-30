@@ -1560,8 +1560,6 @@ class ReportController extends \BaseController {
             $malariaTest = TestType::find($malariaTestId);
             $measures = TestTypeMeasure::where('test_type_id', $malariaTestId)->orderBy('measure_id', 'DESC')->get();
             if ($mlra=='Malaria Rapid Diagnostic Test') {
-//            	dd($measures);
-//            	exit();
                 $arr['name'] = "Malaria Rapid Diagnostic Test";
                 foreach ($measures as $measure) {
                     $tMeasure = Measure::find($measure->measure_id);

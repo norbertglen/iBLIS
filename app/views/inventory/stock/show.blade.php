@@ -54,7 +54,7 @@
 		                 	<td>{{ $value->id }}</td>
 							<td>{{ $value->quantity_used }}</td>
 							<td>{{ $value->date_of_usage }}</td>
-							<td>{{ $value->request->testCategory->name }}</td>
+							<td>@if($value->request->facility_id>0){{$value->request->facility->name}}@else{{ $value->request->testCategory->name }}@endif</td>
 							<td>{{ $value->issued_by }}</td>
 							<td>{{ $value->received_by }}</td>
 							<td>{{ $value->remarks }}</td>

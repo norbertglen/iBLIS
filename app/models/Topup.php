@@ -14,6 +14,15 @@ class Topup extends Eloquent
 	{
 		return $this->belongsTo('TestCategory');
 	}
+
+	/**
+	 * Test category relationship
+	 */
+	public function facility()
+	{
+		return $this->belongsTo('Facility');
+	}
+
 	/**
 	 * Item relationship
 	 */
