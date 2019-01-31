@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d4d55af-c6f0-4c1d-b036-e0396808c0b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/test/index.blade.php" afterPath="$PROJECT_DIR$/app/views/test/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/database/migrations/2014_07_24_082711_CreatekBLIStables.php" afterPath="$PROJECT_DIR$/app/database/migrations/2014_07_24_082711_CreatekBLIStables.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -61,7 +60,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/test/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="436">
@@ -100,6 +99,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="2014_07_24_082711_CreatekBLIStables.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/database/migrations/2014_07_24_082711_CreatekBLIStables.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="251" column="35" lean-forward="false" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Test.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/Test.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -119,16 +128,6 @@
                 <marker date="1548222269314" expanded="true" signature="12417:12432" ph="SELECT 'Norm... " />
                 <marker date="1548222269314" expanded="true" signature="17729:17742" ph="SELECT * FRO... " />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/Template/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="123" column="15" lean-forward="false" selection-start-line="123" selection-start-column="15" selection-end-line="123" selection-end-column="15" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -175,7 +174,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$malariaTest</find>
       <find>Malaria Rapid Diagnostic Test</find>
       <find>mala</find>
       <find>enter</find>
@@ -203,8 +201,9 @@
       <find>sputumList</find>
       <find>saveresults</find>
       <find>show</find>
-      <find>sputum</find>
       <find>sputumLis</find>
+      <find>sputum</find>
+      <find>specimen</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -234,6 +233,7 @@
         <option value="$PROJECT_DIR$/app/models/Measure.php" />
         <option value="$PROJECT_DIR$/app/controllers/ReportController.php" />
         <option value="$PROJECT_DIR$/app/views/test/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/database/migrations/2014_07_24_082711_CreatekBLIStables.php" />
       </list>
     </option>
   </component>
@@ -365,12 +365,12 @@
       <workItem from="1548572124455" duration="13731000" />
       <workItem from="1548756414007" duration="35000" />
       <workItem from="1548767516811" duration="1259000" />
-      <workItem from="1548827398489" duration="44512000" />
+      <workItem from="1548827398489" duration="45847000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66085000" />
+    <option name="totallyTimeSpent" value="67420000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1858" height="1098" extended-state="6" />
@@ -676,14 +676,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/database/migrations/2014_07_24_082711_CreatekBLIStables.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-139">
-          <caret line="278" column="32" lean-forward="false" selection-start-line="278" selection-start-column="28" selection-end-line="278" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/StockController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
@@ -909,6 +901,14 @@
             <marker date="1548929023016" expanded="true" signature="33876:34069" ph="..." />
             <marker date="1548929023016" expanded="true" signature="33890:34067" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/database/migrations/2014_07_24_082711_CreatekBLIStables.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="251" column="35" lean-forward="false" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -249,6 +249,7 @@ class CreatekBLIStables extends Migration {
 			$table->integer('rejection_reason_id')->unsigned()->nullable();
             $table->string('reject_explained_to',100)->nullable();
 			$table->integer('referral_id')->unsigned()->nullable();
+			$table->integer('sputum')->unsigned()->nullable();
 			$table->timestamp('time_accepted')->nullable();
 			$table->timestamp('time_rejected')->nullable();
 
