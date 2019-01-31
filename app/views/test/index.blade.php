@@ -261,7 +261,7 @@
 
                                                     <div class="col-md-8" >
                                                         {{ Form::select('sputum', [''=>'Select',1=>'TB new suspects', 2=>'TB followup'],  '',
-                                                        array('class' => 'form-control', 'id' => 'sputum', 'required' => '') )}}
+                                                        array('class' => 'form-control', 'id' => 'sputum') )}}
                                                     </div>
                                                 </div><br />
                                             </div>
