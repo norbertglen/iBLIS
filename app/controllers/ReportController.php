@@ -1260,12 +1260,12 @@ class ReportController extends \BaseController {
     /**
      * Function to check object state before groupedTestCount
      **/
-    public function getGroupedTestCounts($ttypeob, $gender=null, $ageRange=null, $from=null, $to=null)
+    public function getGroupedTestCounts($ttypeob, $gender=null, $ageRange=null, $from=null, $to=null,$option=null)
     {
         if($ttypeob == null){
             return 0;
         }
-        return $ttypeob->groupedTestCount($gender, $ageRange, $from, $to);
+        return $ttypeob->groupedTestCount($gender, $ageRange, $from, $to,$option);
     }
     /** ZEEK
      * Function to check object state before getReferredSpecimenCount
@@ -1290,11 +1290,11 @@ class ReportController extends \BaseController {
     /**
      * Function to check object state before totalTestResults
      **/
-    public function getTotalTestResults($measureobj, $gender=null, $ageRange=null, $from=null, $to=null, $range=null, $positive=null){
+    public function getTotalTestResults($measureobj, $gender=null, $ageRange=null, $from=null, $to=null, $range=null, $positive=null,$option=null){
         if($measureobj == null){
             return 0;
         }
-        return $measureobj->totalTestResults($gender, $ageRange, $from, $to, $range, $positive);
+        return $measureobj->totalTestResults($gender, $ageRange, $from, $to, $range, $positive,$option);
     }
     public function histologyCytologySerology($testArr,$from, $toPlusOne)//sub routine to process histology and cytology. The test sub sections repeat similarly
     {
@@ -1851,18 +1851,27 @@ class ReportController extends \BaseController {
             foreach ($measures as $measure) {
                 $tMeasure = Measure::find($measure->measure_id);
                 $arr['name'] = $tMeasure->name;
-                $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne);
+	            $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne);
                 $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, null);
                 array_push($sputumList, $arr);
+	            $arr['name'] = 'TB new suspects';
+	            $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne,1);
+	            $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, null,1);
+	            array_push($sputumList, $arr);
+	            $arr['name'] =  'TB followup';
+	            $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne,2);
+	            $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, null,2);
+	            array_push($sputumList, $arr);
+
             }
-            if($sp != "Sputum for AFB")
-            {
-                /*TODO: complete below report after design work is complete */
-                $arr['name'] = $sp;
-                $arr['total'] = 0;
-                $arr['positive'] = 0;
-                array_push($sputumList, $arr);
-            }
+//            if($sp != "Sputum for AFB")
+//            {
+//                /*TODO: complete below report after design work is complete */
+//                $arr['name'] = $sp;
+//                $arr['total'] = 0;
+//                $arr['positive'] = 0;
+//                array_push($sputumList, $arr);
+//            }
         }
         $moh706List['sputumList'] = $sputumList;
 

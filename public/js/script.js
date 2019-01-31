@@ -1176,14 +1176,22 @@ function updateIntermediate(id, type) {
     console.log(max_intermediate, id);
 }
 
-function fetchSpecimenSample(specimenId) {
+function fetchSpecimenSample(specimenId,sputum) {
+    if (sputum === undefined) {
+        sputum = sputum || 0;
+    }
     $.get('/specimen/' + specimenId, function(res) {
         $('#date_collected').val(res.date_collected);
         $('#timepicker').val(res.time_collected);
         $('#location').val(res.location_id.id);
         $('#collection_site').val(res.site_collected_id.id);
         $('#specimen-id').val(specimenId);
-        
+        $('#sputum').val(sputum);
+        if(sputum==29){
+            $('#sput').removeClass('hidden');
+        }else{
+            $('#sput').addClass('hidden');
+        }
         var time = moment().format('HH:mm');
         if (!res.date_collected) {
             return $('#timepicker').val(time);
@@ -1234,6 +1242,7 @@ function updateSampleDetails() {
     var collection_site = $('#collection_site').val();
     var csrf_token = $('#csrf_token').val();
     var specimenId = $('#specimen-id').val();
+    var sputum = $('#sputum').val();
 
     if (!date_collected || !time_collected || !location || !collection_site) {
         return $(' <div class="alert alert-danger alert-dismissable">' +
@@ -1251,6 +1260,7 @@ function updateSampleDetails() {
             date_collected: date_collected,
             time_collected: time_collected,
             specimen_id: specimenId,
+            sputum: sputum,
         },
         success: function(ss) {
             console.log('request sent', ss);

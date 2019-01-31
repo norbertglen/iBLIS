@@ -188,7 +188,7 @@
                             <a class="btn btn-sm btn-info sample-specimen" href="#sample-details-modal"
                                     data-toggle="modal" data-url="{{ URL::route('test.sampleSpecimenDetails') }}"
                                     data-test-id="{{$test->id}}" data-target="#sample-details-modal"
-                                                                 title="{{trans('messages.sample-details')}}" onclick="fetchSpecimenSample(<?php echo $test->specimen->id; ?>)">
+                                                                 title="{{trans('messages.sample-details')}}" onclick="fetchSpecimenSample(<?php echo $test->specimen->id; ?>,<?php echo $test->testType->id?>)">
                                     <!-- <span class="glyphicon glyphicon-transfer"></span> -->
                                     {{trans('messages.sample-details')}}
                                 </a>
@@ -254,7 +254,16 @@
                                                         array('class' => 'form-control', 'id' => 'collection_site', 'required' => '', 'onchange' => 'onOtherSampleDetailsSelection()')) }}
                                                     </div>
                                                 </div><br/>
-                                                
+                                                <div class="row hidden" id="sput">
+                                                    <div class="col-md-4">
+                                                        <strong>{{trans('messages.sputum')}}</strong>
+                                                    </div>
+
+                                                    <div class="col-md-8" >
+                                                        {{ Form::select('sputum', [''=>'Select',1=>'TB new suspects', 2=>'TB followup'],  '',
+                                                        array('class' => 'form-control', 'id' => 'sputum', 'required' => '') )}}
+                                                    </div>
+                                                </div><br />
                                             </div>
                                         </div>
                                       </div>

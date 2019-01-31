@@ -453,6 +453,7 @@ return array(
     'daily-visits' =>  'Daily visits',
     'pending-only'  =>  'Pending Tests Only',
     'all-tests' =>  'All Tests',
+    'sputum' =>  'Sputum',
     'date-rejected' =>  'Date Rejected',
     'complete-tests'    =>  'Complete Tests',
     'total-specimen'    =>  'Total Specimen',

@@ -66,7 +66,6 @@ class TestController extends \BaseController {
 
         // collection sites
         $sites = SpecimenCollectionSite::select('id', 'name')->get();
-
         // Load the view and pass it the tests
         return View::make('test.index')
             ->with('testSet', $tests)
@@ -303,7 +302,8 @@ class TestController extends \BaseController {
         $specimen->location_id = Input::get('location');
         $specimen->site_collected_id = $id;
         $specimen->date_collected = Input::get('date_collected');
-        $specimen->time_collected = Input::get('time_collected');
+	    $specimen->time_collected = Input::get('time_collected');
+	    $specimen->sputum = (null !==Input::get('sputum'))?Input::get('sputum'):"";
         $specimen->save();
         return Redirect::route('test.viewDetails', array($specimen->test->id));
     }
