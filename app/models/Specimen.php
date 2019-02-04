@@ -173,7 +173,7 @@ class Specimen extends Eloquent
     public function setTimeCollectedAttribute($time) {
         $date_collected = $this->attributes['date_collected'];
         $date_to_save = $date_collected.' '.$time;
-        $this->attributes['time_collected'] = Carbon::createFromFormat('Y-m-d H:i', $date_to_save);
+        $this->attributes['time_collected'] = $date_to_save;
     }
 
     /**

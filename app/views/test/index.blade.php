@@ -269,7 +269,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans('messages.save'),
-                                        array('class' => 'btn btn-primary',  'onclick' => 'updateSampleDetails()', 'type' => 'submit')) }}
+                                        array('class' => 'btn btn-primary','id'=>'sss', 'type' => 'submit')) }}
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             {{trans('messages.close')}}</button>
                                       </div>

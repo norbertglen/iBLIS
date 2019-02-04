@@ -1852,15 +1852,15 @@ class ReportController extends \BaseController {
                 $tMeasure = Measure::find($measure->measure_id);
                 $arr['name'] = $tMeasure->name;
 	            $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne);
-                $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, null);
+                $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, true);
                 array_push($sputumList, $arr);
 	            $arr['name'] = 'TB new suspects';
 	            $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne,1);
-	            $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, null,1);
+	            $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, true,1);
 	            array_push($sputumList, $arr);
 	            $arr['name'] =  'TB followup';
 	            $arr['total'] = $this->getGroupedTestCounts($sputum, null, null, $from, $toPlusOne,2);
-	            $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, null,2);
+	            $arr['positive'] = $this->getTotalTestResults($tMeasure, null, null, $from, $toPlusOne, null, true,2);
 	            array_push($sputumList, $arr);
 
             }

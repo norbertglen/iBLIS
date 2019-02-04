@@ -298,6 +298,7 @@ class TestController extends \BaseController {
             $new_site_of_collection->save();
             $id = $new_site_of_collection->id;
         }
+//        dd(Input::get('time_collected'));
         $specimen = Specimen::find(Input::get('specimen_id'));
         $specimen->location_id = Input::get('location');
         $specimen->site_collected_id = $id;
@@ -305,6 +306,7 @@ class TestController extends \BaseController {
 	    $specimen->time_collected = Input::get('time_collected');
 	    $specimen->sputum = (null !==Input::get('sputum'))?Input::get('sputum'):"";
         $specimen->save();
+        dd($specimen);
         return Redirect::route('test.viewDetails', array($specimen->test->id));
     }
 

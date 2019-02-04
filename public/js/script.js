@@ -502,6 +502,12 @@ $(function() {
             ends: 23 // Last displayed hour
         },
     });
+
+    $("#sss").click(function(evt) {
+        evt.preventDefault();
+        alert("papa0");
+        updateSampleDetails();
+    });
 });
 /**
  *-----------------------------------
@@ -1186,7 +1192,7 @@ function fetchSpecimenSample(specimenId,sputum) {
         $('#location').val(res.location_id.id);
         $('#collection_site').val(res.site_collected_id.id);
         $('#specimen-id').val(specimenId);
-        $('#sputum').val(sputum);
+        $('#sputum').val(res.sputum);
         if(sputum==29){
             $('#sput').removeClass('hidden');
         }else{
