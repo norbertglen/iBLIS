@@ -504,8 +504,8 @@ $(function() {
     });
 
     $("#sss").click(function(evt) {
-        evt.preventDefault();
-        alert("papa0");
+        // evt.preventDefault();
+        // alert("papa0");
         updateSampleDetails();
     });
 });
