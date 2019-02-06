@@ -66,7 +66,7 @@
                     <div class="col-md-6">
                         <div class="display-details">
                             <h3 class="view"><strong>{{ Lang::choice('messages.test-type',1) }}</strong>
-                                {{ (count($test->testType->name)>0)?$test->testType->name:"unknown" }}</h3>
+                                {{ (count($test->testType)>0)?$test->testType->name:"unknown" }}</h3>
                             <p class="view"><strong>{{trans('messages.visit-number')}}</strong>
                                 {{(count($test->visit)>0)?$test->visit->id:"unknown" }}</p>
                             <p class="view"><strong>{{trans('messages.date-ordered')}}</strong>

@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5d4d55af-c6f0-4c1d-b036-e0396808c0b5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/inventory/stock/usage.blade.php" afterPath="$PROJECT_DIR$/app/views/inventory/stock/usage.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/test/viewDetails.blade.php" afterPath="$PROJECT_DIR$/app/views/test/viewDetails.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,10 +33,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewDetails.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="viewDetails.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/test/viewDetails.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
+            <state relative-caret-position="233">
               <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
               <folding>
                 <element signature="e#0#23947#0#Blade" expanded="false" />
@@ -59,7 +57,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Test.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/Test.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="524">
@@ -345,12 +343,12 @@
       <workItem from="1548827398489" duration="47165000" />
       <workItem from="1549282251991" duration="8705000" />
       <workItem from="1549349437526" duration="2461000" />
-      <workItem from="1549426933262" duration="8695000" />
+      <workItem from="1549426933262" duration="8937000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88599000" />
+    <option name="totallyTimeSpent" value="88841000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1858" height="1098" extended-state="6" />
@@ -796,18 +794,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/test/viewDetails.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#23947#0#Blade" expanded="false" />
-            <element signature="e#0#23947#0#Blade" expanded="false" />
-            <element signature="e#6650#8893#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/Test.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="524">
@@ -825,6 +811,18 @@
             <marker date="1548222269314" expanded="true" signature="12381:12410" ph="SELECT 'High... " />
             <marker date="1548222269314" expanded="true" signature="12417:12432" ph="SELECT 'Norm... " />
             <marker date="1548222269314" expanded="true" signature="17729:17742" ph="SELECT * FRO... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/test/viewDetails.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#23947#0#Blade" expanded="false" />
+            <element signature="e#0#23947#0#Blade" expanded="false" />
+            <element signature="e#6650#8893#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
