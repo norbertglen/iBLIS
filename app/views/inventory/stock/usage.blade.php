@@ -38,9 +38,10 @@
                     @foreach($requests as $request)
                         @if( (count($request->usage)>0 && ($request->quantity_ordered-$request->issued())>0) || count($request->usage)==0)
                         <div class="radio col-sm-offset-3">
+                            <?php $facility= ($request->facility_id>0)?$request->facility->name:$request->testCategory->name; ?>
                             <label>
                                 <input type="radio" name="request_id" id="request_id" value="{{$request->id}}" {{ ($record == $request->id||Input::old('request_id')) ? 'checked' : ''}}>
-                                {{ $request->item->name.'('.(count($request->usage)>0?$request->quantity_ordered-$request->issued():$request->quantity_ordered).') - '.$request->testCategory->name.'('.($request->remarks?$request->remarks:$request->user->name).')' }}
+                                {{ $request->item->name.'('.(count($request->usage)>0?$request->quantity_ordered-$request->issued():$request->quantity_ordered).') - '.$facility.'('.($request->remarks?$request->remarks:$request->user->name).')' }}
                             </label>
                         </div>
                         @endif
