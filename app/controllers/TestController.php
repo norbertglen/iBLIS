@@ -475,7 +475,7 @@ class TestController extends \BaseController {
      */
     public function viewDetails($testID)
     {
-    	
+
         return View::make('test.viewDetails')->with('test', Test::find($testID));
     }
 
