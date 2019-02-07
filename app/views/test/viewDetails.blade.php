@@ -67,10 +67,10 @@
                         <div class="display-details">
 
                             <h3 class="view"><strong>{{ Lang::choice('messages.test-type',1) }}</strong>
-                                @if(count($test->testType)>0){{$test->testType->name}}@else{{trans('messages.unknown')}}@endif</h3>
+                                {{($test->testType->name)?$test->testType->name : trans('messages.unknown')}}</h3>
                             <p class="view"><strong>{{trans('messages.visit-number')}}</strong>
-                                @if(count($test->visit)>0){{$test->visit->id}}@else{{trans('messages.unknown')}}@endif
-                                </p>
+                                {{($test->visit->id)?$test->visit->id : trans('messages.unknown')}}
+                            </p>
                             <p class="view"><strong>{{trans('messages.date-ordered')}}</strong>
                                 {{ $test->isExternal()?$test->external()->request_date:$test->time_created }}</p>
                             <p class="view"><strong>{{trans('messages.lab-receipt-date')}}</strong>
@@ -86,10 +86,10 @@
                                     {{ $test->visit->visit_type }}
                                 @endif</p>
                             <p class="view-striped"><strong>{{trans('messages.registered-by')}}</strong>
-                                @if(count($test->createdBy)>0){{$test->createdBy->name}}@else{{trans('messages.unknown')}}@endif
+                                {{($test->createdBy->name)?$test->createdBy->name : trans('messages.unknown')}}
                             </p>
                             <p class="view"><strong>{{trans('messages.tested-by')}}</strong>
-                                @if(count($test->testedBy)>0){{$test->testedBy->name}}@else{{trans('messages.unknown')}}@endif
+                                {{($test->testedBy)?$test->testedBy->name : trans('messages.unknown')}}
                             </p>
                             @if($test->isVerified())
                                 <p class="view"><strong>{{trans('messages.verified-by')}}</strong>
@@ -173,7 +173,7 @@
                                                 <p><strong>{{trans('messages.rejection-reason-title')}}</strong></p>
                                             </div>
                                             <div class="col-md-8">
-                                                @if(count($test->specimen->rejectionReason)>0){{$test->specimen->rejectionReason->reason}}@else{{trans('messages.pending') }}@endif
+                                                {{($test->specimen->rejectionReason->reason)?$test->specimen->rejectionReason->reason : trans('messages.unknown')}}
                                             </div>
                                         </div>
                                         <div class="row">
